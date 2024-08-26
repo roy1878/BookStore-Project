@@ -1,5 +1,7 @@
+// import { NgModule } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
 import { BookCardComponent } from './components/book-card/book-card.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
@@ -9,33 +11,33 @@ import { AdminContainerComponent } from './components/admin-container/admin-cont
 
 const routes: Routes = [
   {
-    path:'login-signup',
-    component:LoginSignupComponent
+    path: 'login-signup',
+    component: LoginSignupComponent,
   },
   {
-    path:'bookcard',
-    component:BookCardComponent
+    path: 'bookcard',
+    component: BookCardComponent,
   },
   {
-    path:'bookDetails',
-    component:BookDetailsComponent
+    path: 'bookDetails',
+    component: BookDetailsComponent,
   },
   {
-    path:'dashboard',
-    component:DashboardComponent
+    path: 'dashboard',
+    component: DashboardComponent,
   },
   {
-    path:'cart',
-    component:BookCartComponent
+    path: 'cart',
+    component: BookCartComponent,
   },
   {
-    path:'admin',
-    component:AdminContainerComponent
-  }
+    path: 'admin',
+    component: AdminContainerComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
