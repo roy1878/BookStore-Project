@@ -18,13 +18,21 @@ const routes: Routes = [
     path: 'bookcard',
     component: BookCardComponent,
   },
-  {
-    path: 'bookDetails',
-    component: BookDetailsComponent,
-  },
+  // {
+  //   path: 'bookDetails',
+  //   component: BookDetailsComponent,
+  // },
   {
     path: 'dashboard',
     component: DashboardComponent,
+
+    /////changed here by Priya
+    children:[
+      {
+        path: 'bookdetails',
+        component: BookDetailsComponent,
+      }
+    ]
   },
   {
     path: 'cart',
