@@ -19,6 +19,7 @@ import { AdminContainerComponent } from './components/admin-container/admin-cont
 import { AddBookComponent } from './components/add-book/add-book.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ForgotPasswordComponent,
     AdminContainerComponent,
     AddBookComponent,
-    SearchPipe
+    SearchPipe,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
