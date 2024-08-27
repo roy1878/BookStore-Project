@@ -6,9 +6,12 @@
     </div>
     <div class="header-searchbar">
       <mat-icon svgIcon="search"></mat-icon>
-      <input type="text"placeholder="Search..." 
-       [(ngModel)]="searchQuery"
-      (input)="handleSearch()" />
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchQuery"
+        (input)="handleSearch()"
+      />
     </div>
   </div>
 
@@ -16,33 +19,34 @@
     <div class="book-store-header-btns">
       <div class="header-btns">
         <mat-icon svgIcon="profile"></mat-icon>
-        <button mat-button >
-          Profile
-        </button>
+        <button mat-button [matMenuTriggerFor]="loginMenu">Profile</button>
 
-        <mat-menu #loginMenu="matMenu" style="display: flex;" >
-          <p style="font-size: small; font-weight: bold">Welcome</p>
-          <p style="font-size: small">To access and manage orders</p>
-          <button>login/SignUp</button>
-          <hr />
-          <div class="mat-menu-btns" style="display: flex; flex-direction: column;">
-            <button>My Orders</button>
-            <button>WishList</button>
+        <mat-menu #loginMenu="matMenu" >
+          <div class="header-mat-menu-inner-cnt" *ngIf="isLoggedin == true else elsePart" style="padding:0px 20px;">
+            <p style="font-size: small; font-weight: bold">Welcome</p>
+            <p style="font-size: small">To access and manage orders</p>
+            <button class="login">Login/SignUp</button>
+            <hr />
+            <div
+              class="mat-menu-btns"
+              style="display: flex; flex-direction: column"
+            >
+            <button class="menu-button-item"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
+            <button class="menu-button-item"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
+            </div>
           </div>
-        </mat-menu>
-        
-        <mat-menu #loggedInMenu="matMenu" style="display: flex;" >
-          <p style="font-size: small; font-weight: bold">Welcome</p>
-          <p style="font-size: small">To access and manage orders</p>
-          <button>login/SignUp</button>
-          <hr />
-
-          <div class="mat-menu-btns" style="display: flex; flex-direction: column;">
-            <button>My Orders</button>
-            <button>WishList</button>
+          <ng-template #elsePart>
+            <div class="header-mat-menu-inner-cnt" style="display: flex; flex-direction: column; padding: 0px 20px;">
+              <p style="font-weight: bold;">Hello Poonam,</p>
+            <button class="menu-button-item" (click)="handleHeaderMenuClick('profile')"> <mat-icon svgIcon="profile"></mat-icon> Profile</button>
+            <button class="menu-button-item"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
+            <button class="menu-button-item"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
+            <button class="logout">Logout</button>
           </div>
+          </ng-template>
         </mat-menu>
       </div>
+
       <div class="header-btns">
         <mat-icon svgIcon="cart"></mat-icon>
         <button>Cart</button>

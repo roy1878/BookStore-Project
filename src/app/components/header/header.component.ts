@@ -4,13 +4,16 @@ import {
   CART_ICON,
   FAV_ICON,
   GOLD_STAR_ICON,
+  HEART_ICON,
   PROFILE_ICON,
   SEARCH_ICON,
+  SHOPPING_BAG_ICON,
   STAR_ICON,
 } from 'src/assets/icons/svg-icon';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataService } from 'src/app/services/data/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -18,11 +21,16 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  showLoginMenu: boolean = false;
+  isLoggedin: boolean = true;
   searchQuery: string = '';
   @Output() toggleDrawer = new EventEmitter();
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private dataService:DataService) {
+  constructor(
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer,
+    private dataService: DataService,
+    private router:Router
+  ) {
     iconRegistry.addSvgIconLiteral(
       'search',
       sanitizer.bypassSecurityTrustHtml(SEARCH_ICON)
@@ -51,10 +59,23 @@ export class HeaderComponent implements OnInit {
       'gold-star',
       sanitizer.bypassSecurityTrustHtml(GOLD_STAR_ICON)
     );
+    iconRegistry.addSvgIconLiteral(
+      'heart',
+      sanitizer.bypassSecurityTrustHtml(HEART_ICON)
+    );
+    iconRegistry.addSvgIconLiteral(
+      'shopping-bag',
+      sanitizer.bypassSecurityTrustHtml(SHOPPING_BAG_ICON)
+    );
   }
 
   ngOnInit(): void {}
 
+  handleHeaderMenuClick(action: string) {
+    if(action === 'profile'){
+      this.router.navigate(['profile'])
+    }
+  }
   handleSearch() {
     this.dataService.updateData(this.searchQuery);
   }
