@@ -1,0 +1,92 @@
+.book-card-main{
+    width: 235px;
+    height: 300px;
+    border: 1px solid #E2E2E2;
+    display: flex;
+    flex-direction: column;
+    margin: 40px auto;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E2E2E2;
+    border-radius: 3px;
+    
+}
+.book-card-main:hover{
+    box-shadow: 0px 3px 6px #00000040;
+}
+
+.book-card-main-img{
+    height: 172px;
+    background: #F5F5F5 0% 0% no-repeat padding-box;
+    border-radius: 2px 2px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    img{
+        width: 95px;
+        height: 120px;
+    }
+}
+.book-card-main-content{
+    // height: 102px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+
+}
+
+.book-card-main-content-heading{
+ text-align: left;
+font: normal normal normal 19px Roboto;
+letter-spacing: 0px;
+color: #0A0102;
+opacity: 1;
+}
+
+.book-card-main-content-author{
+    font: normal normal normal 13px Roboto;
+ letter-spacing: 0px;
+color: #878787;
+}
+
+
+.book-card-main-content-rating{
+    display: flex;
+    gap: 10px;
+
+}
+
+
+
+.book-card-main-content-rating-ctn{
+width: 33px;
+height: 20px;
+background: #388E3C 0% 0% no-repeat padding-box;
+text-align: center;
+border-radius: 1px;
+color: white;
+
+}
+
+
+.book-card-main-content-price{
+    display: flex;
+    align-items: center;
+    
+    gap: 7px;
+}
+
+.book-card-main-content-price-main{
+    font: normal normal bold 16px Roboto;
+letter-spacing: 0px;
+color: #0A0102;
+}
+
+.book-card-main-content-price-original{
+text-decoration: line-through;
+font: normal normal normal 13px Roboto;
+letter-spacing: 0px;
+color: #878787;
+
+}
