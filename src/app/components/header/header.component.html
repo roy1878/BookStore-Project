@@ -6,7 +6,9 @@
     </div>
     <div class="header-searchbar">
       <mat-icon svgIcon="search"></mat-icon>
-      <input type="text" name="" id="" placeholder="Search..." class="" />
+      <input type="text"placeholder="Search..." 
+       [(ngModel)]="searchQuery"
+      (input)="handleSearch()" />
     </div>
   </div>
 

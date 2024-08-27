@@ -19,7 +19,7 @@
     </div>
     
     <div class="books-container-display-cards">
-        <div *ngFor="let bookData of BooksList" class="books-container-cards">
+        <div *ngFor="let bookData of BooksList | searchPipe:searchQuery" class="books-container-cards">
             <app-book-card [bookDetails]="bookData"></app-book-card>
         </div>
     </div>
