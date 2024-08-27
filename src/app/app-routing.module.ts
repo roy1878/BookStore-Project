@@ -41,22 +41,24 @@ const routes: Routes = [
       {
         path:'orderlist',
         component:OrderListComponent
+      },
+      {
+        path: 'cart',
+        component: BookCartComponent,
+      },
+      {
+        path:'profile',
+        component:ProfileComponent
       }
       
     ]
   },
-  {
-    path: 'cart',
-    component: BookCartComponent,
-  },
+  
   {
     path:'admin',
     component:AdminContainerComponent
   },
-  {
-    path:'profile',
-    component:ProfileComponent
-  }
+  
 ];
 
 @NgModule({
