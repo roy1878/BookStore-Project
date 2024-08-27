@@ -24,6 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 import {MatIconModule} from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +54,10 @@ import {MatIconModule} from '@angular/material/icon';
     BrowserAnimationsModule,
     HttpClientModule,
    
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
