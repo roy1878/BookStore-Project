@@ -1,0 +1,30 @@
+.books-container-display-cards{
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    gap: 30px 20px;
+    justify-content: center;
+    align-items: center;
+   
+
+}
+
+.books-container-cards{
+    width: 235px;
+    height: 300px;
+}
+
+.books-container-header{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.books-container-header-books{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

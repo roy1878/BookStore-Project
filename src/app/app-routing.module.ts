@@ -8,6 +8,8 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BookCartComponent } from './components/book-cart/book-cart.component';
 import { AdminContainerComponent } from './components/admin-container/admin-container.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { BooksContainerComponent } from './components/books-container/books-container.component';
 
 const routes: Routes = [
   {
@@ -18,15 +20,19 @@ const routes: Routes = [
     path: 'bookcard',
     component: BookCardComponent,
   },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-
+   {
+    path:'dashboard',
+    component:DashboardComponent,
     children:[
       {
-        path: 'bookdetails',
-        component: BookDetailsComponent,
+        path:'books',
+        component:BooksContainerComponent
+      },
+      {
+        path:'bookDetails',
+        component:BookDetailsComponent
       }
+      
     ]
   },
   {
@@ -34,9 +40,13 @@ const routes: Routes = [
     component: BookCartComponent,
   },
   {
-    path: 'admin',
-    component: AdminContainerComponent,
+    path:'admin',
+    component:AdminContainerComponent
   },
+  {
+    path:'profile',
+    component:ProfileComponent
+  }
 ];
 
 @NgModule({
