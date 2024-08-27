@@ -21,6 +21,8 @@ import { SearchPipe } from './pipes/search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     CommonModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatPaginatorModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
