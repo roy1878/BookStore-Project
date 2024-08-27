@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./book-cart.component.scss']
 })
 export class BookCartComponent implements OnInit {
-
+  panelOpenState = false;
   constructor() { }
 
   ngOnInit(): void {
