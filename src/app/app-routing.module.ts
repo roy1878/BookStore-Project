@@ -27,7 +27,7 @@ const routes: Routes = [
         component:BooksContainerComponent
       },
       {
-        path:'bookDetails',
+        path:'bookdetails',
         component:BookDetailsComponent
       }
       

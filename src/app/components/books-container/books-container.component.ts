@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BookService } from 'src/app/services/book/book.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { BookService } from 'src/app/services/book/book.service';
 export class BooksContainerComponent implements OnInit {
   BooksList:any[]=[];
 
-  constructor(private bookService:BookService) { }
+  constructor(private bookService:BookService, private router:Router) { }
 
   ngOnInit(): void {
     this.bookService.getAllBooksApiCall().subscribe({
@@ -21,6 +22,11 @@ export class BooksContainerComponent implements OnInit {
       }
     })
 
+  }
+
+  handleBookcardClick(id:any){
+    this.router.navigate(['dashboard/bookDetails'], {queryParams: { que : id}});
+    console.log(id);
   }
 
 }
