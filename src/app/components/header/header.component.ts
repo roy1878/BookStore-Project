@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+showLoginMenu: boolean=false;
 
   constructor(iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,) {

@@ -14,7 +14,32 @@
     <div class="book-store-header-btns">
       <div class="header-btns">
         <mat-icon svgIcon="profile"></mat-icon>
-        <button>Profile</button>
+        <button mat-button >
+          Profile
+        </button>
+
+        <mat-menu #loginMenu="matMenu" style="display: flex;" >
+          <p style="font-size: small; font-weight: bold">Welcome</p>
+          <p style="font-size: small">To access and manage orders</p>
+          <button>login/SignUp</button>
+          <hr />
+          <div class="mat-menu-btns" style="display: flex; flex-direction: column;">
+            <button>My Orders</button>
+            <button>WishList</button>
+          </div>
+        </mat-menu>
+        
+        <mat-menu #loggedInMenu="matMenu" style="display: flex;" >
+          <p style="font-size: small; font-weight: bold">Welcome</p>
+          <p style="font-size: small">To access and manage orders</p>
+          <button>login/SignUp</button>
+          <hr />
+
+          <div class="mat-menu-btns" style="display: flex; flex-direction: column;">
+            <button>My Orders</button>
+            <button>WishList</button>
+          </div>
+        </mat-menu>
       </div>
       <div class="header-btns">
         <mat-icon svgIcon="cart"></mat-icon>
