@@ -27,4 +27,9 @@ export class BookService {
       `bookstore_user/add_wish_list/${id}`,id
     );
   }
+
+
+  deleteWishListItem(id:any){
+    return this.httpService.deleteAPICall(`remove_wishlist_item/${id}`);
+  }
 }
