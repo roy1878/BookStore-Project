@@ -1,1 +1,38 @@
-<p>books-container works!</p>
+
+<div class="books-container-main">
+
+    <div class="books-container-header">
+        <div class="books-container-header-books">
+            <h1>Books</h1>
+            <p>({{BooksList.length}} items)</p>
+        </div>
+        <div class="books-container-header-filter">
+            
+        <select  (change)="sortItems($event)">
+            <option value="">Sort by relevance</option>
+            <option value="price-low-high" >Price : Low to High</option>
+            <option value="price-high-low">Price: High to Low</option>
+            <option value="rating">Rating</option>
+        </select>
+
+        </div>
+    </div>
+    
+    <div class="books-container-display-cards">
+        <div *ngFor="let bookData of paginatedCards| searchPipe:searchQuery" class="books-container-cards" (click)="handleBookcardClick(bookData._id)">
+            <app-book-card [bookDetails]="bookData"></app-book-card>
+        </div>
+    </div>
+
+    <div class="paginator">
+        <button (click)="goToPage(page)" *ngFor="let page of pageNumbers" [class.active]="pageIndex + 1 === page">
+          {{ page }}
+        </button>
+      </div>
+      <!-- <mat-paginator [length]="length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[8]"
+                     showFirstLastButtons
+                     (page)="onPageChange($event)">
+      </mat-paginator> -->
+</div>
