@@ -8,6 +8,10 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BookCartComponent } from './components/book-cart/book-cart.component';
 import { AdminContainerComponent } from './components/admin-container/admin-container.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { BooksContainerComponent } from './components/books-container/books-container.component';
+import { WishListComponent } from './components/wish-list/wish-list.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
 
 const routes: Routes = [
   {
@@ -18,25 +22,43 @@ const routes: Routes = [
     path: 'bookcard',
     component: BookCardComponent,
   },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-
+   {
+    path:'dashboard',
+    component:DashboardComponent,
     children:[
       {
-        path: 'bookdetails',
-        component: BookDetailsComponent,
+        path:'books',
+        component:BooksContainerComponent
+      },
+      {
+        path:'bookdetails',
+        component:BookDetailsComponent
+      },
+      {
+        path:'wishlist',
+        component:WishListComponent
+      },
+      {
+        path:'orderlist',
+        component:OrderListComponent
+      },
+      {
+        path: 'cart',
+        component: BookCartComponent,
+      },
+      {
+        path:'profile',
+        component:ProfileComponent
       }
+      
     ]
   },
+  
   {
-    path: 'cart',
-    component: BookCartComponent,
+    path:'admin',
+    component:AdminContainerComponent
   },
-  {
-    path: 'admin',
-    component: AdminContainerComponent,
-  },
+  
 ];
 
 @NgModule({

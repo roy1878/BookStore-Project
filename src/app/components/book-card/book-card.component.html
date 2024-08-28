@@ -1,1 +1,20 @@
-<p>book-card works!</p>
+<div class="book-card-main">
+    <div class="book-card-main-img">
+        <img src="../../../assets/think-book.png" alt="">
+
+    </div>
+    <div class="book-card-main-content">
+        <p class="book-card-main-content-heading">{{bookDetails.bookName}}</p>
+        <p class="book-card-main-content-author">by {{bookDetails.author}}</p>
+        <div class="book-card-main-content-rating">
+            <div class="book-card-main-content-rating-ctn">
+                4.5
+            </div>
+            <p>(20)</p>
+        </div>
+        <div class="book-card-main-content-price">
+            <span class="book-card-main-content-price-main">Rs. {{bookDetails.discountPrice}}</span>
+            <span class="book-card-main-content-price-original">Rs. {{bookDetails.price}}</span>
+        </div>
+    </div>
+</div>
