@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import {
   BULLET_ICON,
   CART_ICON,
@@ -15,7 +15,8 @@ import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataService } from 'src/app/services/data/data.service';
 import { Router } from '@angular/router';
-
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { LoginSignupComponent } from '../login-signup/login-signup.component';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -30,7 +31,8 @@ export class HeaderComponent implements OnInit {
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
     iconRegistry.addSvgIconLiteral(
       'search',
@@ -98,8 +100,15 @@ export class HeaderComponent implements OnInit {
       localStorage.clear();
     }
     if (action == 'login') {
-      this.router.navigate(['login-signup'])
+      this.openDialog();
     }
+  }
+
+  openDialog(): void {
+    this.dialog.open(LoginSignupComponent, {
+      width: '50%', height : '550px'
+    });
+
   }
   handleSearch() {
     this.dataService.updateData(this.searchQuery);
