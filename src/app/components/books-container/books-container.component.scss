@@ -1,3 +1,9 @@
+.books-container-main{
+    display: flex;
+    flex-direction: column;
+    // gap: 100px;
+}
+
 .books-container-display-cards{
     display: flex;
     width: 80%;
@@ -20,7 +26,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 auto;
+    margin: 30px auto 0 auto;
 }
 
 .books-container-header-books{
@@ -28,3 +34,32 @@
     gap: 5px;
     align-items: center;
 }
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+  }
+  
+  .paginator button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .paginator button.active {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .paginator button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  mat-paginator {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }

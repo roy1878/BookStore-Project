@@ -25,4 +25,8 @@ export class HttpService {
     headers: this.header
   });
   }
+
+  PostAPICall(endPoint:string,data:any,header:any=null){
+    return this.http.post(this.BaseUrl+endPoint,data,{headers:header});
+  }
 }
