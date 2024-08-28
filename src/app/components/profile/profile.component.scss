@@ -1,6 +1,7 @@
 .profile-main-ctn{
     display: flex;
     flex-direction: column;
+    margin-top: 50px;
     
 }
 
@@ -19,6 +20,7 @@
     
     .edit{
         color: #A03037;
+        cursor: pointer;
     }
 }
 

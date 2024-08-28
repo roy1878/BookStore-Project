@@ -4,23 +4,23 @@
     <div class="profile-main-personalDetails">
         <div class="profile-main-personalDetails-heading">
             <h1 class="heading-main">Personal Details</h1>
-            <p class="edit">Edit</p>
+            <p class="edit" (click)="PDenableEditing()">Edit</p>
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Full Name</p>
-            <input type="text" placeholder="Enter Your Name">
+            <input  type="text" placeholder="Enter Your Name"  [disabled]="PDisDisabled">
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Email Id</p>
-            <input type="text" placeholder="Enter Your Name">
+            <input type="text" placeholder="Enter Your Email" [disabled]="PDisDisabled">
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Password</p>
-            <input type="password" placeholder="">
+            <input type="password" placeholder="" [disabled]="PDisDisabled" >
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Mobile Number</p>
-            <input type="number" placeholder="999999999">
+            <input type="number" placeholder="999999999" [disabled]="PDisDisabled" >
         </div>
     </div>
 
@@ -32,20 +32,20 @@
         </div>
         <div class="profile-main-address-Details-Subheader">
             <h2>1. Work</h2>
-            <p style="color: #A03037;">Edit</p>
+            <p style="color: #A03037;" (click)="CDenableEditing()">Edit</p>
         </div>
         <div class="profile-main-address-Details-main">
             <p >Address</p>
-            <input type="text" placeholder="Mumbai">
+            <input type="text" placeholder="Mumbai" [disabled]="CDisDisabled">
         </div>
         <div class="profile-main-address-Details-sub">
             <div class="profile-main-address-Details-sub2">
                 <p>City/town</p>
-                <input type="text" placeholder="Mumbai">
+                <input type="text" placeholder="Mumbai" [disabled]="CDisDisabled">
             </div>
             <div class="profile-main-address-Details-sub2">
                 <p>State</p>
-                <input type="text" placeholder="Mumbai">
+                <input type="text" placeholder="Mumbai" [disabled]="CDisDisabled">
             </div>
 
         </div>

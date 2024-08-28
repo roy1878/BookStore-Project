@@ -23,12 +23,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
-
-
 import {MatIconModule} from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +56,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     MatPaginatorModule,
     MatCardModule,
-   
+    ReactiveFormsModule,
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
