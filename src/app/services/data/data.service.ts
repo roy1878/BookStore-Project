@@ -13,7 +13,23 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
       this.dataSource.next(data);
     }
 
-   
+    private orderList = new BehaviorSubject<any>([]);
+    currentOrderList = this.dataSource.asObservable();
+    updateOrderList(data: any) {
+      this.orderList.next(data);
+    }
+
+    private cartList = new BehaviorSubject<any>([]);
+    currentCartList = this.dataSource.asObservable();
+    updateCartList(data: any) {
+      this.cartList.next(data);
+    }
+
+    private wishList = new BehaviorSubject<any>([]);
+    currentWishList = this.dataSource.asObservable();
+    updateWishList(data: any) {
+      this.wishList.next(data);
+    }
 
     
   }
