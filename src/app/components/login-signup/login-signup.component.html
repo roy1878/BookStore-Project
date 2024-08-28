@@ -1,4 +1,4 @@
-<div class="main-cnt">
+
     <mat-dialog-content>
         <div class="online-book-shopping">
             <div class="login-panel">
@@ -12,7 +12,7 @@
                 <div class="form">
                     <mat-tab-group #tabGroup>
                         <mat-tab label="LOGIN">
-                            <form class="login-body" [formGroup]="loginForm">
+                            <form class="login-signup-body" [formGroup]="loginForm">
                                 <div class="Email">
                                     <label>Email id</label>
                                     <mat-form-field appearance="outline">
@@ -40,7 +40,7 @@
                             </form>
                         </mat-tab>
                         <mat-tab label="SIGNUP">
-                            <form class="signup-body" [formGroup]="registerForm">
+                            <form class="login-signup-body" [formGroup]="registerForm">
                                 <label>Full Name</label>
                                 <mat-form-field appearance="outline">
                                     <input formControlName="fullName" matInput type="text">
@@ -68,4 +68,3 @@
             </div>
         </div>
     </mat-dialog-content>
-</div>
