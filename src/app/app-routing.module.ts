@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { BooksContainerComponent } from './components/books-container/books-container.component';
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderPlacedComponent } from './components/order-placed/order-placed.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,9 @@ const routes: Routes = [
       {
         path:'profile',
         component:ProfileComponent
+      },{
+        path:'order-placed',
+        component:OrderPlacedComponent
       }
       
     ]

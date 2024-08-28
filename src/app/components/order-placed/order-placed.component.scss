@@ -1,0 +1,94 @@
+.order-placed {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+   
+}
+
+.order-msg {
+    text-align: center;
+}
+
+.table-data {
+    border: 2px solid rgb(148, 148, 148);
+}
+
+.table {
+    border: 2px solid rgb(148, 148, 148);
+    column-gap: 0px;
+    row-gap: 0px;
+    width: 700px;
+}
+
+.Order {
+    background-color: #2d7bcf;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5%;
+}
+
+.contact-table {
+    justify-self: center;
+    width: 700px;
+    border-collapse: collapse;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.contact-table th, .contact-table td {
+    border: 2px solid rgba(176, 174, 174, 0.338);
+    padding: 15px;
+    text-align: left;
+}
+
+.contact-table th {
+    background-color: #f2f2f2;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .contact-table {
+        width: 100%;
+    }
+
+    .contact-table th, .contact-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .contact-table th {
+        background-color: #f2f2f2;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-placed {
+        margin-top: 2%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .Order {
+        padding: 8px 16px;
+    }
+
+    .contact-table {
+        width: 100%;
+    }
+
+    .contact-table th, .contact-table td {
+        padding: 10px;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .contact-table th {
+        background-color: #f2f2f2;
+    }
+}
