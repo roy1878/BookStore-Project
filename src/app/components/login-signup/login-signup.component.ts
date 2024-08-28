@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
@@ -18,7 +19,7 @@ export class LoginSignupComponent implements OnInit {
   registerForm!:FormGroup;
   
 
-  constructor(private formBuilder: FormBuilder,private userService:UserService, private router:Router) { }
+  constructor(private formBuilder: FormBuilder,private userService:UserService, private router:Router, public dialog:MatDialog) { }
      
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -47,8 +48,9 @@ export class LoginSignupComponent implements OnInit {
         console.log("response",res);
         localStorage.setItem("access_token",res.result.accessToken);
         console.log("access_token",res.result.accessToken);
-        this.router.navigate(["./dashboard/books"]);
-        
+        // this.router.navigate(["./dashboard/books"]);
+        window.location.reload();
+        this.dialog.closeAll();
       },
       error:(err)=>{
         console.log("error:",err);

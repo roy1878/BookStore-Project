@@ -17,12 +17,12 @@
 
   <div class="book-store-header-right-cnt">
     <div class="book-store-header-btns">
-      <div class="header-btns">
+      <div class="header-btns" [matMenuTriggerFor]="loginMenu">
         <mat-icon svgIcon="profile"></mat-icon>
-        <button mat-button [matMenuTriggerFor]="loginMenu">Profile</button>
+        Profile
 
         <mat-menu #loginMenu="matMenu" >
-          <div class="header-mat-menu-inner-cnt" *ngIf="isLoggedin == true else elsePart" style="padding:0px 20px;">
+          <div class="header-mat-menu-inner-cnt" *ngIf="isLoggedin == false else elsePart" style="padding:0px 20px;">
             <p style="font-size: small; font-weight: bold">Welcome</p>
             <p style="font-size: small">To access and manage orders</p>
             <button class="login" (click)="handleHeaderMenuClick('login')">Login/SignUp</button>
@@ -37,7 +37,7 @@
           </div>
           <ng-template #elsePart>
             <div class="header-mat-menu-inner-cnt" style="display: flex; flex-direction: column; padding: 0px 20px;">
-              <p style="font-weight: bold;">Hello Poonam,</p>
+              <p style="font-weight: bold;">Hello XYZ,</p>
             <button class="menu-button-item" (click)="handleHeaderMenuClick('profile')"> <mat-icon svgIcon="profile"></mat-icon> Profile</button>
             <button class="menu-button-item" (click)="handleHeaderMenuClick('myOrders')"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
             <button class="menu-button-item" (click)="handleHeaderMenuClick('myWishList')"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
@@ -49,7 +49,7 @@
 
       <div class="header-btns">
         <mat-icon svgIcon="cart"></mat-icon>
-        <button>Cart</button>
+        <button (click)="handleHeaderMenuClick('cartlist')">Cart</button>
       </div>
     </div>
   </div>
