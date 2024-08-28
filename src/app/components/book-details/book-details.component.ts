@@ -111,6 +111,13 @@ export class BookDetailsComponent implements OnInit {
       });
   }
 
+  handleWishlistBtn() {
+    this.bookService.postWishlistBook(this.questionId).subscribe({
+      next: (res) => console.log(res),
+      error: (err) => console.log(err),
+    });
+  }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

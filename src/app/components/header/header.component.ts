@@ -22,8 +22,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  
-  isLoggedin: boolean = true;
+  isLoggedin: boolean = false;
   searchQuery: string = '';
   @Output() toggleDrawer = new EventEmitter();
   access_token = '';
@@ -77,14 +76,29 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.access_token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdhMDkzY2VhZTVjNDAwMGVkMGVkMDIiLCJpYXQiOjE3MjQ3NjI1OTAsImV4cCI6MTcyNDg0ODk5MH0.2aDnHhNdkpkt5woXZLYR5Pd_9yx4WRdOIb_M7x4vs0M`;
-  
-    if(this.access_token)
-      this.isLoggedin=!this.isLoggedin;
+
+    if (this.access_token) this.isLoggedin = !this.isLoggedin;
+
+    if (localStorage.getItem('access_token')) {
+      this.isLoggedin = !this.isLoggedin;
+    }
   }
 
   handleHeaderMenuClick(action: string) {
     if (action === 'profile') {
-      this.router.navigate(['profile']);
+      this.router.navigate(['dashboard/profile']);
+    }
+    if (action == 'myWishList') {
+      this.router.navigate(['dashboard/wishlist']);
+    }
+    if (action == 'myOrders') {
+      this.router.navigate(['dashboard/orderlist']);
+    }
+    if (action == 'logout') {
+      localStorage.clear();
+    }
+    if (action == 'login') {
+      this.router.navigate(['login-signup'])
     }
   }
   handleSearch() {
