@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
@@ -19,8 +19,9 @@ import { AdminContainerComponent } from './components/admin-container/admin-cont
 import { AddBookComponent } from './components/add-book/add-book.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatExpansionModule} from '@angular/material/expansion';
-
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {MatIconModule} from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,13 +39,16 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ForgotPasswordComponent,
     AdminContainerComponent,
     AddBookComponent,
-    SearchPipe
+    SearchPipe,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatExpansionModule
+    MatIconModule,
+    MatExpansionModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

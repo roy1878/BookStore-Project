@@ -1,28 +1,190 @@
 
 <app-header></app-header>
-<mat-accordion>
-    <mat-expansion-panel hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          This is the expansion title
-        </mat-panel-title>
-        <mat-panel-description>
-          This is a summary of the content
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>This is the primary content of the panel.</p>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Self aware panel
-        </mat-panel-title>
-        <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
-    </mat-expansion-panel>
-  </mat-accordion>
+
+
+<div class="cart">
+
+  <div class="cart1">
+    <div class="cart-head">
+     <strong class="title"> My Cart(1)</strong>
+     <div class="select-main">
+      <img src="../../../assets/icons/location.png" width="35px" alt="">
+       
+      <select class="select" name="" id="">
+        <option value="current">Use Current Location</option>
+       <option value="home">Home</option>
+       <option value="work">Work</option>
+     </select>
+     </div>
+     
+    </div>
+
+    <br><br>
+    <br>
+    <div class="cart-body">
+
+
+      <div class="product">
+      <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
+      <div class="item-details">
+        <h3>Dont Make Me Think</h3>
+        <p> By Steve Kings</p>
+        <strong>Rs. 1500</strong>
+         
+        <div class="quantity">
+          <div class="btns">
+          <button (click)="onDecrement()" class="btn">-</button>
+          <input [value]="count" readonly class="input" type="text" placeholder="1" >
+          <button (click)="onIncrement()" class="btn">+</button>
+        </div>
+         <strong>Remove</strong>
+        </div>
+        
+      </div>
+    </div>
+    <div class="product">
+      <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
+      <div class="item-details">
+        <h3>Dont Make Me Think</h3>
+        <p> By Steve Kings</p>
+        <strong>Rs. 1500</strong>
+
+        <div class="quantity">
+          <div class="btns">
+          <button (click)="onDecrement()" class="btn">-</button>
+          <input [value]="count" readonly class="input" type="text" placeholder="1" >
+          <button (click)="onIncrement()" class="btn">+</button>
+        </div>
+         <strong>Remove</strong>
+        </div>
+        
+      </div>
+    </div>
+
+
+    </div>
+
+
+
+    <br>
+    <div class="cart-footer">
+     
+
+
+      <button class="Order"  *ngIf="isBtnVisible" (click)="showCart2()">Place Order</button>
+    </div>
+  </div>
+
+
+
+
+  <div class="cart2" *ngIf="isCart2Visible">
+    <div class="cart-head">
+     <strong class="title2">Customer Details</strong>
+     <div class="select-main">
+     <h5 class="Add-new-address">Add New Address</h5>
+     </div>
+     
+    </div>
+
+    <br>
+    <div class="cart-body">
+     <form action="post">
+
+      <div class="name">
+        <input  class="form" type="text" placeholder="Full-Name" name="" id="">
+        <input  class="form"  type="text " placeholder="Mobile Number" name="" id="">
+      </div>
+     
+      <input  class="form2"  type="text " placeholder="Address" name="" id="">
+     
+      <div class="city">
+        <input  class="form"  placeholder="City" type="text" name="" id="">
+        <input   class="form" placeholder="State" type="text" name="" id="">
+      </div>
+
+      <br>
+      <div class="type">
+        <h3>Type</h3>
+        
+        <div class="radio">
+          <div class="option1">
+            <input style="color: rgb(107, 1, 1);" type="radio" name="opt" id="">
+            <h4>Home</h4>
+          </div>
+          <div class="option2">
+            <input type="radio" name="opt" id="">
+            <h4>Work</h4>
+          </div>
+<div class="option3">
+            <input type="radio" name="opt" id="">
+            <h4>Other</h4>
+          </div>
+
+          
+        </div>
+      </div>
+      
+     </form>
+
+   
+
+
   
+ 
+    
+     
+
+    </div>
+    
+    
+    <div class="option4">
+      
+            
+      <button *ngIf="isBtnVisible2"  class="Order2" (click)="showCart3()" >Place Order</button>
+    </div>
+  </div>
+
+
+  <div class="card2" *ngIf="isCard2Visible">
+    <strong>Address Details</strong>
+  </div>
+
+  <div class="card3" *ngIf="isCard3Visible">
+    <strong>Order Summary</strong>
+  </div>
+
+  <div class="cart3" *ngIf="isCart3Visible">
+    <div class="cart-head">
+      <strong>Order Summary</strong>
+    
+      
+     </div>
+ 
+     <br>
+     <div class="cart-body">
+       <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
+       <div class="item-details">
+         <h3>Dont Make Me Think</h3>
+         <p> By Steve Kings</p>
+         <strong>Rs. 1500</strong>
+         
+       </div>
+     </div>
+ 
+ 
+     <br>
+     <div class="cart-footer2">
+       
+ 
+       <button  class="Order" (click)="showCart2()">Checkout</button>
+     </div>
+   </div>
+  
+</div>
+
+<br><br>
+<br><br>
+<div class="footer">
+<h3 style="   font-size: 10px;">Copyright &copy 2020 Bookstore Private Limited. All Rights Reserved</h3>
+</div>
