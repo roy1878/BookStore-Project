@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class HttpService {
   BaseUrl = 'https://bookstore.incubation.bridgelabz.com/';
   header = {
-    'x-access-token': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdhMDkzY2VhZTVjNDAwMGVkMGVkMDIiLCJpYXQiOjE3MjQ3NjI1OTAsImV4cCI6MTcyNDg0ODk5MH0.2aDnHhNdkpkt5woXZLYR5Pd_9yx4WRdOIb_M7x4vs0M`,
+    'x-access-token': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdhMDkzY2VhZTVjNDAwMGVkMGVkMDIiLCJpYXQiOjE3MjQ4NjYwMjMsImV4cCI6MTcyNDk1MjQyM30.C8RnbZAMbzhIaEo77uGNrLx8-dcw76LfaUKoHZ6J--0`,
   };
   constructor(private http: HttpClient) {}
 
