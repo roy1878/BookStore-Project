@@ -25,23 +25,23 @@
           <div class="header-mat-menu-inner-cnt" *ngIf="isLoggedin == true else elsePart" style="padding:0px 20px;">
             <p style="font-size: small; font-weight: bold">Welcome</p>
             <p style="font-size: small">To access and manage orders</p>
-            <button class="login">Login/SignUp</button>
+            <button class="login" (click)="handleHeaderMenuClick('login')">Login/SignUp</button>
             <hr />
             <div
               class="mat-menu-btns"
               style="display: flex; flex-direction: column"
             >
-            <button class="menu-button-item"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
-            <button class="menu-button-item"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
+            <button class="menu-button-item" (click)="handleHeaderMenuClick('myOrders')"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
+            <button class="menu-button-item" (click)="handleHeaderMenuClick('myWishList')"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
             </div>
           </div>
           <ng-template #elsePart>
             <div class="header-mat-menu-inner-cnt" style="display: flex; flex-direction: column; padding: 0px 20px;">
               <p style="font-weight: bold;">Hello Poonam,</p>
             <button class="menu-button-item" (click)="handleHeaderMenuClick('profile')"> <mat-icon svgIcon="profile"></mat-icon> Profile</button>
-            <button class="menu-button-item"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
-            <button class="menu-button-item"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
-            <button class="logout">Logout</button>
+            <button class="menu-button-item" (click)="handleHeaderMenuClick('myOrders')"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
+            <button class="menu-button-item" (click)="handleHeaderMenuClick('myWishList')"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
+            <button class="logout" (click)="handleHeaderMenuClick('logout')">Logout</button>
           </div>
           </ng-template>
         </mat-menu>
