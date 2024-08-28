@@ -17,17 +17,19 @@
                                     <label>Email id</label>
                                     <mat-form-field appearance="outline">
                                         <input formControlName="email" matInput>
-
+                                        
                                     </mat-form-field>
+
                                 </div>
                                 <div class="password">
                                     <label>Password</label>
                                     <mat-form-field appearance="outline">
                                         <input formControlName="password" matInput type="password">
+                                        
                                     </mat-form-field>
                                 </div>
 
-                                <button mat-raised-button class="login-btn">Login</button>
+                                <button mat-raised-button (click)="userLogin()" class="login-btn">Login</button>
 
                                 <div class="or-separator">OR</div>
 
@@ -57,7 +59,7 @@
                                 </mat-form-field>
 
 
-                                <button style="width: 100%;background-color:#A03037;color:white; height: 40px;" mat-raised-button>Sign
+                                <button style="width: 100%;background-color:#A03037;color:white; height: 40px;" mat-raised-button (click)="userRegister()">Sign
                                     Up</button>
                             </form>
                         </mat-tab>
