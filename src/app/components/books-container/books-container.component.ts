@@ -79,9 +79,9 @@ export class BooksContainerComponent implements OnInit {
     const sortBy = selectElement.value;
 
     if (sortBy === 'price-low-high') {
-      this.BooksList.sort((a, b) => a.price - b.price);
+      this.BooksList.sort((a, b) => a.discountPrice- b.discountPrice);
     } else if (sortBy === 'price-high-low') {
-      this.BooksList.sort((a, b) => b.price - a.price);
+      this.BooksList.sort((a, b) => b.discountPrice - a.discountPrice);
     } 
     // else if (sortBy === 'rating') {
     //   this.BooksList.sort((a, b) => b.rating - a.rating);
