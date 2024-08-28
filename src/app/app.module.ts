@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
@@ -19,8 +20,16 @@ import { AddBookComponent } from './components/add-book/add-book.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+
 import {MatExpansionModule} from '@angular/material/expansion';
 
+import {MatIconModule} from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +54,16 @@ import {MatExpansionModule} from '@angular/material/expansion';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    MatCardModule,
+   
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatExpansionModule
   ],

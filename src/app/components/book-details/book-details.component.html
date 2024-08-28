@@ -1,1 +1,150 @@
-<p>book-details works!</p>
+<div class="book-details-outer-cnt">
+  <div class="book-details-routes">
+    <span>Home / </span> <span style="font-weight: bold">Book(0)</span>
+  </div>
+
+  <div class="book-details-inner-cnt">
+    <div class="book-details-cnt">
+      <div class="small-pic-cnt">
+        <img
+          src="../../../assets/book-images/small-images/Image 1.png"
+          alt=""
+        />
+        <img
+          src="../../../assets/book-images/small-images/Image 46.png"
+          alt=""
+        />
+      </div>
+      <div class="book-details-left-cnt">
+        <img
+          class="image"
+          src="../../../assets/book-images/Image 11.png"
+          alt=""
+        />
+        <div class="book-details-left-cnt-btns">
+          <button class="add-to-bag-btn">ADD TO BAG</button>
+          <button class="wishlist-btn">
+            <mat-icon svgIcon="fav"></mat-icon>
+            WISHLIST
+          </button>
+        </div>
+      </div>
+      <div class="book-details-right-cnt">
+        <div class="book-details-upper-cnt">
+          <div
+            class="book-title"
+            style="
+              text-align: left;
+              font: normal normal normal 28px/37px Roboto;
+              letter-spacing: 0px;
+              color: #0a0102;
+              opacity: 1;
+            "
+          >
+            {{ selectedBook.bookName }}
+          </div>
+          <div
+            class="book-seller"
+            style="
+              margin-top: 5px;
+              text-align: left;
+              font: normal normal normal 18px/24px Roboto;
+              letter-spacing: 0px;
+              color: #878787;
+              opacity: 1;
+            "
+          >
+            {{ selectedBook.author }}
+          </div>
+          <div
+            class="book-rating-cnt"
+            style="display: flex; align-items: center; gap: 1rem"
+          >
+            <div class="book-rating" >
+              <span
+                >{{ getAvgRating() }} <mat-icon svgIcon="star-fill" ></mat-icon>
+              </span>
+            </div>
+            <p style="color: #878787">({{ feedbackList.length }})</p>
+          </div>
+          <div class="book-price">
+            <p class="price">Rs.{{ selectedBook.discountPrice }}</p>
+            <p style="text-decoration: line-through; color: #878787">
+              Rs.{{ selectedBook.price }}
+            </p>
+          </div>
+        </div>
+        <hr />
+        <div class="book-description">
+          <p style="color: grey; height: 20px; width: 100%">
+            <mat-icon svgIcon="bullet"></mat-icon> Book Detail
+          </p>
+          <p>
+            {{ selectedBook.description }}
+          </p>
+        </div>
+        <hr />
+        <div class="book-customer-feedback">
+          <h2>Customer Feedback</h2>
+          <div class="input-feedback">
+            <p style="margin: 0">Overall rating</p>
+            <div class="input-stars" style="display: flex">
+              <div
+                class="star-icons"
+                *ngFor="let star of getStars(); let i = index"
+              >
+                <mat-icon
+                  class="input-rating"
+                  [ngClass]="{
+                    'gold-star': i < rating,
+                    'grey-star': i >= rating
+                  }"
+                  
+                  (click)="setRating(i + 1)"
+                >star</mat-icon>
+              </div>
+            </div>
+
+            <input
+              type="text"
+              placeholder="Write a review..."
+              [(ngModel)]="reviewText"
+            />
+            <div class="submit-btn">
+              <button (click)="submitFeedback()">Submit</button>
+            </div>
+          </div>
+          <div class="customer-reviews" *ngFor="let feedback of feedbackList">
+            <div class="review-details">
+              <div class="user">
+                <div class="initials">
+                  {{ getInitials(feedback.user_id.fullName) }}
+                </div>
+                <div class="name">{{ feedback.user_id.fullName }}</div>
+              </div>
+              <div
+                class="user-rating"
+                style="display: flex; gap: 3px; margin-bottom: 10px"
+              >
+                <mat-icon
+                  *ngFor="let star of getGoldStar(feedback.rating)"
+                  svgIcon="gold-star"
+                ></mat-icon>
+                <mat-icon
+                  *ngFor="let star of getGreyStar(feedback.rating)"
+                  svgIcon="star"
+                ></mat-icon>
+              </div>
+
+              <div class="user-review">
+                <p>
+                  {{ feedback.comment }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
