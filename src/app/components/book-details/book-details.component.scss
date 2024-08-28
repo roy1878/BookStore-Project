@@ -74,6 +74,9 @@
     background-color: #333333;
 }
 
+.book-details-left-cnt .wishlist-btn:hover{
+    background-color: #707070;
+}
 .book-details-right-cnt {
     width: 100%;
     padding-right: 15%;
@@ -97,8 +100,10 @@
     display: flex;
     color: white;
     border-radius: 1px;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+   
+
 }
 
 .book-rating mat-icon {

@@ -23,11 +23,17 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
+
+import {MatExpansionModule} from '@angular/material/expansion';
+
 import {MatIconModule} from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +52,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AdminContainerComponent,
     AddBookComponent,
     SearchPipe,
-    DashboardComponent
+    DashboardComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -60,7 +67,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatExpansionModule,
+    
+    MatTabsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatInputModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

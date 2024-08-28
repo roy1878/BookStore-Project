@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import {
   BULLET_ICON,
   CART_ICON,
@@ -15,23 +15,27 @@ import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataService } from 'src/app/services/data/data.service';
 import { Router } from '@angular/router';
-
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { LoginSignupComponent } from '../login-signup/login-signup.component';
+import { HttpClient } from '@angular/common/http';
+import { HttpService } from 'src/app/services/http/http.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  
-  isLoggedin: boolean = true;
+  isLoggedin: boolean = false;
   searchQuery: string = '';
   @Output() toggleDrawer = new EventEmitter();
-  access_token = '';
+  access_token: any = localStorage.getItem('access_token');
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
+    private httpService: HttpService
   ) {
     iconRegistry.addSvgIconLiteral(
       'search',
@@ -76,16 +80,66 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.access_token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdhMDkzY2VhZTVjNDAwMGVkMGVkMDIiLCJpYXQiOjE3MjQ3NjI1OTAsImV4cCI6MTcyNDg0ODk5MH0.2aDnHhNdkpkt5woXZLYR5Pd_9yx4WRdOIb_M7x4vs0M`;
-  
-    if(this.access_token)
-      this.isLoggedin=!this.isLoggedin;
+    console.log('access_token: ', this.access_token);
+
+    if (this.access_token) {
+      this.isLoggedin = true;
+    }
+
+    this.httpService.GetApiCall('bookstore_user/get_wishlist_items').subscribe({
+      next: (res: any) => {
+        // console.log('WishListBooks: ', res.result);
+        this.dataService.updateWishList(res.result);
+      },
+      error: (err) => console.log(err),
+    });
+
+    this.dataService.currentWishList.subscribe({
+      next: (res) => console.log('fetched wishlist: ', res),
+    });
+
+
+    this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
+      next: (res:any) => {
+        console.log('CartListBooks: ', res);
+        this.dataService.updateCartList(res.result);
+      },
+      error: (err) => console.log(err),
+    });
+    this.dataService.currentCartList.subscribe({
+      next: (res) => console.log('fetched cartlist: ', res),
+    });
   }
+  
+
 
   handleHeaderMenuClick(action: string) {
     if (action === 'profile') {
-      this.router.navigate(['profile']);
+      this.router.navigate(['dashboard/profile']);
     }
+    if (action == 'myWishList') {
+      this.router.navigate(['dashboard/wishlist']);
+    }
+    if (action == 'myOrders') {
+      this.router.navigate(['dashboard/orderlist']);
+    }
+    if (action == 'logout') {
+      localStorage.clear();
+      this.isLoggedin = false;
+    }
+    if (action == 'login') {
+      this.openDialog();
+    }
+    if (action == 'cartlist') {
+      this.router.navigate(['dashboard/cart']);
+    }
+  }
+
+  openDialog(): void {
+    this.dialog.open(LoginSignupComponent, {
+      width: '50%',
+      height: '550px',
+    });
   }
   handleSearch() {
     this.dataService.updateData(this.searchQuery);

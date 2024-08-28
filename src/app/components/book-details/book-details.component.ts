@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
+import { LoginSignupComponent } from '../login-signup/login-signup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-book-details',
@@ -15,11 +17,14 @@ export class BookDetailsComponent implements OnInit {
   questionId: number = 1;
   starsArray: any = [];
   reviewText: string = '';
+  showWishlistBtn: boolean = true;
+  isLoggedIn: boolean = false;
   private ngUnsubscribe = new Subject<void>();
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private bookService: BookService
+    private bookService: BookService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +33,10 @@ export class BookDetailsComponent implements OnInit {
       .subscribe((params) => {
         this.questionId = params['que'];
       });
+
+    if (localStorage.getItem('access_token')) {
+      this.isLoggedIn = !this.isLoggedIn;
+    }
 
     // console.log("id: ",this.questionId);
 
@@ -48,7 +57,7 @@ export class BookDetailsComponent implements OnInit {
 
     this.bookService.getBookReviews(this.questionId).subscribe({
       next: (res: any) => {
-        this.feedbackList = res.result;
+        this.feedbackList = res.result.reverse();
         console.log(this.feedbackList);
         this.feedbackList.rating = Array(5).fill(0);
       },
@@ -95,20 +104,49 @@ export class BookDetailsComponent implements OnInit {
   }
 
   submitFeedback() {
+    if (!this.isLoggedIn) {
+      this.openDialog();
+    }
     console.log('Rating:', this.rating);
     console.log('Review:', this.reviewText);
+    let reviewObj = {
+      comment: this.reviewText,
+      rating: this.rating,
+      // fullName: localStorage.getItem('name'),
+      user_id: { fullName: 'Priya Kumari' },
+    };
 
-    this.bookService
-      .postReviews(this.questionId, {
-        comment: this.reviewText,
-        rating: this.rating.toString(),
-      })
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-        error: (err) => console.log(err),
-      });
+    if (this.reviewText && this.rating) {
+      this.feedbackList = [reviewObj, ...this.feedbackList];
+
+      this.bookService
+        .postReviews(this.questionId, {
+          comment: this.reviewText,
+          rating: this.rating.toString(),
+        })
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+          error: (err) => console.log(err),
+        });
+    }
+  }
+  openDialog(): void {
+    this.dialog.open(LoginSignupComponent, {
+      width: '50%',
+      height: '550px',
+    });
+  }
+
+  handleWishlistBtn() {
+    if (!this.isLoggedIn) {
+      this.openDialog();
+    }
+    this.bookService.postWishlistBook(this.questionId).subscribe({
+      next: (res) => console.log('res', res),
+      error: (err) => console.log('err: ', err),
+    });
   }
 
   ngOnDestroy() {

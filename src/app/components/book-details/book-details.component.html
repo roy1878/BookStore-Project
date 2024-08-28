@@ -23,10 +23,13 @@
         />
         <div class="book-details-left-cnt-btns">
           <button class="add-to-bag-btn">ADD TO BAG</button>
-          <button class="wishlist-btn">
+          <button class="wishlist-btn" (click)="handleWishlistBtn()">
             <mat-icon svgIcon="fav"></mat-icon>
             WISHLIST
           </button>
+          <div class="quantity-btns" #elsePart>
+
+          </div>
         </div>
       </div>
       <div class="book-details-right-cnt">
