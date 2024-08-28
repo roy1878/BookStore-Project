@@ -8,6 +8,7 @@ import {
   PROFILE_ICON,
   SEARCH_ICON,
   SHOPPING_BAG_ICON,
+  STAR_FILL,
   STAR_ICON,
 } from 'src/assets/icons/svg-icon';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
@@ -21,15 +22,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  
   isLoggedin: boolean = true;
   searchQuery: string = '';
   @Output() toggleDrawer = new EventEmitter();
-
+  access_token = '';
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     private dataService: DataService,
-    private router:Router
+    private router: Router
   ) {
     iconRegistry.addSvgIconLiteral(
       'search',
@@ -67,13 +69,22 @@ export class HeaderComponent implements OnInit {
       'shopping-bag',
       sanitizer.bypassSecurityTrustHtml(SHOPPING_BAG_ICON)
     );
+    iconRegistry.addSvgIconLiteral(
+      'star-fill',
+      sanitizer.bypassSecurityTrustHtml(STAR_FILL)
+    );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.access_token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdhMDkzY2VhZTVjNDAwMGVkMGVkMDIiLCJpYXQiOjE3MjQ3NjI1OTAsImV4cCI6MTcyNDg0ODk5MH0.2aDnHhNdkpkt5woXZLYR5Pd_9yx4WRdOIb_M7x4vs0M`;
+  
+    if(this.access_token)
+      this.isLoggedin=!this.isLoggedin;
+  }
 
   handleHeaderMenuClick(action: string) {
-    if(action === 'profile'){
-      this.router.navigate(['profile'])
+    if (action === 'profile') {
+      this.router.navigate(['profile']);
     }
   }
   handleSearch() {

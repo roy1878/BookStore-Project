@@ -32,7 +32,7 @@ export class BooksContainerComponent implements OnInit {
   }
 
   handleBookcardClick(id:any){
-    this.router.navigate(['dashboard/bookDetails'], {queryParams: { que : id}});
+    this.router.navigate(['dashboard/bookdetails'], {queryParams: { que : id}});
     console.log(id);
   }
 
