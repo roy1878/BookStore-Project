@@ -15,6 +15,7 @@ export class BookDetailsComponent implements OnInit {
   questionId: number = 1;
   starsArray: any = [];
   reviewText: string = '';
+  showWishlistBtn: boolean = true;
   private ngUnsubscribe = new Subject<void>();
 
   constructor(
@@ -48,7 +49,7 @@ export class BookDetailsComponent implements OnInit {
 
     this.bookService.getBookReviews(this.questionId).subscribe({
       next: (res: any) => {
-        this.feedbackList = res.result;
+        this.feedbackList = res.result.reverse();
         console.log(this.feedbackList);
         this.feedbackList.rating = Array(5).fill(0);
       },
@@ -97,7 +98,14 @@ export class BookDetailsComponent implements OnInit {
   submitFeedback() {
     console.log('Rating:', this.rating);
     console.log('Review:', this.reviewText);
+    let reviewObj = {
+      comment: this.reviewText,
+      rating: this.rating,
+      // fullName: localStorage.getItem('name'),
+      user_id: {fullName: 'Priya Kumari'},
+    }
 
+    this.feedbackList = [reviewObj,...this.feedbackList];
     this.bookService
       .postReviews(this.questionId, {
         comment: this.reviewText,
@@ -113,8 +121,8 @@ export class BookDetailsComponent implements OnInit {
 
   handleWishlistBtn() {
     this.bookService.postWishlistBook(this.questionId).subscribe({
-      next: (res) => console.log(res),
-      error: (err) => console.log(err),
+      next: (res) => console.log('res', res),
+      error: (err) => console.log('err: ', err),
     });
   }
 

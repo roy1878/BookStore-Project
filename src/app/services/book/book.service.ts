@@ -23,8 +23,8 @@ export class BookService {
 
   postWishlistBook(id: any) {
     return this.httpService.PostAPICall(
-      id,
-      `bookstore_user/add_wish_list/${id}`
+      
+      `bookstore_user/add_wish_list/${id}`,id
     );
   }
 }
