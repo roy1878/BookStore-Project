@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { DataService } from 'src/app/services/data/data.service';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
@@ -14,10 +15,9 @@ export class BookCartComponent implements OnInit {
   isBtnVisible=true;
   isBtnVisible2=true
  
-
   cartItems: any[] = [];
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,private dataService: DataService) { }
   hideBtn1(){
     this.isBtnVisible=false;
   }
@@ -39,21 +39,18 @@ export class BookCartComponent implements OnInit {
     this.hideBtn2();
     
   }
-  
-
+ 
 
   ngOnInit(): void {
-    this.fetchCartItems();
-  }
-  fetchCartItems() {
-    this.cartService.getAllCartApiCall().subscribe(
-      (response: any) => {
-        this.cartItems = response.data;
-      },
-      (error: any) => {
-        console.error('Error fetching cart items', error);
-      }
-    );
+   this.dataService.currentCartList.subscribe({
+    next:(res:any)=>{
+      this.cartItems=res;
+      console.log("cartlist",res);
+      console.log(this.cartItems);
+
+
+    }
+   })
   }
 
   count:number=1;
@@ -67,6 +64,20 @@ export class BookCartComponent implements OnInit {
     if(this.count>0){
       this.count--;
     }
+  }
+
+
+  removeCartItem(itemId: string) {
+    this.cartService.removeFromCart(itemId).subscribe({
+      next: (res: any) => {
+        console.log('Item removed', res);
+       
+        this.cartItems = this.cartItems.filter(item => item._id !== itemId);
+      },
+      error: (err: any) => {
+        console.error('Error removing item', err);
+      }
+    });
   }
 
 }

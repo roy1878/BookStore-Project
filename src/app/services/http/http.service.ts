@@ -34,4 +34,6 @@ export class HttpService {
     return this.http.put(this.BaseUrl + endPoint, data , { headers: this.header });
 
   }
+
+  
 }
