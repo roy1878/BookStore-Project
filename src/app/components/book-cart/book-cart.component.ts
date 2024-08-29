@@ -17,6 +17,7 @@ export class BookCartComponent implements OnInit {
  
   cartItems: any[] = [];
 
+  constructor(private cartService: CartService,private dataService: DataService) { }
   hideBtn1(){
     this.isBtnVisible=false;
   }
@@ -38,7 +39,7 @@ export class BookCartComponent implements OnInit {
     this.hideBtn2();
     
   }
-  constructor(private dataService: DataService) { }
+ 
 
   ngOnInit(): void {
    this.dataService.currentCartList.subscribe({

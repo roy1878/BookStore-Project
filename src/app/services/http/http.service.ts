@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class HttpService {
   BaseUrl = 'https://bookstore.incubation.bridgelabz.com/';
   header = {
-    'x-access-token': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdhMDkzY2VhZTVjNDAwMGVkMGVkMDIiLCJpYXQiOjE3MjQ3NjI1OTAsImV4cCI6MTcyNDg0ODk5MH0.2aDnHhNdkpkt5woXZLYR5Pd_9yx4WRdOIb_M7x4vs0M`,
+    'x-access-token': localStorage.getItem(`access_token`)!,
   };
   constructor(private http: HttpClient) {}
 
@@ -17,17 +17,30 @@ export class HttpService {
   postApiCall(data: any, endpoint: string) {
     console.log(data);
     const { comment, rating } = data;
-    return this.http.post(`${this.BaseUrl}${endpoint}`, {
-      "comment": comment,
-      "rating": rating,
-    },
-  {
-    headers: this.header
-  });
+    return this.http.post(
+      `${this.BaseUrl}${endpoint}`,
+      {
+        comment: comment,
+        rating: rating,
+      },
+      {
+        headers: this.header,
+      }
+    );
   }
 
-  PostAPICall(endPoint:string,data:any,){
-    return this.http.post(this.BaseUrl+endPoint,data);
+  PostAPICall(endPoint: string, data: any) {
+    return this.http.post(this.BaseUrl + endPoint, data);
+  }
+
+  deleteAPICall(endPoint: string){
+    return this.http.delete(this.BaseUrl+endPoint,{ headers: this.header });
+    
+  }
+
+  updateAPICall(endPoint: string, data: any){
+    return this.http.put(this.BaseUrl + endPoint, data , { headers: this.header });
+
   }
 
   
