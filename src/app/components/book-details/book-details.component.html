@@ -31,20 +31,22 @@
           </button>
           <ng-template #quantityBtns>
             <div class="add-to-bag-quantity-btns">
-              <button (click)="handleAddToCartBtn('decrement')">-</button>
-              <p *ngIf="isLoggedIn" else localQuantity>{{ quantity }}</p>
-              <ng-template #localQuantity>
-                <p>{{localQuantity}}</p>
-              </ng-template>
+              <button (click)="handleAddToCartBtn('decreament')">-</button>
+              <p>{{ quantity }}</p>
+
               <button (click)="handleAddToCartBtn('increament')">+</button>
             </div>
           </ng-template>
-          <button class="wishlist-btn" *ngIf="isWishListed == true else notWishListed" style="background-color: grey;">
+          <button
+            class="wishlist-btn"
+            *ngIf="isWishListed == true; else notWishListed"
+            style="background-color: grey"
+          >
             <mat-icon svgIcon="fav"></mat-icon>
             WISHLISTED
           </button>
           <ng-template #notWishListed>
-            <button class="wishlist-btn"  (click)="handleWishlistBtn()">
+            <button class="wishlist-btn" (click)="handleWishlistBtn()">
               <mat-icon svgIcon="fav"></mat-icon>
               WISHLIST
             </button>
