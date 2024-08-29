@@ -33,7 +33,7 @@ export class HttpService {
     return this.http.post(this.BaseUrl + endPoint, data);
   }
 
-  deleteAPICall(endPoint: string){
+  deleteAPICall(endPoint: string,id:any){
     return this.http.delete(this.BaseUrl+endPoint,{ headers: this.header });
     
   }
