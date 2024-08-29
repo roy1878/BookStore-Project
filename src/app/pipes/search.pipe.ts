@@ -9,7 +9,6 @@ export class SearchPipe implements PipeTransform {
     if (!searchQuery) return bookList;
 
     searchQuery = searchQuery.toLowerCase();
-    console.log('hi');
 
     return bookList.filter(
       (e) =>
