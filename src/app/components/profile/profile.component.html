@@ -25,6 +25,24 @@
     </div>
 
 
+    <div class="profile-main-customerAdd">
+        <div class="profile-main-customerAdd-header">
+            <h1>Address Details</h1>
+            <div class="profile-main-customerAdd-header-sub">Add New Address</div>
+        </div>
+        <div class="profile-main-customerAdd-span" *ngFor="let addressData of customerDetails">
+    
+            <div style="display: flex; justify-content: space-between;">
+                <h2>{{addressData.addressType}}</h2>
+                <p style="color: #A03037;cursor: pointer;">Edit</p>
+            </div>
+            <h3>Address</h3>
+           <span>{{addressData.fullAddress}} , {{addressData.city}}, {{addressData.state}} </span>
+           
+           
+       </div>
+    </div>
+
     <div class="profile-main-address-Details">
         <div class="profile-main-address-Details-header">
             <h1>Address Details</h1>

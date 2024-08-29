@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -17,12 +18,20 @@ export class ProfileComponent implements OnInit {
   customerAddType:any="Office";
   customerDetails:any;
 
+  customerAddreessList:any[]=[];
 
-  constructor(private userService:UserService) { 
+
+  constructor(private userService:UserService,private dataService:DataService) { 
     
   }
 
   ngOnInit(): void { 
+    this.dataService.currentCartList.subscribe({
+      next:(res:any)=>{
+        this.customerDetails=res[0].user_id.address;
+        console.log("add",res[0].user_id.address);
+      }
+    })
   }
   
   PDenableEditing(): void {
