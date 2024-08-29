@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class ProfileComponent implements OnInit {
  
   PDisDisabled:boolean=true;
-  CDisDisabled:boolean=true;
+  CDisDisabled:boolean=false;
   customerAddress:string="Plot no.13, Bhallar township, nagpur";
   customerCity:string="Nagpur";
   customerState:string="Maharashtra";
@@ -19,6 +19,9 @@ export class ProfileComponent implements OnInit {
   customerDetails:any;
 
   customerAddreessList:any[]=[];
+
+  editCard:boolean=false;
+  displaySpan:boolean=false;
 
 
   constructor(private userService:UserService,private dataService:DataService) { 
@@ -41,6 +44,20 @@ export class ProfileComponent implements OnInit {
   CDenableEditing(): void {
     this.CDisDisabled=false;
     
+  }
+
+  // editAddCard(action:any){
+  //   if(action=="Office") this.editCard=true;
+  // }
+
+  // buttonClick(){
+  //   this.displaySpan=true;
+    
+  // }
+  showFirstDiv: boolean = true;
+
+  toggleDivs() {
+    this.showFirstDiv = !this.showFirstDiv;
   }
 
   

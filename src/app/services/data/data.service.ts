@@ -31,6 +31,12 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
       this.wishList.next(data);
     }
 
+    private customerAddressList = new BehaviorSubject<any>([]);
+    currentCustomerAddressList = this.orderList.asObservable();
+    updateCustomerAddressList(data: any) {
+      this.customerAddressList.next(data);
+    }
+
 
    
 
