@@ -63,7 +63,7 @@ import { MatInputModule } from '@angular/material/input';
     HttpClientModule,
     MatPaginatorModule,
     MatCardModule,
-   
+    ReactiveFormsModule,
     MatIconModule,
     MatMenuModule,
     MatButtonModule,

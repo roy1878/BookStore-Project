@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { CartService } from 'src/app/services/cart/cart.service';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
@@ -15,7 +15,9 @@ export class BookCartComponent implements OnInit {
   isBtnVisible2=true
  
 
+  cartItems: any[] = [];
 
+  constructor(private cartService: CartService) { }
   hideBtn1(){
     this.isBtnVisible=false;
   }
@@ -37,9 +39,21 @@ export class BookCartComponent implements OnInit {
     this.hideBtn2();
     
   }
-  constructor() { }
+  
+
 
   ngOnInit(): void {
+    this.fetchCartItems();
+  }
+  fetchCartItems() {
+    this.cartService.getAllCartApiCall().subscribe(
+      (response: any) => {
+        this.cartItems = response.data;
+      },
+      (error: any) => {
+        console.error('Error fetching cart items', error);
+      }
+    );
   }
 
   count:number=1;
