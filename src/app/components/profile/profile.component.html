@@ -4,23 +4,23 @@
     <div class="profile-main-personalDetails">
         <div class="profile-main-personalDetails-heading">
             <h1 class="heading-main">Personal Details</h1>
-            <p class="edit" (click)="PDenableEditing()">Edit</p>
+            <p class="edit" (click)="PDenableEditing()" style="cursor: pointer;">Edit</p>
         </div>
         <div class="profile-main-personalDetails-subctn">
-            <p class="profile-main-personalDetails-subtitle">Full Name</p>
-            <input  type="text" placeholder="Enter Your Name"  [disabled]="PDisDisabled">
+            <p class="profile-main-personalDetails-subtitle">Name</p>
+            <input  type="text" placeholder="Alexa Martin"  [disabled]="PDisDisabled">
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Email Id</p>
-            <input type="text" placeholder="Enter Your Email" [disabled]="PDisDisabled">
+            <input type="text" placeholder="alexa.martin@gmail.com" [disabled]="PDisDisabled">
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Password</p>
-            <input type="password" placeholder="" [disabled]="PDisDisabled" >
+            <input type="password" placeholder="********" [disabled]="PDisDisabled" >
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Mobile Number</p>
-            <input type="number" placeholder="999999999" [disabled]="PDisDisabled" >
+            <input type="number" placeholder="99483945" [disabled]="PDisDisabled" >
         </div>
     </div>
 
@@ -32,20 +32,20 @@
         </div>
         <div class="profile-main-address-Details-Subheader">
             <h2>1. Work</h2>
-            <p style="color: #A03037;" (click)="CDenableEditing()">Edit</p>
+            <p style="color: #A03037; cursor: pointer;" (click)="CDenableEditing()" >Edit</p>
         </div>
         <div class="profile-main-address-Details-main">
             <p >Address</p>
-            <input type="text" placeholder="Mumbai" [disabled]="CDisDisabled">
+            <input type="text" placeholder="Plot no.13, Bhallar township, nagpur" [disabled]="CDisDisabled" [(ngModel)]="customerAddress">
         </div>
         <div class="profile-main-address-Details-sub">
             <div class="profile-main-address-Details-sub2">
                 <p>City/town</p>
-                <input type="text" placeholder="Mumbai" [disabled]="CDisDisabled">
+                <input type="text" placeholder="Nagpur" [disabled]="CDisDisabled" [(ngModel)]="customerCity">
             </div>
             <div class="profile-main-address-Details-sub2">
                 <p>State</p>
-                <input type="text" placeholder="Mumbai" [disabled]="CDisDisabled">
+                <input type="text" placeholder="Maharashtra" [disabled]="CDisDisabled" [(ngModel)]="customerState">
             </div>
 
         </div>
@@ -53,21 +53,23 @@
             <p>Type</p>
            <div class="profile-main-address-Details-worktype-radio">
            <div>
-            <input type="radio" id="home" name="location" value="home">
+            <input type="radio" id="home" name="location" value="Home" [(ngModel)]="customerAddType">
             <label for="home">Home</label>
            </div>
             
           <div>  
-            <input type="radio" id="work" name="location" value="work">
+            <input type="radio" id="work" name="location" value="Office" [(ngModel)]="customerAddType">
             <label for="work">Work</label>
           </div>
             
             <div>
-                <input type="radio" id="other" name="location" value="other">
+                <input type="radio" id="other" name="location" value="Other" [(ngModel)]="customerAddType">
             <label for="other">Other</label>
             </div>
            </div>
         </div>
+
+        <button *ngIf="!CDisDisabled" (click)="saveAddress()">Save</button>
 
 
     </div>
