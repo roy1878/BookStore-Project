@@ -28,6 +28,11 @@ export class BookService {
     );
   }
 
+
+  deleteWishListItem(id:any){
+    return this.httpService.deleteAPICall(`bookstore_user/remove_wishlist_item/${id}`);
+  }
+
   postCartItem(id:any,data:any){
     return this.httpService.PostAPICall(
       `bookstore_user/add_cart_item/${id}`,

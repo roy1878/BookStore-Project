@@ -31,5 +31,8 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
       this.wishList.next(data);
     }
 
+
+   
+
     
   }

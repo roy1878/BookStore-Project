@@ -24,4 +24,14 @@ export class HttpService {
   PutAPICall(endpoint: string, data: any) {
     return this.http.put(this.BaseUrl + endpoint, data,{headers:this.header});
   }
+
+  deleteAPICall(endPoint: string){
+    return this.http.delete(this.BaseUrl+endPoint,{ headers: this.header });
+    
+  }
+
+  updateAPICall(endPoint: string, data: any){
+    return this.http.put(this.BaseUrl + endPoint, data , { headers: this.header });
+
+  }
 }
