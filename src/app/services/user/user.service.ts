@@ -16,4 +16,8 @@ export class UserService {
  registerApiCall(data:any){
    return this.httpService.PostAPICall('bookstore_user/registration',data);
  }
+
+ updateCustomerDetails(data:any){
+  return this.httpService.updateAPICall('bookstore_user/edit_user',data);
+ }
 }

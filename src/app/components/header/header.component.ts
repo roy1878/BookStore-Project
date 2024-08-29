@@ -94,20 +94,12 @@ export class HeaderComponent implements OnInit {
       error: (err) => console.log(err),
     });
 
-    this.dataService.currentWishList.subscribe({
-      next: (res) => console.log('fetched wishlist: ', res),
-    });
-
-
     this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
       next: (res:any) => {
-        console.log('CartListBooks: ', res);
+        // console.log('CartListBooks: ', res);
         this.dataService.updateCartList(res.result);
       },
       error: (err) => console.log(err),
-    });
-    this.dataService.currentCartList.subscribe({
-      next: (res) => console.log('fetched cartlist: ', res),
     });
   }
   

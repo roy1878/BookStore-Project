@@ -1,25 +1,27 @@
 <div class="wishlist-main">
 
     <div class="wishlist-main-header">
-        <h2>My Wishlist (02)</h2>
+        <h2>My Wishlist ({{wishCardLists.length}})</h2>
     </div>
 
-    <div class="wishlist-submain">
-        <div class="wishlist-main-card">
+    <div class="wishlist-submain" *ngFor="let wishData of wishCardLists">
+        <div class="wishlist-main-card" >
             <div class="wishlist-main-img">
                 <img src="../../../assets/think-book.png" alt="" height="90px" width="70px">
         
             </div>
-            <div class="wishlist-main-content">
-                <p class="wishlist-main-content-heading">bookDetails.bookName</p>
-                <p class="wishlist-main-content-author">by bookDetails.author</p>
+            <div class="wishlist-main-content" >
+               
+                <p class="wishlist-main-content-heading">{{wishData.product_id.bookName}}</p>
+                <p class="wishlist-main-content-author">{{wishData.product_id.author}}</p>
                 <div class="wishlist-main-content-price">
-                    <span class="wishlist-main-content-price-main">Rs. 3000</span>
-                    <span class="wishlist-main-content-price-original">Rs. 2000</span>
+                    <span class="wishlist-main-content-price-main">Rs. {{wishData.product_id.discountPrice}}</span>
+                    <span class="wishlist-main-content-price-original">Rs. {{wishData.product_id.price}}</span>
                 </div>
+              
             </div>
         </div>
-        <img src="../../../assets/icons/delete.png" alt="" height="20px" width="20px">
+        <img src="../../../assets/icons/delete.png" alt="" height="20px" width="20px" (click)="handleDeleteIcon(wishData._id)" style="cursor: pointer;">
     </div>
 </div>
 
