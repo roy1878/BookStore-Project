@@ -18,11 +18,18 @@
         </div>
     </div>
     
-    <div class="books-container-display-cards">
+    <div class="books-container-display-cards" *ngIf="currentRoute != 'admin' else elsePart">
         <div *ngFor="let bookData of paginatedCards| searchPipe:searchQuery" class="books-container-cards" (click)="handleBookcardClick(bookData._id)">
             <app-book-card [bookDetails]="bookData"></app-book-card>
         </div>
     </div>
+    <ng-template #elsePart>
+        <div class="books-container-display-cards">
+            <div *ngFor="let bookData of paginatedCards| searchPipe:searchQuery" class="books-container-cards">
+                <app-book-card [bookDetails]="bookData"></app-book-card>
+            </div>
+        </div>
+    </ng-template>
 
     <div class="paginator">
         <button (click)="goToPage(page)" *ngFor="let page of pageNumbers" [class.active]="pageIndex + 1 === page">

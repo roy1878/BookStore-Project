@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 
@@ -19,7 +20,7 @@ export class LoginSignupComponent implements OnInit {
   registerForm!:FormGroup;
   
 
-  constructor(private formBuilder: FormBuilder,private userService:UserService, private router:Router, public dialog:MatDialog) { }
+  constructor(private formBuilder: FormBuilder,private userService:UserService, private router:Router, public dialog:MatDialog,private dataService:DataService) { }
      
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -88,10 +89,24 @@ export class LoginSignupComponent implements OnInit {
        }
     });
   }
+
+
+
+  functionComparision(){
+
+    
+
+    
+
+
+  
+  }
+
+
   
 
 }
-// function userLogin() {
-//   throw new Error('Function not implemented.');
-// }
+
+
+
 
