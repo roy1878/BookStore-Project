@@ -15,16 +15,31 @@ export class BookService {
     return this.httpService.GetApiCall(`bookstore_user/get/feedback/${id}`);
   }
   postReviews(id: any, data: any) {
-    return this.httpService.postApiCall(
-      data,
-      `bookstore_user/add/feedback/${id}`
+    return this.httpService.PostAPICall(
+      `bookstore_user/add/feedback/${id}`,
+      data
     );
   }
 
   postWishlistBook(id: any) {
     return this.httpService.PostAPICall(
-      
-      `bookstore_user/add_wish_list/${id}`,id
+      `bookstore_user/add_wish_list/${id}`,
+      id
     );
   }
+
+  postCartItem(id:any,data:any){
+    return this.httpService.PostAPICall(
+      `bookstore_user/add_cart_item/${id}`,
+      data
+    );
+  }
+
+  putAddToCartQuantity(id: any, data: any) {
+    return this.httpService.PutAPICall(
+      `bookstore_user/cart_item_quantity/${id}`,
+      data
+    );
+  }
+
 }

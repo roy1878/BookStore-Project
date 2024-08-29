@@ -53,12 +53,12 @@
     display: flex;
     width: 86%;
     justify-content: space-between;
-
+    align-items: center;
 }
 
 .book-details-left-cnt button {
     width: 47%;
-    height: 40px;
+    height: 30px;
     color: white;
     display: flex;
     justify-content: center;
@@ -72,6 +72,33 @@
 
 .book-details-left-cnt .wishlist-btn {
     background-color: #333333;
+}
+
+.add-to-bag-quantity-btns{
+    height: 30px;
+    width: 50%;
+    display: flex;
+    align-items: ce;
+    gap: 5px;
+}
+.add-to-bag-quantity-btns button{
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    color: #707070;
+    display: flex;
+    font-size: 25px;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-to-bag-quantity-btns p{
+    height: 30px;
+    width: 60px;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .book-details-left-cnt .wishlist-btn:hover{
@@ -236,3 +263,4 @@
 .input-rating:hover{
     color: gold;
 }
+
