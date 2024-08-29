@@ -9,6 +9,7 @@ import { DataService } from 'src/app/services/data/data.service';
 })
 export class WishListComponent implements OnInit {
   wishCardLists:any[]=[];
+  AddressList:any[]=[];
 
   constructor(private dataService:DataService, private bookService:BookService) { }
 
