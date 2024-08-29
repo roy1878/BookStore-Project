@@ -9,6 +9,7 @@ import { DataService } from 'src/app/services/data/data.service';
 })
 export class WishListComponent implements OnInit {
   wishCardLists:any[]=[];
+  AddressList:any[]=[];
 
   constructor(private dataService:DataService, private bookService:BookService) { }
 
@@ -22,10 +23,12 @@ export class WishListComponent implements OnInit {
   }
 
   handleDeleteIcon(id:any){
+    
     this.wishCardLists=this.wishCardLists.filter((ele)=>ele._id!=id);
     this.bookService.deleteWishListItem(id).subscribe({
       next:(res:any)=>{
         console.log("Dlt res", res);
+
         console.log("id deleted is : ",id);
       },
       error:(err:any)=>{
