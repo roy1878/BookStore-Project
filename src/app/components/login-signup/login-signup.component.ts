@@ -58,9 +58,9 @@ export class LoginSignupComponent implements OnInit {
     // *****
 
     this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         console.log('BackendCartList: ', res.result);
-        this.BackendCartList=res.result;
+        this.BackendCartList = res.result;
       },
       error: (err) => console.log(err),
     });
@@ -68,34 +68,43 @@ export class LoginSignupComponent implements OnInit {
     this.dataService.currentCartList.subscribe({
       next: (res) => {
         console.log('DataServiceCartList: ', res);
-        this.DataServiceCartList=res;
-        
-      }
-
+        this.DataServiceCartList = res;
+      },
     });
 
-    if(this.DataServiceCartList.length==0){
-      this.dataService.updateCartList( this.BackendCartList);
-    }
-
-    else if(this.BackendCartList.length==0){
-
-    }
-
-    else{
+    if (this.DataServiceCartList.length == 0) {
+      this.dataService.updateCartList(this.BackendCartList);
+    } else if (this.BackendCartList.length == 0) {
       for (let dataServiceItem of this.DataServiceCartList) {
-        let backendItem = this.BackendCartList.find(item => item.id === dataServiceItem.id);
+        this.bookService
+          .postCartItem(dataServiceItem._id, dataServiceItem)
+          .subscribe(() => {
+            next: (res: any) => {};
+          });
+      }
+    } else {
+      for (let dataServiceItem of this.DataServiceCartList) {
+        let backendItem = this.BackendCartList.find(
+          (item) => item._id === dataServiceItem._id
+        );
 
-         if(backendItem){
-          
-         }
-          }
-
-
-
-   
-
-  }
+        if (backendItem) {
+          this.bookService
+            .putAddToCartQuantity(dataServiceItem._id, {
+              "quantityToBuy": dataServiceItem.quantityToBuy
+            })
+            .subscribe(() => {
+              next: (res: any) => {};
+            });
+        } else {
+          this.bookService
+            .postCartItem(dataServiceItem._id, dataServiceItem)
+            .subscribe(() => {
+              next: (res: any) => {};
+            });
+        }
+      }
+    }
 
 
 
