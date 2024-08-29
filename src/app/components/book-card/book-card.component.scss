@@ -7,6 +7,7 @@
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #E2E2E2;
     border-radius: 3px;
+    padding-bottom: 2%;
     
 }
 .book-card-main:hover{
@@ -59,12 +60,16 @@ color: #878787;
 
 
 .book-card-main-content-rating-ctn{
-width: 33px;
-height: 20px;
+width: 45px;
+height: 22px;
 background: #388E3C 0% 0% no-repeat padding-box;
 text-align: center;
 border-radius: 1px;
 color: white;
+display: flex;
+gap: 3px;
+align-items: center;
+justify-content: center;
 
 }
 
@@ -88,4 +93,9 @@ font: normal normal normal 13px Roboto;
 letter-spacing: 0px;
 color: #878787;
 
+}
+
+ mat-icon {
+    height: 15px;
+    width: 15px;
 }

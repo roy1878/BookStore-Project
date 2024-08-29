@@ -30,4 +30,6 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
     updateWishList(data: any) {
       this.wishList.next(data);
     }
+
+
   }
