@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { BookService } from 'src/app/services/book/book.service';
 import { DataService } from 'src/app/services/data/data.service';
+import { HttpService } from 'src/app/services/http/http.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 
@@ -15,12 +17,15 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class LoginSignupComponent implements OnInit {
 
-
+ BackendCartList:any[]=[];
+ DataServiceCartList:any[]=[];
   loginForm!:FormGroup;
   registerForm!:FormGroup;
   
 
-  constructor(private formBuilder: FormBuilder,private userService:UserService, private router:Router, public dialog:MatDialog,private dataService:DataService) { }
+  constructor(private formBuilder: FormBuilder,private userService:UserService,
+    private bookService :BookService,private router:Router, 
+    private httpService:HttpService, public dialog:MatDialog,private dataService:DataService) { }
      
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -50,7 +55,58 @@ export class LoginSignupComponent implements OnInit {
         localStorage.setItem("access_token",res.result.accessToken);
         console.log("access_token",res.result.accessToken);
         // this.router.navigate(["./dashboard/books"]);
-        window.location.reload();
+    // *****
+
+    this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
+      next: (res:any) => {
+        console.log('BackendCartList: ', res.result);
+        this.BackendCartList=res.result;
+      },
+      error: (err) => console.log(err),
+    });
+
+    this.dataService.currentCartList.subscribe({
+      next: (res) => {
+        console.log('DataServiceCartList: ', res);
+        this.DataServiceCartList=res;
+        
+      }
+
+    });
+
+    if(this.DataServiceCartList.length==0){
+      this.dataService.updateCartList( this.BackendCartList);
+    }
+
+    else if(this.BackendCartList.length==0){
+
+    }
+
+    else{
+      for (let dataServiceItem of this.DataServiceCartList) {
+        let backendItem = this.BackendCartList.find(item => item.id === dataServiceItem.id);
+
+         if(backendItem){
+          
+         }
+          }
+
+
+
+   
+
+  }
+
+
+
+
+
+
+
+
+//  ***
+
+        // window.location.reload();
         this.dialog.closeAll();
       },
       error:(err)=>{
@@ -58,6 +114,9 @@ export class LoginSignupComponent implements OnInit {
       }
     });
   }
+
+
+
 
 
 
@@ -92,7 +151,13 @@ export class LoginSignupComponent implements OnInit {
 
 
 
-  functionComparision(){
+  
+
+
+ 
+
+
+
 
     
 
@@ -100,7 +165,7 @@ export class LoginSignupComponent implements OnInit {
 
 
   
-  }
+  
 
 
   
