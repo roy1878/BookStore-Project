@@ -37,6 +37,12 @@ export class DataService {
       this.wishList.next(data);
     }
 
+    private customerAddressList = new BehaviorSubject<any>([]);
+    currentCustomerAddressList = this.orderList.asObservable();
+    updateCustomerAddressList(data: any) {
+      this.customerAddressList.next(data);
+    }
+
 
   }
   
