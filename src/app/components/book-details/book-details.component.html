@@ -22,14 +22,35 @@
           alt=""
         />
         <div class="book-details-left-cnt-btns">
-          <button class="add-to-bag-btn">ADD TO BAG</button>
-          <button class="wishlist-btn" (click)="handleWishlistBtn()">
-            <mat-icon svgIcon="fav"></mat-icon>
-            WISHLIST
+          <button
+            *ngIf="quantity <= 0; else quantityBtns"
+            class="add-to-bag-btn"
+            (click)="handleAddToCartBtn('increament')"
+          >
+            ADD TO BAG
           </button>
-          <div class="quantity-btns" #elsePart>
+          <ng-template #quantityBtns>
+            <div class="add-to-bag-quantity-btns">
+              <button (click)="handleAddToCartBtn('decreament')">-</button>
+              <p>{{ quantity }}</p>
 
-          </div>
+              <button (click)="handleAddToCartBtn('increament')">+</button>
+            </div>
+          </ng-template>
+          <button
+            class="wishlist-btn"
+            *ngIf="isWishListed == true; else notWishListed"
+            style="background-color: grey"
+          >
+            <mat-icon svgIcon="fav"></mat-icon>
+            WISHLISTED
+          </button>
+          <ng-template #notWishListed>
+            <button class="wishlist-btn" (click)="handleWishlistBtn()">
+              <mat-icon svgIcon="fav"></mat-icon>
+              WISHLIST
+            </button>
+          </ng-template>
         </div>
       </div>
       <div class="book-details-right-cnt">
@@ -63,9 +84,9 @@
             class="book-rating-cnt"
             style="display: flex; align-items: center; gap: 1rem"
           >
-            <div class="book-rating" >
+            <div class="book-rating">
               <span
-                >{{ getAvgRating() }} <mat-icon svgIcon="star-fill" ></mat-icon>
+                >{{ getAvgRating() }} <mat-icon svgIcon="star-fill"></mat-icon>
               </span>
             </div>
             <p style="color: #878787">({{ feedbackList.length }})</p>
@@ -102,9 +123,9 @@
                     'gold-star': i < rating,
                     'grey-star': i >= rating
                   }"
-                  
                   (click)="setRating(i + 1)"
-                >star</mat-icon>
+                  >star</mat-icon
+                >
               </div>
             </div>
 
