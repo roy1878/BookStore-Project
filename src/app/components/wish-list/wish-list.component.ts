@@ -22,9 +22,18 @@ export class WishListComponent implements OnInit {
   }
 
   handleDeleteIcon(id:any){
-    this.bookService.deleteWishListItem(id);
-    console.log("id deleted is : ",id);
-    this.wishCardLists=this.wishCardLists.filter((ele)=>ele._id!=id);
+    this.bookService.deleteWishListItem(id).subscribe({
+      next:(res:any)=>{
+        console.log("Dlt res", res);
+        console.log("id deleted is : ",id);
+        this.wishCardLists=this.wishCardLists.filter((ele)=>ele._id!=id);
+      },
+      error:(err:any)=>{
+
+      }
+    });
+    
+    
 
   }
 
