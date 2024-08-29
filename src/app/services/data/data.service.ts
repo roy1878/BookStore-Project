@@ -28,6 +28,7 @@ export class DataService {
   private cartList = new BehaviorSubject<any>([]);
   currentCartList = this.cartList.asObservable();
   updateCartList(data: any) {
+    console.log("sm",data);
     this.cartList.next(data);
   }
 

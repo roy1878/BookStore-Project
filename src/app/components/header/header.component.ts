@@ -14,11 +14,12 @@ import {
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataService } from 'src/app/services/data/data.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { LoginSignupComponent } from '../login-signup/login-signup.component';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from 'src/app/services/http/http.service';
+import { AddBookComponent } from '../add-book/add-book.component';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -29,13 +30,15 @@ export class HeaderComponent implements OnInit {
   searchQuery: string = '';
   @Output() toggleDrawer = new EventEmitter();
   access_token: any = localStorage.getItem('access_token');
+  currentRoute!: string;
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     private dataService: DataService,
     private router: Router,
     public dialog: MatDialog,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private activatedRoute: ActivatedRoute
   ) {
     iconRegistry.addSvgIconLiteral(
       'search',
@@ -80,6 +83,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.url.subscribe((urlSegment) => {
+      this.currentRoute = urlSegment.join('/');
+    });
+
     console.log('access_token: ', this.access_token);
 
     if (this.access_token) {
@@ -95,15 +102,13 @@ export class HeaderComponent implements OnInit {
     });
 
     this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         // console.log('CartListBooks: ', res);
         this.dataService.updateCartList(res.result);
       },
       error: (err) => console.log(err),
     });
   }
-  
-
 
   handleHeaderMenuClick(action: string) {
     if (action === 'profile') {
@@ -125,13 +130,21 @@ export class HeaderComponent implements OnInit {
     if (action == 'cartlist') {
       this.router.navigate(['dashboard/cart']);
     }
+    if (action == 'add-book') this.openDialog();
   }
 
   openDialog(): void {
-    this.dialog.open(LoginSignupComponent, {
-      width: '50%',
-      height: '550px',
-    });
+    if (this.currentRoute != 'admin') {
+      this.dialog.open(LoginSignupComponent, {
+        width: '50%',
+        height: '550px',
+      });
+    } else {
+      this.dialog.open(AddBookComponent, {
+        width: '40%',
+        height: '400px',
+      });
+    }
   }
   handleSearch() {
     this.dataService.updateData(this.searchQuery);
