@@ -29,4 +29,6 @@ export class HttpService {
   PostAPICall(endPoint:string,data:any,){
     return this.http.post(this.BaseUrl+endPoint,data);
   }
+
+  
 }

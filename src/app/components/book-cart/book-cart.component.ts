@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { CartService } from 'src/app/services/cart/cart.service';
+import { DataService } from 'src/app/services/data/data.service';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
@@ -14,7 +15,7 @@ export class BookCartComponent implements OnInit {
   isBtnVisible=true;
   isBtnVisible2=true
  
-
+  cartItems: any[] = [];
 
   hideBtn1(){
     this.isBtnVisible=false;
@@ -37,9 +38,17 @@ export class BookCartComponent implements OnInit {
     this.hideBtn2();
     
   }
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+   this.dataService.currentCartList.subscribe({
+    next:(res:any)=>{
+      this.cartItems=res;
+      console.log(res);
+
+
+    }
+   })
   }
 
   count:number=1;
