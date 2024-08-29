@@ -54,6 +54,8 @@ export class LoginSignupComponent implements OnInit {
         console.log("error:",err);
       }
     });
+
+    
   }
 
 

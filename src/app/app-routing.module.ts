@@ -12,11 +12,16 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { BooksContainerComponent } from './components/books-container/books-container.component';
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
     path: 'login-signup',
     component: LoginSignupComponent,
+  },
+  {
+    path:'forgot-password',
+    component:ForgotPasswordComponent
   },
   {
     path: 'bookcard',
@@ -49,7 +54,8 @@ const routes: Routes = [
       {
         path:'profile',
         component:ProfileComponent
-      }
+      },
+      
       
     ]
   },
