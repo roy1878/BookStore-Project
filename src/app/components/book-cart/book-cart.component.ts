@@ -45,7 +45,8 @@ export class BookCartComponent implements OnInit {
    this.dataService.currentCartList.subscribe({
     next:(res:any)=>{
       this.cartItems=res;
-      console.log(res);
+      console.log("cartlist",res);
+      console.log(this.cartItems);
 
 
     }
@@ -63,6 +64,20 @@ export class BookCartComponent implements OnInit {
     if(this.count>0){
       this.count--;
     }
+  }
+
+
+  removeCartItem(itemId: string) {
+    this.cartService.removeFromCart(itemId).subscribe({
+      next: (res: any) => {
+        console.log('Item removed', res);
+       
+        this.cartItems = this.cartItems.filter(item => item._id !== itemId);
+      },
+      error: (err: any) => {
+        console.error('Error removing item', err);
+      }
+    });
   }
 
 }

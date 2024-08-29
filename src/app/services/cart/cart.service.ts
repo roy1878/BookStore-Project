@@ -18,7 +18,13 @@ export class CartService {
       }
     });
   }
-
+  removeFromCart(itemId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}remove_cart_item/${itemId}`, {
+      headers: {
+        'x-access-token': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmNmMTk3M2I3OGRmYTAwMGU4NTc1NWUiLCJpYXQiOjE3MjQ5MDg2MjMsImV4cCI6MTcyNDk5NTAyM30.BPdgrKvK7ki5kZ0fycgIJtgr99ydsqBfDbSpWhBoMRE`
+      }
+    });
+  }
   addToCart(item: any): void {
     this.cartItems.push(item);
   }

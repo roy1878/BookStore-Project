@@ -23,43 +23,25 @@
     <div class="cart-body">
 
 
-      <div class="product">
+      <div class="product" *ngFor="let item of cartItems">
       <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
       <div class="item-details">
-        <h3>Dont Make Me Think</h3>
-        <p> By Steve Kings</p>
-        <strong>Rs. 1500</strong>
+        <h3>{{item.product_id.bookName}}</h3>
+        <p> {{item.product_id.author}} </p>
+        <strong>Rs. {{item.product_id.price}}</strong>
          
         <div class="quantity">
           <div class="btns">
           <button (click)="onDecrement()" class="btn">-</button>
-          <input [value]="count" readonly class="input" type="text" placeholder="1" >
+          <input  readonly class="input" type="text" value="{{item.product_id.quantity}}" >
           <button (click)="onIncrement()" class="btn">+</button>
         </div>
-         <strong>Remove</strong>
-        </div>
+        <strong (click)="removeCartItem(item._id)">Remove</strong>
+          </div>
         
       </div>
     </div>
-    <div class="product">
-      <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
-      <div class="item-details">
-        <h3>Dont Make Me Think</h3>
-        <p> By Steve Kings</p>
-        <strong>Rs. 1500</strong>
-
-        <div class="quantity">
-          <div class="btns">
-          <button (click)="onDecrement()" class="btn">-</button>
-          <input [value]="count" readonly class="input" type="text" placeholder="1" >
-          <button (click)="onIncrement()" class="btn">+</button>
-        </div>
-         <strong>Remove</strong>
-        </div>
-        
-      </div>
-    </div>
-
+    
 
     </div>
 
@@ -153,31 +135,41 @@
     <strong>Order Summary</strong>
   </div>
 
-  <div class="cart3" *ngIf="isCart3Visible">
+
+  <div class="cart3" *ngIf="isCart3Visible" >
+    <strong>Order Summary</strong>
+
+    <div class="order-summary" >
     <div class="cart-head">
-      <strong>Order Summary</strong>
+     
     
       
      </div>
  
      <br>
-     <div class="cart-body">
+    
+     <div class="cart-body" *ngFor="let item of cartItems">
+      
        <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
        <div class="item-details">
-         <h3>Dont Make Me Think</h3>
-         <p> By Steve Kings</p>
-         <strong>Rs. 1500</strong>
+        <h3 class="txt">{{item.product_id.bookName}}</h3>
+        <p  class="txt"> {{item.product_id.author}} </p>
+        <strong >Rs. {{item.product_id.price}}</strong>
          
        </div>
+
      </div>
+  
  
  
      <br>
-     <div class="cart-footer2">
+    
+    </div>
+    <div class="cart-footer2">
        
  
-       <button  class="Order" (click)="showCart2()">Checkout</button>
-     </div>
+      <button  class="Order" (click)="showCart2()">Checkout</button>
+    </div>
    </div>
   
 </div>
