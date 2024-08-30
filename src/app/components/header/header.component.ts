@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
   @Output() toggleDrawer = new EventEmitter();
   access_token: any = localStorage.getItem('access_token');
   currentRoute!: string;
+  name: string = '';
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -83,6 +84,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.name = localStorage.getItem('name') || 'XYZ';
     this.activatedRoute.url.subscribe((urlSegment) => {
       this.currentRoute = urlSegment.join('/');
     });
@@ -129,6 +131,9 @@ export class HeaderComponent implements OnInit {
     }
     if (action == 'cartlist') {
       this.router.navigate(['dashboard/cart']);
+    }
+    if (action == 'admin-login') {
+      this.openDialog();
     }
     if (action == 'add-book') this.openDialog();
   }
