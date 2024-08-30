@@ -31,6 +31,8 @@ export class BookDetailsComponent implements OnInit {
   data: any = {};
   access_token = localStorage.getItem('access_token');
   isWishListed: boolean = false;
+  name: string = '';
+  booklist = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -41,11 +43,12 @@ export class BookDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dataService.currentlocalcartlistData.subscribe({
-      next: (res) => {
-        console.log('Result:::', res);
-      },
+    this.name = localStorage.getItem('name')!;
+
+    this.bookService.getAllBooksApiCall().subscribe({
+      next: (res: any) => (this.booklist = res.result),
     });
+
     if (this.data) this.isWishListed = true;
     this.activeRoute.queryParams
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -158,7 +161,7 @@ export class BookDetailsComponent implements OnInit {
       comment: this.reviewText,
       rating: this.rating,
       // fullName: localStorage.getItem('name'),
-      user_id: { fullName: 'Priya Kumari' },
+      user_id: { fullName: this.name },
     };
 
     this.feedbackList = [reviewObj, ...this.feedbackList];
@@ -239,11 +242,15 @@ export class BookDetailsComponent implements OnInit {
         this.localQuantity++;
       }
 
-      localStorage.setItem('localQuantity', this.localQuantity.toString());
+      let bookdata = this.booklist.find((e: any) => e._id === this.questionId);
+      
+      if (bookdata) {
+        Object.assign(bookdata, { quantityToBuy: this.localQuantity});
+        this.dataService.updateCartList([...this.cartlist,bookdata])
+      }
+      
 
-      this.dataService.updateLocalCartList(this.questionId, {
-        quantity: this.localQuantity,
-      });
+
       console.log(this.localQuantity);
       this.quantity = this.localQuantity;
     }
