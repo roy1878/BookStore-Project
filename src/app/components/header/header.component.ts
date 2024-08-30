@@ -113,6 +113,9 @@ export class HeaderComponent implements OnInit {
   }
 
   handleHeaderMenuClick(action: string) {
+    if(action=='logo'){
+      this.router.navigate(['dashboard/books'])
+    }
     if (action === 'profile') {
       this.router.navigate(['dashboard/profile']);
     }

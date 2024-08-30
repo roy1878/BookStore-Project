@@ -12,12 +12,12 @@ export class DataService {
     this.dataSource.next(data);
   }
 
-  private localcartlist = new BehaviorSubject<any>([]);
-  currentlocalcartlistData = this.localcartlist.asObservable();
+  // private localcartlist = new BehaviorSubject<any>([]);
+  // currentlocalcartlistData = this.localcartlist.asObservable();
 
-  updateLocalCartList(bookid:any,data: any) {
-    this.localcartlist.next({'bid':bookid, 'quantity':data});
-  }
+  // updateLocalCartList(bookid:any,data: any) {
+  //   this.localcartlist.next({'bid':bookid, 'quantity':data});
+  // }
 
   private orderList = new BehaviorSubject<any>([]);
   currentOrderList = this.orderList.asObservable();
