@@ -55,14 +55,15 @@ export class LoginSignupComponent implements OnInit {
         localStorage.setItem("access_token",res.result.accessToken);
         console.log("access_token",res.result.accessToken);
         // this.router.navigate(["./dashboard/books"]);
+        // this.dialog.closeAll();
     // *****
 
-    this.functionUpdateServices();
+           this.functionUpdateServices();
 
 //  ***
 
         // window.location.reload();
-        this.dialog.closeAll();
+        
       },
       error:(err)=>{
         console.log("error:",err);

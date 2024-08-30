@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
+import { LoginSignupComponent } from '../login-signup/login-signup.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
@@ -18,7 +20,7 @@ export class BookCartComponent implements OnInit {
  
   cartItems: any[] = [];
 
-  constructor(private cartService: CartService,private dataService: DataService,private route:Router) { }
+  constructor(public dialog: MatDialog, private cartService: CartService,private dataService: DataService,private route:Router) { }
   hideBtn1(){
     this.isBtnVisible=false;
   }
@@ -26,13 +28,24 @@ export class BookCartComponent implements OnInit {
   hideBtn2(){
     this.isBtnVisible2=false;
   }
+  openDialog(): void {
+    
+      this.dialog.open(LoginSignupComponent, {
+        width: '50%',
+        height: '550px',
+      });
+    
+  }
 
 
   showCart2() {
+    // this.openDialog();
+    this.route.navigate(['/login-signup']);
     this.isCart2Visible = true;
     this.isCard2Visible=false;
+    
     this.hideBtn1();
-    this.route.navigate(['/login-signup']);
+    
     
   }
 
