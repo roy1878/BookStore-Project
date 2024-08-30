@@ -30,6 +30,11 @@ export class DataService {
   updateCartList(data: any) {
     this.cartList.next(data);
   }
+  addToCartList(newItems: any[]) {
+    const currentList = this.cartList.getValue();
+    const updatedList = currentList.concat(newItems);
+    this.cartList.next(updatedList);
+  }
 
   private wishList = new BehaviorSubject<any>([]);
   currentWishList = this.wishList.asObservable();

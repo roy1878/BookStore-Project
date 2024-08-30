@@ -17,7 +17,7 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class LoginSignupComponent implements OnInit {
 
- BackendCartList:any[]=[];
+ BackendCartList:any=[];
  DataServiceCartList:any[]=[];
   loginForm!:FormGroup;
   registerForm!:FormGroup;
@@ -57,58 +57,7 @@ export class LoginSignupComponent implements OnInit {
         // this.router.navigate(["./dashboard/books"]);
     // *****
 
-    this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
-      next: (res: any) => {
-        console.log('BackendCartList: ', res.result);
-        this.BackendCartList = res.result;
-      },
-      error: (err) => console.log(err),
-    });
-
-    this.dataService.currentCartList.subscribe({
-      next: (res) => {
-        console.log('DataServiceCartList: ', res);
-        this.DataServiceCartList = res;
-      },
-    });
-
-    if (this.DataServiceCartList.length == 0) {
-      this.dataService.updateCartList(this.BackendCartList);
-    } else if (this.BackendCartList.length == 0) {
-      for (let dataServiceItem of this.DataServiceCartList) {
-        this.bookService
-          .postCartItem(dataServiceItem._id, dataServiceItem)
-          .subscribe(() => {
-            next: (res: any) => {};
-          });
-      }
-    } else {
-      for (let dataServiceItem of this.DataServiceCartList) {
-        let backendItem = this.BackendCartList.find(
-          (item) => item._id === dataServiceItem._id
-        );
-
-        if (backendItem) {
-          this.bookService
-            .putAddToCartQuantity(dataServiceItem._id, {
-              "quantityToBuy": dataServiceItem.quantityToBuy
-            })
-            .subscribe(() => {
-              next: (res: any) => {};
-            });
-        } else {
-          this.bookService
-            .postCartItem(dataServiceItem._id, dataServiceItem)
-            .subscribe(() => {
-              next: (res: any) => {};
-            });
-        }
-      }
-    }
-
-
-
-
+    this.functionUpdateServices();
 
 
 
@@ -123,6 +72,96 @@ export class LoginSignupComponent implements OnInit {
       }
     });
   }
+
+
+functionUpdateServices(){
+  this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
+    next: (res: any) => {
+      console.log('BackendCartList: ', res.result);
+      this.BackendCartList = res.result;
+    },
+    error: (err) => console.log(err),
+  });
+
+  this.dataService.currentCartList.subscribe({
+    next: (res) => {
+      console.log('DataServiceCartList: ', res);
+      this.DataServiceCartList = res;
+    },
+  });
+
+  if (this.DataServiceCartList.length == 0) {
+    this.dataService.updateCartList(this.BackendCartList);
+
+  } 
+  else if (this.BackendCartList.length == 0) {
+    for (let dataServiceItem of this.DataServiceCartList) {
+      this.bookService
+        .postCartItem(dataServiceItem._id, dataServiceItem)
+        .subscribe({
+          next: (res: any) => {
+            console.log('Item posted: ', res);
+          },
+          error: (err) => console.log(err),
+        });
+    }
+    
+  } 
+  
+  else {
+    for (let dataServiceItem of this.DataServiceCartList) {
+      let backendItem = this.BackendCartList.find(
+        (item: any) => item.product_id._id === dataServiceItem._id
+      );
+
+      if (backendItem) {
+        this.bookService
+        .putAddToCartQuantity(dataServiceItem._id, {"quantityToBuy": dataServiceItem.quantityToBuy})
+        .subscribe({
+          next: (res: any) => {
+            console.log('Quantity updated: ', res);
+          },
+          error: (err) => console.log(err),
+        });
+      
+          
+      } else {
+        this.bookService
+          .postCartItem(dataServiceItem._id, dataServiceItem)
+          .subscribe(() => {
+            next: (res: any) => {};
+          });
+      }
+    }
+
+    const updateList: any = this.BackendCartList.filter((item: any) => {
+      return !this.DataServiceCartList.some(dataItem => dataItem.id === item.product_id.id);
+    });
+
+    this.dataService.addToCartList(updateList);
+    
+
+  }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
