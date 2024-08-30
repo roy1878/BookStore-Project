@@ -20,4 +20,18 @@ export class UserService {
  updateCustomerDetails(data:any){
   return this.httpService.updateAPICall('bookstore_user/edit_user',data);
  }
+
+ 
+
+
+ // for admin
+ addBookAPICall(data:any){
+  console.log("admin",data);
+  return this.httpService.PostAPICall('bookstore_user/admin/add/book', data);
+ }
+
+ adminAPICall(data:any){
+  return this.httpService.PostAPICall('bookstore_user/admin/login',data);
+ }
+
 }
