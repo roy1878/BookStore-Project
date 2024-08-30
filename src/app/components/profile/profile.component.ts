@@ -33,6 +33,16 @@ export class ProfileComponent implements OnInit {
       next:(res:any)=>{
         console.log(res);
         this.customerDetails=res[0].user_id.address;
+       
+        this.customerDetails = this.customerDetails.map((addressData: any) => ({
+          ...addressData,
+          showFirstDiv: true
+        }));
+        console.log("cust",this.customerDetails);
+        
+
+        
+
         
         // this.dataService.updateCustomerAddressList( this.customerDetails);
         console.log("add",res[0].user_id.address);
@@ -49,9 +59,15 @@ export class ProfileComponent implements OnInit {
     
   }
 
+  shouldShowFirstDiv(addressData: any): boolean {
+    return addressData.showFirstDiv;
+  }
 
-  toggleDivs(action:any) {
-    this.showFirstDiv = !this.showFirstDiv;
+
+  toggleDivs(addressData:any) {
+    // this.showFirstDiv = !this.showFirstDiv;
+    addressData.showFirstDiv = !addressData.showFirstDiv;
+    const action=addressData.addressType;
     console.log(action);
 
     if (action == 'Office') {

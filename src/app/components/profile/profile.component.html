@@ -32,13 +32,63 @@
         </div>
         <div class="profile-main-customerAdd-span" *ngFor="let addressData of customerDetails">
     
-            <div *ngIf="showFirstDiv" >
+            <div *ngIf="shouldShowFirstDiv(addressData)" >
                 <div style="display: flex; justify-content: space-between;">
                     <h2 style="margin: 0;">{{addressData.addressType}}</h2>
-                    <p style="color: #A03037;cursor: pointer;" (click)="toggleDivs(addressData.addressType)">Edit</p>
+                    <p style="color: #A03037;cursor: pointer;" (click)="toggleDivs(addressData)">Edit</p>
                 </div>
                 <h3 style="margin: 0;">Address</h3>
                <span>{{addressData.fullAddress}} , {{addressData.city}}, {{addressData.state}} </span>
+            </div>
+
+            <div class="profile-main-address-Details" *ngIf="!shouldShowFirstDiv(addressData)" >
+                <div class="profile-main-address-Details-header">
+                    <!-- <h1>Address Details</h1> -->
+                    <!-- <div class="profile-main-address-Details-header-sub">Add New Address</div> -->
+                </div>
+                <div class="profile-main-address-Details-Subheader">
+                    <h2>1. {{customerAddType}}</h2>
+                    <!-- <p style="color: #A03037; cursor: pointer;" (click)="CDenableEditing()" >Edit</p> -->
+                </div>
+                <div class="profile-main-address-Details-main">
+                    <p >Address</p>
+                    <input type="text" placeholder="Full Address" [disabled]="CDisDisabled" [(ngModel)]="customerAddress">
+                </div>
+                <div class="profile-main-address-Details-sub">
+                    <div class="profile-main-address-Details-sub2">
+                        <p>City/town</p>
+                        <input type="text" placeholder="City" [disabled]="CDisDisabled" [(ngModel)]="customerCity">
+                    </div>
+                    <div class="profile-main-address-Details-sub2">
+                        <p>State</p>
+                        <input type="text" placeholder="State" [disabled]="CDisDisabled" [(ngModel)]="customerState">
+                    </div>
+        
+                </div>
+                <div class="profile-main-address-Details-worktype">
+                    <p>Type</p>
+                   <div class="profile-main-address-Details-worktype-radio">
+                   <div>
+                    <input type="radio" id="home" name="location" value="Home" [(ngModel)]="customerAddType">
+                    <label for="home">Home</label>
+                   </div>
+                    
+                  <div>  
+                    <input type="radio" id="work" name="location" value="Office" [(ngModel)]="customerAddType">
+                    <label for="work">Work</label>
+                  </div>
+                    
+                    <div>
+                        <input type="radio" id="other" name="location" value="Other" [(ngModel)]="customerAddType">
+                    <label for="other">Other</label>
+                    </div>
+                   </div>
+                </div>
+        
+                <!-- <button *ngIf="!CDisDisabled" (click)="saveAddress()">Save</button> -->
+                <button (click)="saveAddress()">Save</button>
+        
+        
             </div>
            
            
@@ -46,56 +96,8 @@
     </div>
 
     <!-- <ng-template #else_part> -->
-        <div class="profile-main-address-Details" *ngIf="!showFirstDiv" >
-            <div class="profile-main-address-Details-header">
-                <!-- <h1>Address Details</h1> -->
-                <!-- <div class="profile-main-address-Details-header-sub">Add New Address</div> -->
-            </div>
-            <div class="profile-main-address-Details-Subheader">
-                <h2>1. {{customerAddType}}</h2>
-                <!-- <p style="color: #A03037; cursor: pointer;" (click)="CDenableEditing()" >Edit</p> -->
-            </div>
-            <div class="profile-main-address-Details-main">
-                <p >Address</p>
-                <input type="text" placeholder="Full Address" [disabled]="CDisDisabled" [(ngModel)]="customerAddress">
-            </div>
-            <div class="profile-main-address-Details-sub">
-                <div class="profile-main-address-Details-sub2">
-                    <p>City/town</p>
-                    <input type="text" placeholder="City" [disabled]="CDisDisabled" [(ngModel)]="customerCity">
-                </div>
-                <div class="profile-main-address-Details-sub2">
-                    <p>State</p>
-                    <input type="text" placeholder="State" [disabled]="CDisDisabled" [(ngModel)]="customerState">
-                </div>
+        
     
-            </div>
-            <div class="profile-main-address-Details-worktype">
-                <p>Type</p>
-               <div class="profile-main-address-Details-worktype-radio">
-               <div>
-                <input type="radio" id="home" name="location" value="Home" [(ngModel)]="customerAddType">
-                <label for="home">Home</label>
-               </div>
-                
-              <div>  
-                <input type="radio" id="work" name="location" value="Office" [(ngModel)]="customerAddType">
-                <label for="work">Work</label>
-              </div>
-                
-                <div>
-                    <input type="radio" id="other" name="location" value="Other" [(ngModel)]="customerAddType">
-                <label for="other">Other</label>
-                </div>
-               </div>
-            </div>
-    
-            <!-- <button *ngIf="!CDisDisabled" (click)="saveAddress()">Save</button> -->
-            <button (click)="saveAddress()">Save</button>
-    
-    
-        </div>
-    <!-- </ng-template> -->
 
 
 </div>
