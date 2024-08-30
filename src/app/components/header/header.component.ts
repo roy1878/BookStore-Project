@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
   access_token: any = localStorage.getItem('access_token');
   currentRoute!: string;
   name: string = '';
+  currentState: string = '';
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -84,6 +85,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataService.currentLoginState.subscribe({
+      next: (res) => (this.currentState = res),
+    });
     this.name = localStorage.getItem('name') || 'XYZ';
     this.activatedRoute.url.subscribe((urlSegment) => {
       this.currentRoute = urlSegment.join('/');
@@ -113,8 +117,8 @@ export class HeaderComponent implements OnInit {
   }
 
   handleHeaderMenuClick(action: string) {
-    if(action=='logo'){
-      this.router.navigate(['dashboard/books'])
+    if (action == 'logo') {
+      this.router.navigate(['dashboard/books']);
     }
     if (action === 'profile') {
       this.router.navigate(['dashboard/profile']);
@@ -127,6 +131,7 @@ export class HeaderComponent implements OnInit {
     }
     if (action == 'logout') {
       localStorage.clear();
+      this.dataService.updateLoginState('loggedOut');
       this.isLoggedin = false;
     }
     if (action == 'login') {
