@@ -40,6 +40,8 @@ export class LoginSignupComponent implements OnInit {
       password: ['', Validators.required],
       phone: ['', Validators.required],
     });
+
+    
   }
 
   userLogin() {
