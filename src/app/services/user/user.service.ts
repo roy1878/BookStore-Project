@@ -29,6 +29,7 @@ export class UserService {
   console.log("admin",data);
   return this.httpService.PostAPICall('bookstore_user/admin/add/book', data);
  }
+ 
 
  adminAPICall(data:any){
   return this.httpService.PostAPICall('bookstore_user/admin/login',data);

@@ -65,6 +65,13 @@ export class LoginSignupComponent implements OnInit {
           console.log('error:', err);
         },
       });
+
+      this.userService.adminAPICall({ email: email, password: password }).subscribe({
+        next:(res)=>{
+          this.router.navigate(['admin'])
+          this.dialog.closeAll();
+        }
+      })
   }
 
   userRegister() {

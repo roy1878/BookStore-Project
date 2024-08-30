@@ -22,8 +22,8 @@ const routes: Routes = [
     component: LoginSignupComponent,
   },
   {
-    path:'forgot-password',
-    component:ForgotPasswordComponent
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
   {
     path: 'bookcard',
@@ -62,16 +62,6 @@ const routes: Routes = [
         component: OrderPlacedComponent,
       },
     ],
-        path:'profile',
-        component:ProfileComponent
-      },{
-        path:'order-placed',
-        component:OrderPlacedComponent
-      }
-    
-      
-      
-    ]
   },
 
   {

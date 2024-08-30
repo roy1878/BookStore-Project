@@ -135,6 +135,7 @@ export class HeaderComponent implements OnInit {
       this.isLoggedin = false;
     }
     if (action == 'login') {
+      this.dataService.updateLoginState('loggedIn');
       this.openDialog();
     }
     if (action == 'cartlist') {
@@ -149,13 +150,13 @@ export class HeaderComponent implements OnInit {
   openDialog(): void {
     if (this.currentRoute != 'admin') {
       this.dialog.open(LoginSignupComponent, {
-        width: '50%',
-        height: '550px',
+        width: '60%',
+        height: '500px',
       });
     } else {
       this.dialog.open(AddBookComponent, {
-        width: '40%',
-        height: '400px',
+        width: '60%',
+        height: '500px',
       });
     }
   }

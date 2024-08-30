@@ -1,1 +1,37 @@
-<p>add-book works!</p>
+<div class="parentDiv">
+    <div class="wrapper">
+        <div class="form-heading">
+            <h1 class="fundoName">Admin Add Book</h1>
+        </div>
+        <form class="login-signup-body" [formGroup]="AdminForm">
+            <label>Book Name</label>
+            <mat-form-field appearance="outline">
+                <input formControlName="fullName" matInput type="text">
+            </mat-form-field>
+            <label>Author Name</label>
+            <mat-form-field appearance="outline">
+                <input formControlName="email" matInput type="text">
+            </mat-form-field>
+            <label>Description</label>
+            <mat-form-field appearance="outline">
+                <input formControlName="fullName" matInput type="text">
+            </mat-form-field>
+            <label>Quantity</label>
+            <mat-form-field appearance="outline">
+                <input formControlName="password" matInput type="password">
+            </mat-form-field>
+            <label>Price</label>
+            <mat-form-field appearance="outline">
+                <input formControlName="phone" matInput type="tel">
+            </mat-form-field>
+            <label>Discount Price</label>
+            <mat-form-field appearance="outline">
+                <input formControlName="phone" matInput type="tel">
+            </mat-form-field>
+ 
+            <button style="width: 100%;background-color:#A03037;color:white; height: 40px;" mat-raised-button (click)="onSubmit()">Submit</button>
+        </form>
+    </div>
+</div>
+ 
+ 
