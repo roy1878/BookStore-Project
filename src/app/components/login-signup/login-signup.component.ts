@@ -59,9 +59,6 @@ export class LoginSignupComponent implements OnInit {
 
     this.functionUpdateServices();
 
-
-
-
 //  ***
 
         // window.location.reload();
@@ -116,7 +113,7 @@ functionUpdateServices(){
 
       if (backendItem) {
         this.bookService
-        .putAddToCartQuantity(dataServiceItem._id, {"quantityToBuy": dataServiceItem.quantityToBuy})
+        .putAddToCartQuantity(dataServiceItem.product_id._id, {"quantityToBuy": dataServiceItem.quantityToBuy})
         .subscribe({
           next: (res: any) => {
             console.log('Quantity updated: ', res);
@@ -127,9 +124,11 @@ functionUpdateServices(){
           
       } else {
         this.bookService
-          .postCartItem(dataServiceItem._id, dataServiceItem)
+          .postCartItem(dataServiceItem.product_id._id, dataServiceItem)
           .subscribe(() => {
-            next: (res: any) => {};
+            next: (res: any) => {
+              console.log("add to backend",res);
+            };
           });
       }
     }

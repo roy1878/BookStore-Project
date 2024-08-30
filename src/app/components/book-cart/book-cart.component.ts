@@ -32,6 +32,7 @@ export class BookCartComponent implements OnInit {
     this.isCart2Visible = true;
     this.isCard2Visible=false;
     this.hideBtn1();
+    this.route.navigate(['/login-signup']);
     
   }
 
@@ -50,7 +51,7 @@ export class BookCartComponent implements OnInit {
    this.dataService.currentCartList.subscribe({
     next:(res:any)=>{
       this.cartItems=res;
-      console.log("cartlist",res);
+      console.log("Myyyyyycartlist",res);
       console.log(this.cartItems);
 
 
