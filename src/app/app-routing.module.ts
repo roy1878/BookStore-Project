@@ -14,11 +14,16 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderPlacedComponent } from './components/order-placed/order-placed.component';
 import { AddBookComponent } from './components/add-book/add-book.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
     path: 'login-signup',
     component: LoginSignupComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
   {
     path: 'bookcard',
