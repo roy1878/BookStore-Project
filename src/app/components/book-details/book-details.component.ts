@@ -41,10 +41,6 @@ export class BookDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // const storedQuantity = localStorage.getItem('localQuantity');
-    // this.localQuantity = storedQuantity ? parseInt(storedQuantity, 10) : 0;
-    // this.quantity = this.localQuantity;
-    
     this.dataService.currentlocalcartlistData.subscribe({
       next: (res) => {
         console.log('Result:::', res);
@@ -210,6 +206,7 @@ export class BookDetailsComponent implements OnInit {
       console.log('quantity::::', this.quantity);
 
       console.log(this.isCartlisted);
+
       if (!this.isCartlisted) {
         this.bookService
           .postCartItem(this.questionId, this.isCartlisted)
