@@ -31,6 +31,7 @@ export class BookDetailsComponent implements OnInit {
   data: any = {};
   access_token = localStorage.getItem('access_token');
   isWishListed: boolean = false;
+  name: string = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -41,6 +42,9 @@ export class BookDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.name= localStorage.getItem('name')!;
+
     this.dataService.currentlocalcartlistData.subscribe({
       next: (res) => {
         console.log('Result:::', res);
@@ -158,7 +162,7 @@ export class BookDetailsComponent implements OnInit {
       comment: this.reviewText,
       rating: this.rating,
       // fullName: localStorage.getItem('name'),
-      user_id: { fullName: 'Priya Kumari' },
+      user_id: { fullName: this.name },
     };
 
     this.feedbackList = [reviewObj, ...this.feedbackList];
