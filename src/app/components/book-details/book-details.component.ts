@@ -243,13 +243,30 @@ export class BookDetailsComponent implements OnInit {
       }
 
       let bookdata = this.booklist.find((e: any) => e._id === this.questionId);
-      
-      if (bookdata) {
-        Object.assign(bookdata, { quantityToBuy: this.localQuantity});
-        this.dataService.updateCartList([...this.cartlist,bookdata])
-      }
-      
 
+      let isbookCartlisted = this.cartlist.find(
+        (e: any) => e._id === this.questionId
+      );
+
+      if (bookdata && !isbookCartlisted) {
+        Object.assign(bookdata, { quantityToBuy: this.localQuantity });
+        this.dataService.updateCartList([...this.cartlist, bookdata]);
+      } else {
+        isbookCartlisted.quantityToBuy = this.localQuantity;
+        let index = this.cartlist.findIndex(
+          (e: any) => e._id === isbookCartlisted._id
+        );
+        if (index !== -1) {
+          console.log('aaaaa');
+
+          this.cartlist = [
+            ...this.cartlist.slice(0, index),
+            isbookCartlisted,
+            ...this.cartlist.slice(index + 1),
+          ];
+        }
+        this.dataService.updateCartList(this.cartlist);
+      }
 
       console.log(this.localQuantity);
       this.quantity = this.localQuantity;
