@@ -1,5 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
@@ -8,30 +14,35 @@ import { DataService } from 'src/app/services/data/data.service';
 import { HttpService } from 'src/app/services/http/http.service';
 import { UserService } from 'src/app/services/user/user.service';
 
-
-
 @Component({
   selector: 'app-login-signup',
   templateUrl: './login-signup.component.html',
-  styleUrls: ['./login-signup.component.scss']
+  styleUrls: ['./login-signup.component.scss'],
 })
 export class LoginSignupComponent implements OnInit {
 
- BackendCartList:any=[];
+ BackendCartList:any[] = [];
  DataServiceCartList:any[]=[];
   loginForm!:FormGroup;
   registerForm!:FormGroup;
   
 
+
   constructor(private formBuilder: FormBuilder,private userService:UserService,
     private bookService :BookService,private router:Router, 
-    private httpService:HttpService, public dialog:MatDialog,private dataService:DataService) { }
+    private httpService:HttpService, public dialog:MatDialog,private dataService:DataService,
+    private http:HttpClient
+    
+    
+  ) { }
      
+ 
+
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],  
-  });
+      password: ['', [Validators.required, Validators.minLength(4)]],
+    });
 
   this.registerForm = this.formBuilder.group({
     fullName: ['', Validators.required],
@@ -57,6 +68,8 @@ export class LoginSignupComponent implements OnInit {
         // this.router.navigate(["./dashboard/books"]);
         // this.dialog.closeAll();
     // *****
+          this.dataService.updateLoginState('loggedIn');
+          this.dialog.closeAll();
 
            this.functionUpdateServices();
 
@@ -69,22 +82,37 @@ export class LoginSignupComponent implements OnInit {
         console.log("error:",err);
       }
     });
+    
+
   }
 
-
 functionUpdateServices(){
-  this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
-    next: (res: any) => {
-      console.log('BackendCartList: ', res.result);
-      this.BackendCartList = res.result;
-    },
-    error: (err) => console.log(err),
-  });
+  // this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
+  //   next: (res: any) => {
+  //     console.log('BackendCartList: ', res.result);
+  //     this.BackendCartList = res.result;
+  //   },
+  //   error: (err) => console.log(err),
+  // });
+ let  header: any = {
+    'x-access-token': localStorage.getItem(`access_token`) || '',
+  };
+ this.http.get('https://bookstore.incubation.bridgelabz.com/bookstore_user/get_cart_items',{headers:header}).subscribe({
+  next:(res:any)=>{
+    // this.BackendCartList = res.result;
+    this.BackendCartList.push(res);
+    
+    console.log("BackendCartListress",this.BackendCartList);
+
+  }
+ });
+ 
 
   this.dataService.currentCartList.subscribe({
     next: (res) => {
-      console.log('DataServiceCartList: ', res);
-      this.DataServiceCartList = res;
+      this.DataServiceCartList.push(res);
+      console.log('DataServiceCartList: ', this.DataServiceCartList);
+      
     },
   });
 
@@ -92,6 +120,7 @@ functionUpdateServices(){
     this.dataService.updateCartList(this.BackendCartList);
 
   } 
+
   else if (this.BackendCartList.length == 0) {
     for (let dataServiceItem of this.DataServiceCartList) {
       this.bookService
@@ -134,6 +163,7 @@ functionUpdateServices(){
       }
     }
 
+
     const updateList: any = this.BackendCartList.filter((item: any) => {
       return !this.DataServiceCartList.some(dataItem => dataItem.id === item.product_id.id);
     });
@@ -153,73 +183,38 @@ functionUpdateServices(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  userRegister(){
-    if(this.registerForm.invalid){
+  userRegister() {
+    if (this.registerForm.invalid) {
       // console.log(this.registerForm.invalid);
       return;
     }
- 
-    const{fullName,email,password,phone}=this.registerForm.value
- 
-    let register ={
-      "fullName": fullName,
-      "email": email,
-      "password": password,
-      "phone": phone
-    }
- 
+
+    const { fullName, email, password, phone } = this.registerForm.value;
+
+    let register = {
+      fullName: fullName,
+      email: email,
+      password: password,
+      phone: phone,
+    };
+
     // console.log(register);
-   
+
     this.userService.registerApiCall(register).subscribe({
-      next:(res:any)=>{
-        console.log("response",res);
-       },
-       error:(err:any)=>{
-         console.log("response",err);
-       }
+      next: (res: any) => {
+        console.log('response', res);
+      },
+      error: (err: any) => {
+        console.log('response', err);
+      },
     });
   }
 
-
-
-  
-
-
- 
-
-
-
-
-    
-
-    
-
-
-  
-  
-
-
-  
 
 }
 
 
 
+
+  
 

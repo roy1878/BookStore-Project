@@ -12,6 +12,13 @@ export class DataService {
     this.dataSource.next(data);
   }
 
+  private loginState = new BehaviorSubject<string>('');
+  currentLoginState = this.loginState.asObservable();
+
+  updateLoginState(data: any) {
+    this.loginState.next(data);
+  }
+
   // private localcartlist = new BehaviorSubject<any>([]);
   // currentlocalcartlistData = this.localcartlist.asObservable();
 
@@ -28,7 +35,7 @@ export class DataService {
   private cartList = new BehaviorSubject<any>([]);
   currentCartList = this.cartList.asObservable();
   updateCartList(data: any) {
-    console.log("sm",data);
+    console.log('sm', data);
     this.cartList.next(data);
   }
   addToCartList(newItems: any[]) {
@@ -37,19 +44,15 @@ export class DataService {
     this.cartList.next(updatedList);
   }
 
-    private wishList = new BehaviorSubject<any>([]);
-    currentWishList = this.wishList.asObservable();
-    updateWishList(data: any) {
-      this.wishList.next(data);
-    }
-
-    private customerAddressList = new BehaviorSubject<any>([]);
-    currentCustomerAddressList = this.orderList.asObservable();
-    updateCustomerAddressList(data: any) {
-      this.customerAddressList.next(data);
-    }
-
-
+  private wishList = new BehaviorSubject<any>([]);
+  currentWishList = this.wishList.asObservable();
+  updateWishList(data: any) {
+    this.wishList.next(data);
   }
-  
 
+  private customerAddressList = new BehaviorSubject<any>([]);
+  currentCustomerAddressList = this.orderList.asObservable();
+  updateCustomerAddressList(data: any) {
+    this.customerAddressList.next(data);
+  }
+}
