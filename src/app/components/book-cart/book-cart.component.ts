@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
 @Component({
@@ -17,7 +18,7 @@ export class BookCartComponent implements OnInit {
  
   cartItems: any[] = [];
 
-  constructor(private cartService: CartService,private dataService: DataService) { }
+  constructor(private cartService: CartService,private dataService: DataService,private router: Router) { }
   hideBtn1(){
     this.isBtnVisible=false;
   }
@@ -31,12 +32,21 @@ export class BookCartComponent implements OnInit {
     this.isCart2Visible = true;
     this.isCard2Visible=false;
     this.hideBtn1();
+    
   }
 
   showCart3(){
     this.isCart3Visible = true;
     this.isCard3Visible=false;
     this.hideBtn2();
+    
+    
+  }
+
+  
+  showCart4(){
+   
+    this.router.navigate(['dashboard/order-placed']);
     
   }
  
