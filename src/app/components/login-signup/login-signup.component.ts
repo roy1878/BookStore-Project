@@ -68,7 +68,9 @@ export class LoginSignupComponent implements OnInit {
         // this.router.navigate(["./dashboard/books"]);
         // this.dialog.closeAll();
     // *****
-          this.dataService.updateLoginState('loggedIn');
+          if(localStorage.getItem('access_token')){
+            this.dataService.updateLoginState('loggedIn')
+          }
           this.dialog.closeAll();
 
            this.functionUpdateServices();

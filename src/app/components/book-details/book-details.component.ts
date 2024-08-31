@@ -33,6 +33,7 @@ export class BookDetailsComponent implements OnInit {
   isWishListed: boolean = false;
   name: string = '';
   booklist = [];
+  currentState : string = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -43,6 +44,15 @@ export class BookDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.dataService.currentLoginState.subscribe({
+      next:(res)=>{
+        if(!res)
+          this.currentState = 'loggedOut';
+        else
+          this.currentState = 'loggedIn';
+      }
+    })
     this.name = localStorage.getItem('name')!;
 
     this.bookService.getAllBooksApiCall().subscribe({
@@ -128,6 +138,11 @@ export class BookDetailsComponent implements OnInit {
   }
 
   getAvgRating() {
+    if(this.currentState == 'loggedOut'){
+      this.feedbackList = [1,2,3,4,5,6]
+      return 4.5;
+      
+    }
     let count = this.feedbackList.reduce(
       (acc: number, e: any) => acc + e.rating,
       0
