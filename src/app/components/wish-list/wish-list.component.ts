@@ -10,6 +10,7 @@ import { DataService } from 'src/app/services/data/data.service';
 export class WishListComponent implements OnInit {
   wishCardLists:any[]=[];
   AddressList:any[]=[];
+  showDiv:boolean=false;
 
   constructor(private dataService:DataService, private bookService:BookService) { }
 
@@ -19,6 +20,7 @@ export class WishListComponent implements OnInit {
       console.log("wishlist",res);
       this.wishCardLists=this.wishCardLists.filter((ele)=>ele.product_id!=null);
       console.log("Filterwishlist",this.wishCardLists);
+      if(this.wishCardLists.length==0) this.showDiv=true;
     })
   }
 
