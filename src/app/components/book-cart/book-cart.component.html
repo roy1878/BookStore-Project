@@ -46,11 +46,11 @@
 
     <br>
     <div class="cart-footer">
-     
-
-
-      <button class="Order"  *ngIf="isBtnVisible" (click)="showCart2()">Place Order</button>
+      <button class="Order" *ngIf="isLoggedIn && isBtnVisible" (click)="showCart2()">Place Order</button>
+      <button class="Order" *ngIf="!isLoggedIn && isBtnVisible" (click)="redirectToHome()">Shop Now</button>
     </div>
+    
+    
   </div>
 
 
