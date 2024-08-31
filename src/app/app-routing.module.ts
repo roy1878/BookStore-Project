@@ -14,6 +14,7 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderPlacedComponent } from './components/order-placed/order-placed.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { AddBookComponent } from './components/add-book/add-book.component';
 
 const routes: Routes = [
   {
@@ -64,11 +65,22 @@ const routes: Routes = [
       
     ]
   },
-  
   {
     path:'admin',
-    component:AdminContainerComponent
+    component:AdminContainerComponent,
+    children:[
+      {
+        path:'add-book',
+        component:AddBookComponent
+      },
+      {
+        path:'books',
+        component:BooksContainerComponent
+      }
+    ]
   },
+ 
+ 
   
 ];
 

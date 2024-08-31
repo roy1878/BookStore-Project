@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+Router
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,9 +11,15 @@ import { FormGroup } from '@angular/forms';
 export class ForgotPasswordComponent implements OnInit {
 loginForm!: FormGroup<any>;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
 
+  ResetPassword(){
+    this.router.navigate(["./login-signup"])
+  }
+  handleCreate(){
+    this.router.navigate(["./login-signup"])
+  }
 }
