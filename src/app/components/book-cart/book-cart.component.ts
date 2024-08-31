@@ -78,25 +78,25 @@ export class BookCartComponent implements OnInit {
         console.log(this.cartItems);
       },
     });
-    this.dataService.currentCartList.subscribe({
-      next:(res:any)=>{
-        console.log(res);
-        this.customerDetails=res[0].user_id.address;
+    // this.dataService.currentCartList.subscribe({
+    //   next:(res:any)=>{
+    //     console.log(res);
+    //     this.customerDetails=res[0].user_id.address;
        
-        this.customerDetails = this.customerDetails.map((addressData: any) => ({
-          ...addressData,
-          showFirstDiv: true
-        }));
-        console.log("cust",this.customerDetails);
-       
- 
+    //     this.customerDetails = this.customerDetails.map((addressData: any) => ({
+    //       ...addressData,
+    //       showFirstDiv: true
+    //     }));
+    //     console.log("cust",this.customerDetails);
        
  
        
-        // this.dataService.updateCustomerAddressList( this.customerDetails);
-        console.log("add",res[0].user_id.address);
-      }
-    })
+ 
+       
+    //     // this.dataService.updateCustomerAddressList( this.customerDetails);
+    //     console.log("add",res[0].user_id.address);
+    //   }
+    // })
   }
  
   PDenableEditing(): void {
@@ -281,6 +281,7 @@ export class BookCartComponent implements OnInit {
         console.log('Item removed', res);
  
         this.cartItems = this.cartItems.filter((item) => item._id !== itemId);
+        this.dataService.updateCartList(this.cartItems);
       },
       error: (err: any) => {
         console.error('Error removing item', err);
