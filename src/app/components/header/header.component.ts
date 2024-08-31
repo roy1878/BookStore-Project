@@ -88,11 +88,10 @@ export class HeaderComponent implements OnInit {
     this.dataService.currentLoginState.subscribe({
       next: (res) => {
         this.currentState = res;
-        if(!res){
+        if (!res) {
           this.currentState = 'loggedOut';
         }
-        console.log("current state: ",this.currentState);
-        
+        console.log('current state: ', this.currentState);
       },
     });
     this.name = localStorage.getItem('name') || 'XYZ';
@@ -124,7 +123,14 @@ export class HeaderComponent implements OnInit {
   }
 
   handleHeaderMenuClick(action: string) {
+    if (action === 'user') {
+      this.router.navigate(['dashboard/books']);
+    }
     if (action == 'logo') {
+      if(this.currentRoute == 'admin'){
+        this.router.navigate(['admin/books'])
+      }
+      else
       this.router.navigate(['dashboard/books']);
     }
     if (action === 'profile') {
@@ -149,23 +155,17 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['dashboard/cart']);
     }
     if (action == 'admin-login') {
-      this.router.navigate(['admin'])
+      this.router.navigate(['admin/books']);
     }
-    if (action == 'add-book') this.openDialog();
+    if (action == 'add-book') 
+      this.router.navigate(['admin/add-book']);
   }
 
   openDialog(): void {
-    if (this.currentRoute != 'admin') {
-      this.dialog.open(LoginSignupComponent, {
-        width: '60%',
-        height: '500px',
-      });
-    } else {
-      this.dialog.open(AddBookComponent, {
-        width: '60%',
-        height: '500px',
-      });
-    }
+    this.dialog.open(LoginSignupComponent, {
+      width: '60%',
+      height: '500px',
+    });
   }
   handleSearch() {
     this.dataService.updateData(this.searchQuery);

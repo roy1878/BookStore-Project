@@ -75,6 +75,10 @@ const routes: Routes = [
     component: AdminContainerComponent,
     children: [
       {
+        path: 'books',
+        component: BooksContainerComponent,
+      },
+      {
         path: 'add-book',
         component: AddBookComponent,
       },
