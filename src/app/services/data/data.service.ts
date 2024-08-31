@@ -31,13 +31,9 @@ export class DataService {
     this.cartList.next(data);
   }
 
-    private wishList = new BehaviorSubject<any>([]);
-    currentWishList = this.wishList.asObservable();
-    updateWishList(data: any) {
-      this.wishList.next(data);
-    }
-
-
+  private wishList = new BehaviorSubject<any>([]);
+  currentWishList = this.wishList.asObservable();
+  updateWishList(data: any) {
+    this.wishList.next(data);
   }
-  
-
+}
