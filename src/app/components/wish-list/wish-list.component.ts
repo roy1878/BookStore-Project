@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BookService } from 'src/app/services/book/book.service';
 import { DataService } from 'src/app/services/data/data.service';
 
@@ -10,8 +11,9 @@ import { DataService } from 'src/app/services/data/data.service';
 export class WishListComponent implements OnInit {
   wishCardLists:any[]=[];
   AddressList:any[]=[];
+  showDiv:boolean=false;
 
-  constructor(private dataService:DataService, private bookService:BookService) { }
+  constructor(private dataService:DataService, private bookService:BookService,private route:Router) { }
 
   ngOnInit(): void {
     this.dataService.currentWishList.subscribe((res)=>{
@@ -20,6 +22,8 @@ export class WishListComponent implements OnInit {
       this.wishCardLists=this.wishCardLists.filter((ele)=>ele.product_id!=null);
       console.log("Filterwishlist",this.wishCardLists);
     })
+
+    
   }
 
   handleDeleteIcon(id:any){
@@ -35,8 +39,18 @@ export class WishListComponent implements OnInit {
 
       }
     });
+
+    if(this.wishCardLists.length==0) {
+      this.showDiv=!this.showDiv;
+      console.log("no wish card",this.wishCardLists)
+    }
     
     
+
+  }
+
+  navigateHome(){
+    this.route.navigate(['/dashboard/books']);
 
   }
 

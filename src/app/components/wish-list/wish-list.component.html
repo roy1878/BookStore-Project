@@ -1,4 +1,8 @@
 <div class="wishlist-main">
+    <div class="profile-main-ctn-router" style="display: flex; justify-content: flex-start; width: 60%;">
+        <p style="color: grey; cursor: pointer;" (click)="navigateHome()">Home/</p>
+        <p>Profile</p>
+    </div>
 
     <div class="wishlist-main-header">
         <h2>My Wishlist ({{wishCardLists.length}})</h2>
@@ -22,6 +26,12 @@
             </div>
         </div>
         <img src="../../../assets/icons/delete.png" alt="" height="20px" width="20px" (click)="handleDeleteIcon(wishData.product_id._id)" style="cursor: pointer;">
+    </div>
+
+
+
+    <div class="no-wislist-main" *ngIf="showDiv==true">
+       <h1> No items in the wishList </h1>
     </div>
 </div>
 
