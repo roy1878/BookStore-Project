@@ -20,7 +20,7 @@
         </div>
         <div class="profile-main-personalDetails-subctn">
             <p class="profile-main-personalDetails-subtitle">Mobile Number</p>
-            <input type="number" placeholder="99483945" [disabled]="PDisDisabled" >
+            <input type="number" placeholder="994839459" [disabled]="PDisDisabled" >
         </div>
     </div>
 
@@ -30,6 +30,50 @@
             <h1>Address Details</h1>
             <div class="profile-main-customerAdd-header-sub" (click)="add_new_add()">Add New Address</div>
         </div>
+
+         <!-- ---- st-->
+       <div class="profile-main-address-Details" *ngIf="showDiv==true" >
+        <div class="profile-main-address-Details-main">
+            <p >Address</p>
+            <input type="text" placeholder="Full Address" [disabled]="CDisDisabled" [(ngModel)]="customerAddress">
+        </div>
+        <div class="profile-main-address-Details-sub">
+            <div class="profile-main-address-Details-sub2">
+                <p>City/town</p>
+                <input type="text" placeholder="City" [disabled]="CDisDisabled" [(ngModel)]="customerCity">
+            </div>
+            <div class="profile-main-address-Details-sub2">
+                <p>State</p>
+                <input type="text" placeholder="State" [disabled]="CDisDisabled" [(ngModel)]="customerState">
+            </div>
+
+        </div>
+        <div class="profile-main-address-Details-worktype">
+            <p>Type</p>
+           <div class="profile-main-address-Details-worktype-radio">
+           <div>
+            <input type="radio" id="home" name="location" value="Home" [(ngModel)]="customerAddType">
+            <label for="home">Home</label>
+           </div>
+            
+          <div>  
+            <input type="radio" id="work" name="location" value="Office" [(ngModel)]="customerAddType">
+            <label for="work">Work</label>
+          </div>
+            
+            <div>
+                <input type="radio" id="other" name="location" value="Other" [(ngModel)]="customerAddType">
+            <label for="other">Other</label>
+            </div>
+           </div>
+        </div>
+
+        <button (click)="saveNewAddress()">Save</button>
+
+
+    </div>
+
+       <!-- ---end- -->
         <div class="profile-main-customerAdd-span" *ngFor="let addressData of customerDetails">
     
             <div *ngIf="shouldShowFirstDiv(addressData)" >
@@ -40,7 +84,7 @@
                 <h3 style="margin: 0;">Address</h3>
                <span>{{addressData.fullAddress}} , {{addressData.city}}, {{addressData.state}} </span>
             </div>
-
+  <!-- ---- -->
             <div class="profile-main-address-Details" *ngIf="!shouldShowFirstDiv(addressData)" >
                 <div class="profile-main-address-Details-header">
                     <!-- <h1>Address Details</h1> -->
@@ -93,6 +137,9 @@
            
            
        </div>
+
+
+      
     </div>
 
     <!-- <ng-template #else_part> -->
