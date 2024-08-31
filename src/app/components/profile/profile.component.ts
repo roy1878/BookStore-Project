@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -25,7 +26,7 @@ export class ProfileComponent implements OnInit {
   showDiv:boolean=false;
 
 
-  constructor(private userService:UserService,private dataService:DataService) { 
+  constructor(private userService:UserService,private dataService:DataService,private route:Router) { 
     
   }
 
@@ -166,6 +167,11 @@ export class ProfileComponent implements OnInit {
             
 
 
+  }
+
+  navigateHome(){
+    this.route.navigate(['/dashboard/books']);
+    
   }
 
 

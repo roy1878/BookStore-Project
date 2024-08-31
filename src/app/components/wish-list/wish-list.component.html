@@ -1,4 +1,8 @@
 <div class="wishlist-main">
+    <div class="profile-main-ctn-router" style="display: flex; justify-content: flex-start; width: 60%;">
+        <p style="color: grey; cursor: pointer;" (click)="navigateHome()">Home/</p>
+        <p>Profile</p>
+    </div>
 
     <div class="wishlist-main-header">
         <h2>My Wishlist ({{wishCardLists.length}})</h2>
@@ -26,8 +30,8 @@
 
 
 
-    <div class="no-wislist-main" *ngif="showDiv==true">
-        No items in the wishList . Please Login to see
+    <div class="no-wislist-main" *ngIf="showDiv==true">
+       <h1> No items in the wishList </h1>
     </div>
 </div>
 
