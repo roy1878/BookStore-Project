@@ -156,6 +156,8 @@ export class LoginSignupComponent implements OnInit {
           (item: any) => item.product_id._id === dataServiceItem.product_id._id
         );
 
+        
+
         if (backendItem) {
           let mergeQuantity =
             dataServiceItem.quantityToBuy + backendItem.quantityToBuy;
