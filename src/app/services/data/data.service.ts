@@ -15,8 +15,16 @@ export class DataService {
   private loginState = new BehaviorSubject<string>('');
   currentLoginState = this.loginState.asObservable();
 
-  updateLoginState(data: any) {
-    this.loginState.next(data);
+  updateLoginState() {
+    if (localStorage.getItem('access_token')) {
+      this.loginState.next('loggedIn');
+      console.log('loggedIn');
+      
+    } else {
+      this.loginState.next('loggedOut');
+      console.log('loggedOut');
+      
+    }
   }
 
   // private localcartlist = new BehaviorSubject<any>([]);

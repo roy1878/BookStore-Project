@@ -35,7 +35,7 @@
             <button class="login" (click)="handleHeaderMenuClick('login')">
               Login/SignUp
             </button>
-            <button class="loginAsAdmin" (click)="handleHeaderMenuClick('admin-login')">Login As Admin</button>
+            <button class="loginAsAdmin" (click)="handleHeaderMenuClick('admin-login')">Admin</button>
             <hr />
             <div
               class="mat-menu-btns"
@@ -90,7 +90,9 @@
               style="display: flex; flex-direction: column; padding: 0px 20px;width: 150px; justify-content: center;"
             >
             <h2>Hi Admin!</h2>
-            <button (click)="handleHeaderMenuClick('add-book')">Add Book</button>
+            <button class="adminbtns" (click)="handleHeaderMenuClick('add-book')">Add Book</button>
+            <button class="adminbtns" (click)="handleHeaderMenuClick('user')">User</button>
+
           </div>
           </ng-template>
         </mat-menu>

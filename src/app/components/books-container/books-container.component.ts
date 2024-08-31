@@ -18,7 +18,7 @@ export class BooksContainerComponent implements OnInit {
   length = 0;
   pageNumbers: number[] = [];
   currentRoute!: string;
-
+  currentState!: string;
   constructor(
     private bookService: BookService,
     private dataservice: DataService,
@@ -27,8 +27,11 @@ export class BooksContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     this.activatedRoute.url.subscribe((urlSegment) => {
       this.currentRoute = urlSegment.join('/');
+      console.log(this.currentRoute);
+      
     });
 
     this.bookService.getAllBooksApiCall().subscribe({
