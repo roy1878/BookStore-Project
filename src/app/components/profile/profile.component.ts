@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit {
 
   editCard:boolean=false;
   displaySpan:boolean=false;
+  showDiv:boolean=false;
 
 
   constructor(private userService:UserService,private dataService:DataService) { 
@@ -142,7 +143,27 @@ export class ProfileComponent implements OnInit {
   }
 
   add_new_add(){
-        this.showFirstDiv = !this.showFirstDiv;
+        // this.showFirstDiv = !this.showFirstDiv;
+        // addressData.showFirstDiv = !addressData.showFirstDiv;
+        this.showDiv=true;
+       
+
+  }
+
+  saveNewAddress(){
+    let customerDetail={
+      "addressType": this.customerAddType,
+      "fullAddress": this.customerAddress,
+      "city": this.customerCity,
+      "state": this.customerState,
+      "showFirstDiv": true
+    }
+
+    // this.customerAddreessList.push(customerDetail);
+    this.customerDetails=[... this.customerDetails,customerDetail];
+    console.log("cdd", this.customerDetails);
+    this.showDiv=false;
+            
 
 
   }
