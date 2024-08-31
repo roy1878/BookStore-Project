@@ -23,5 +23,11 @@
         </div>
         <img src="../../../assets/icons/delete.png" alt="" height="20px" width="20px" (click)="handleDeleteIcon(wishData._id)" style="cursor: pointer;">
     </div>
+
+
+
+    <div class="no-wislist-main" *ngif="showDiv==true">
+        No items in the wishList . Please Login to see
+    </div>
 </div>
 
