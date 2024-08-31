@@ -13,7 +13,6 @@ import { BookService } from 'src/app/services/book/book.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { HttpService } from 'src/app/services/http/http.service';
 import { UserService } from 'src/app/services/user/user.service';
-
 @Component({
   selector: 'app-login-signup',
   templateUrl: './login-signup.component.html',
@@ -32,7 +31,6 @@ export class LoginSignupComponent implements OnInit {
     private bookService :BookService,private router:Router, 
     private httpService:HttpService, public dialog:MatDialog,private dataService:DataService,
     private http:HttpClient
-    
     
   ) { }
      
@@ -68,12 +66,17 @@ export class LoginSignupComponent implements OnInit {
         // this.router.navigate(["./dashboard/books"]);
         // this.dialog.closeAll();
     // *****
-          if(localStorage.getItem('access_token')){
-            this.dataService.updateLoginState('loggedIn')
-          }
+            this.dataService.updateLoginState();
+          
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            console.log("change route");
+            
+            this.router.navigate([this.router.url]);
+          });
+        
           this.dialog.closeAll();
 
-           this.functionUpdateServices();
+          //  this.functionUpdateServices();
 
 //  ***
 

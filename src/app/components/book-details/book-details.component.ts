@@ -46,12 +46,7 @@ export class BookDetailsComponent implements OnInit {
   ngOnInit(): void {
 
     this.dataService.currentLoginState.subscribe({
-      next:(res)=>{
-        if(!res)
-          this.currentState = 'loggedOut';
-        else
-          this.currentState = 'loggedIn';
-      }
+      next:(res)=>this.currentState = res
     })
     this.name = localStorage.getItem('name')!;
 

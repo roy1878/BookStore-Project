@@ -33,8 +33,9 @@ export class BookCardComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.currentLoginState.subscribe({
       next: (res) => {
-        if (!res || res == 'loggedOut') this.currentState = 'loggedOut';
-        else this.currentState = 'loggedIn';
+        this.currentState = res;
+        console.log("current state in card",this.currentState);
+        
       },
     });
 
@@ -58,12 +59,14 @@ export class BookCardComponent implements OnInit {
       this.feedbackList = [1, 2, 3, 4, 5, 6];
       return 4.5;
     }
+    
     let count = this.feedbackList.reduce(
       (acc: number, e: any) => acc + e.rating,
       0
     );
     let average = count / this.feedbackList.length;
     let roundedAverage = Math.round(average * 2) / 2;
+    
     return roundedAverage;
   }
 }

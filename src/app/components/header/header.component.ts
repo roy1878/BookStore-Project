@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
   access_token: any = localStorage.getItem('access_token');
   currentRoute!: string;
   name: string = '';
-  currentState: string = '';
+  currentState!: string;
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -85,18 +85,19 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataService.updateLoginState();
     this.dataService.currentLoginState.subscribe({
       next: (res) => {
         this.currentState = res;
-        if (!res) {
-          this.currentState = 'loggedOut';
-        }
-        console.log('current state: ', this.currentState);
+        console.log("current state",this.currentState);
+        
       },
     });
     this.name = localStorage.getItem('name') || 'XYZ';
     this.activatedRoute.url.subscribe((urlSegment) => {
       this.currentRoute = urlSegment.join('/');
+      console.log("current route:",this.currentRoute);
+      
     });
 
     console.log('access_token: ', this.access_token);
@@ -127,11 +128,10 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['dashboard/books']);
     }
     if (action == 'logo') {
-      if(this.currentRoute == 'admin'){
-        this.router.navigate(['admin/books'])
-      }
-      else
-      this.router.navigate(['dashboard/books']);
+      if (this.currentRoute == 'admin') {
+        this.router.navigate(['admin']);
+
+      } else this.router.navigate(['dashboard/books']);
     }
     if (action === 'profile') {
       this.router.navigate(['dashboard/profile']);
@@ -144,8 +144,7 @@ export class HeaderComponent implements OnInit {
     }
     if (action == 'logout') {
       localStorage.clear();
-      if (!localStorage.getItem('access_token'))
-        this.dataService.updateLoginState('loggedOut');
+      this.dataService.updateLoginState();
       this.isLoggedin = false;
     }
     if (action == 'login') {
@@ -155,10 +154,9 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['dashboard/cart']);
     }
     if (action == 'admin-login') {
-      this.router.navigate(['admin/books']);
+      this.router.navigate(['admin']);
     }
-    if (action == 'add-book') 
-      this.router.navigate(['admin/add-book']);
+    if (action == 'add-book') this.router.navigate(['admin/add-book']);
   }
 
   openDialog(): void {
