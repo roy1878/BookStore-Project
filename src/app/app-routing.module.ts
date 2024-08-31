@@ -18,6 +18,12 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 
 const routes: Routes = [
   {
+    path:'',
+    redirectTo:'dashboard/books',
+    pathMatch:"full"
+
+  },
+  {
     path: 'login-signup',
     component: LoginSignupComponent,
   },
