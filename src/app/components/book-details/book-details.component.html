@@ -139,7 +139,7 @@
             </div>
           </div>
           <div class="customer-reviews" *ngFor="let feedback of feedbackList">
-            <div class="review-details">
+            <div class="review-details" *ngIf="currentState == 'loggedIn'">
               <div class="user">
                 <div class="initials">
                   {{ getInitials(feedback.user_id.fullName) }}

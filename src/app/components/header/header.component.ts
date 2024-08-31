@@ -86,7 +86,14 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.currentLoginState.subscribe({
-      next: (res) => (this.currentState = res),
+      next: (res) => {
+        this.currentState = res;
+        if(!res){
+          this.currentState = 'loggedOut';
+        }
+        console.log("current state: ",this.currentState);
+        
+      },
     });
     this.name = localStorage.getItem('name') || 'XYZ';
     this.activatedRoute.url.subscribe((urlSegment) => {
@@ -131,18 +138,18 @@ export class HeaderComponent implements OnInit {
     }
     if (action == 'logout') {
       localStorage.clear();
-      this.dataService.updateLoginState('loggedOut');
+      if (!localStorage.getItem('access_token'))
+        this.dataService.updateLoginState('loggedOut');
       this.isLoggedin = false;
     }
     if (action == 'login') {
-      this.dataService.updateLoginState('loggedIn');
       this.openDialog();
     }
     if (action == 'cartlist') {
       this.router.navigate(['dashboard/cart']);
     }
     if (action == 'admin-login') {
-      this.openDialog();
+      this.router.navigate(['admin'])
     }
     if (action == 'add-book') this.openDialog();
   }
