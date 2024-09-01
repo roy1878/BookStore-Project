@@ -1,4 +1,6 @@
-<div class="cart">
+<div  class="cart">
+ <div *ngIf="!isCardVisible" class="carts">
+
  
   <div class="cart1">
     <div class="cart-head">
@@ -48,8 +50,10 @@
     <div class="cart-footer">
      
  
- 
-      <button class="Order"  *ngIf="isBtnVisible" (click)="showCart2()">Place Order</button>
+      <button class="Order" *ngIf="isBtnVisible" (click)="handleButtonClick()">
+        {{ getButtonText() }}
+      </button>
+      
     </div>
     
     
@@ -156,13 +160,7 @@
   </div>
  
  
-  <div class="card2" *ngIf="isCard2Visible">
-    <strong>Address Details</strong>
-  </div>
- 
-  <div class="card3" *ngIf="isCard3Visible">
-    <strong>Order Summary</strong>
-  </div>
+
  
  
   <div class="cart3" *ngIf="isCart3Visible" >
@@ -200,8 +198,21 @@
       <button  class="Order" (click)="orderPlaced()">Checkout</button>
     </div>
    </div>
+   <div class="card2" *ngIf="isCard2Visible">
+    <strong>Address Details</strong>
+  </div>
+ 
+  <div class="card3" *ngIf="isCard3Visible">
+    <strong>Order Summary</strong>
+  </div>
+  </div>
+  
  
 </div>
- 
+<div *ngIf="isCardVisible" class="card">
+  <button (click)="redirectToBooks()" class="btncard">Shop Now To View Cart</button>
+</div>
+
 <br><br>
 <br><br>
+
