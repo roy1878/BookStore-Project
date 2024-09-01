@@ -1,54 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
- 
+
 @Component({
   selector: 'app-add-book',
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.scss']
 })
 export class AddBookComponent implements OnInit {
- 
-  AdminForm!: FormGroup<any>;
- 
- 
-  constructor(private dialog: MatDialog, private router: Router,private userService:UserService) { }
- 
+
+  AdminForm!: FormGroup;
+
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private formBuilder: FormBuilder
+  ) { }
+
   ngOnInit(): void {
-  }
-  onSubmit(){
-    //  if(this.AdminForm.invalid) return;
- 
-     const{bookName, author, description, quantity, price, discountPrice}=this.AdminForm.value
- 
-     let addBook ={
-      "bookName": bookName,
-  "author": author,
-  "description": description,
-  "quantity": quantity,
-  "price": price,
-  "discountPrice": discountPrice
-    }
- 
-    console.log(addBook);
- 
-    this.userService.addBookAPICall(addBook).subscribe({
-      next:(res:any)=>{
-        console.log("response",res);
- 
-        localStorage.setItem("admin_token",res.result.accessToken);
-       
-          this.router.navigate(['./dashboard/book'])
-          // window.location.reload();
-          // this.dialog.closeAll();
-       },
-       error:(err:any)=>{
-         console.log("response",err);
-       }
+    this.AdminForm = this.formBuilder.group({
+      bookName: ['', [Validators.required]],
+      author: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      quantity: ['', [Validators.required]],
+      price: ['', [Validators.required]],
+      discountPrice: ['', [Validators.required]]
     });
- 
   }
- 
+
+  get addBookControl() {
+    return this.AdminForm.controls;
+  }
+
+  onSubmit() {
+    if (this.AdminForm.invalid) return;
+    const { bookName, author, description, quantity, price, discountPrice } = this.AdminForm.value;
+    const addBook = {
+      bookName,
+      author,
+      description,
+      quantity,
+      price,
+      discountPrice
+    };
+    console.log("Add book is", addBook);
+    this.userService.addBookAPICall(addBook).subscribe({
+      next: (res: any) => {
+        console.log("Response", res);
+        localStorage.setItem("admin_token", res.result.accessToken);
+      },
+      error: (err) => {
+        console.log("Error", err);
+      }
+    });
+    this.router.navigate(['/admin']);
+  }
 }

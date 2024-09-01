@@ -9,7 +9,7 @@ import {  MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-wish-list',
   templateUrl: './wish-list.component.html',
-  styleUrls: ['./wish-list.component.scss']
+  styleUrls: ['./wish-list.component.scss'],
 })
 export class WishListComponent implements OnInit {
   wishCardLists:any[]=[];
@@ -42,31 +42,29 @@ export class WishListComponent implements OnInit {
     
   }
 
-  handleDeleteIcon(id:any){
-    
-    this.wishCardLists=this.wishCardLists.filter((ele)=>ele.product_id._id!=id);
-    if(this.wishCardLists.length==0) {
-      this.showDiv=true;
-      console.log("no wish card",this.wishCardLists)
+  handleDeleteIcon(id: any) {
+    this.wishCardLists = this.wishCardLists.filter(
+      (ele) => ele.product_id._id != id
+    );
+    if (this.wishCardLists.length == 0) {
+      this.showDiv = true;
+      console.log('no wish card', this.wishCardLists);
     }
     this.bookService.deleteWishListItem(id).subscribe({
-      next:(res:any)=>{
-        console.log("Dlt res", res);
+      next: (res: any) => {
+        console.log('Dlt res', res);
 
-        console.log("id deleted is : ",id);
+        console.log('id deleted is : ', id);
+        this.wishCardLists =  this.wishCardLists.filter((e:any)=>e.product_id._id !== id)
+        this.dataService.updateWishList(this.wishCardLists);
       },
-      error:(err:any)=>{
-
-      }
+      error: (err: any) => {
+        console.log(err);
+      },
     });
-
-    
-    
-    
-
   }
 
-  navigateHome(){
+  navigateHome() {
     this.route.navigate(['/dashboard/books']);
 
   }
@@ -81,5 +79,4 @@ export class WishListComponent implements OnInit {
     this.openDialog();
 
   }
-
 }

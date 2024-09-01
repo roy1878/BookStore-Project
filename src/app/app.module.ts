@@ -34,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,7 @@ import { MatInputModule } from '@angular/material/input';
     AddBookComponent,
     SearchPipe,
     DashboardComponent,
+    
    
   ],
   imports: [
