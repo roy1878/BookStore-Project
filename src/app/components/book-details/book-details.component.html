@@ -39,7 +39,7 @@
           </ng-template>
           <button
             class="wishlist-btn"
-            *ngIf="isWishListed == true; else notWishListed"
+            *ngIf="isWishListed == true && currentState == 'loggedIn'; else notWishListed"
             style="background-color: grey"
           >
             <mat-icon svgIcon="fav"></mat-icon>

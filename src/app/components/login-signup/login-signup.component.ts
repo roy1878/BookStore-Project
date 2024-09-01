@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from 'src/app/services/book/book.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
@@ -25,6 +25,7 @@ export class LoginSignupComponent implements OnInit {
   loginForm!: FormGroup;
   registerForm!: FormGroup;
   currentState!: string;
+  currentRoute!: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +36,8 @@ export class LoginSignupComponent implements OnInit {
     public dialog: MatDialog,
     private dataService: DataService,
     private http: HttpClient,
-    private cartService: CartService
+    private cartService: CartService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +75,19 @@ export class LoginSignupComponent implements OnInit {
       password: ['', Validators.required],
       phone: ['', Validators.required],
     });
+
+    this.activatedRoute.url.subscribe(urlSegment => {
+      this.currentRoute = this.router.url
+    });
+  }
+
+  login(){
+    if(this.currentRoute.includes('/admin')){
+      this.adminLogin();
+    }
+    else{
+      this.userLogin();
+    }
   }
 
   userLogin() {
@@ -87,6 +102,7 @@ export class LoginSignupComponent implements OnInit {
           console.log('response', res);
           localStorage.setItem('access_token', res.result.accessToken);
           console.log('access_token', res.result.accessToken);
+
           // this.router.navigate(["./dashboard/books"]);
           // this.dialog.closeAll();
           // *****
@@ -102,13 +118,12 @@ export class LoginSignupComponent implements OnInit {
 
           this.dialog.closeAll();
 
-          if(this.currentState == 'loggedIn')
-           this.functionUpdateServices();
+          //  this.functionUpdateServices();
 
           //  ***
           this.cartService.getCartItems().subscribe({
             next:(res)=>{
-              this.BackendCartList.push(res.result);
+              this.BackendCartList = res.result;
               console.log("BackendList:" ,res.result);
               
             }
@@ -121,32 +136,63 @@ export class LoginSignupComponent implements OnInit {
         },
       });
   }
-  functionUpdateServices() {
-    // this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
-    //   next: (res: any) => {
-    //     console.log('BackendCartList: ', res.result);
-    //     this.BackendCartList = res.result;
-    //   },
-    //   error: (err) => console.log(err),
-    // });
-    let header: any = {
-      'x-access-token': localStorage.getItem(`access_token`) || '',
+  adminLogin(){    
+    if(this.loginForm.invalid)
+      return;
+    const{email,password}=this.loginForm.value
+    console.log(email,password);
+   
+    this.userService.adminAPICall({"email":email,"password":password}).subscribe({
+      next:(res:any)=>{
+        console.log("response",res);
+        
+        localStorage.setItem("admin_token",res.result.accessToken);
+        localStorage.setItem("email",email);
+        console.log("admin_token",res.result.accessToken);
+        // this.router.navigate(["./dashboard/books"]);
+        window.location.reload();
+        this.dialog.closeAll();
+      },
+      error:(err)=>{
+        console.log("error:",err);
+      }
+    });
+  }
+
+  forgotPassword(){
+    this.router.navigate(["dashboard/books"]);
+  }
+  userRegister() {
+    if (this.registerForm.invalid) {
+      // console.log(this.registerForm.invalid);
+      return;
+    }
+
+    const { fullName, email, password, phone } = this.registerForm.value;
+
+    let register = {
+      fullName: fullName,
+      email: email,
+      password: password,
+      phone: phone,
     };
-    // this.http
-    //   .get(
-    //     'https://bookstore.incubation.bridgelabz.com/bookstore_user/get_cart_items',
-    //     { headers: header }
-    //   )
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       this.BackendCartList = res.result;
 
-    //       console.log('BackendCartListress', this.BackendCartList);
-    //     },
-    //   });
+    // console.log(register);
 
+    this.userService.registerApiCall(register).subscribe({
+      next: (res: any) => {
+        console.log('response', res);
+      },
+      error: (err: any) => {
+        console.log('response', err);
+      },
+    });
+  }
+
+
+  functionUpdateServices() {
     if (!this.DataServiceCartList || this.DataServiceCartList.length === 0) {
-      this.dataService.updateCartList(this.BackendCartList);
+      this.dataService.addToCartList(this.BackendCartList);
 
     } else if (this.BackendCartList.length === 0) {
       for (let dataServiceItem of this.DataServiceCartList) {
@@ -221,30 +267,6 @@ export class LoginSignupComponent implements OnInit {
     }
   }
 
-  userRegister() {
-    if (this.registerForm.invalid) {
-      // console.log(this.registerForm.invalid);
-      return;
-    }
-
-    const { fullName, email, password, phone } = this.registerForm.value;
-
-    let register = {
-      fullName: fullName,
-      email: email,
-      password: password,
-      phone: phone,
-    };
-
-    // console.log(register);
-
-    this.userService.registerApiCall(register).subscribe({
-      next: (res: any) => {
-        console.log('response', res);
-      },
-      error: (err: any) => {
-        console.log('response', err);
-      },
-    });
-  }
+  
 }
+  

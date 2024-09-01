@@ -1,10 +1,11 @@
 
-    <mat-dialog-content>
+    <!-- <mat-dialog-content> -->
         <div class="online-book-shopping">
             <div class="login-panel">
                 <div class="image-container">
                     <img
-                        src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A7b0eeb81-a918-4f41-9bc2-f508474e79ce&params=version%3A0&token=1724911623_da39a3ee_57b533d1398f7c361a80a598c70ee956ff7d393f&api_key=CometServer1">
+                        src="../../../assets/main-logo.png" height="200px" width="200px">
+                        
                     <br><br>
                     <p style="font-size:20px;"><b>ONLINE BOOK SHOPPING</b></p>
                 </div>
@@ -29,7 +30,9 @@
                                     </mat-form-field>
                                 </div>
 
-                                <button mat-raised-button (click)="userLogin()" class="login-btn">Login</button>
+                                <button mat-raised-button (click)="login()" class="login-btn">Login</button>
+                                 
+                                <button mat-button class="forgot-btn" (click)="forgotPassword()">Forgot Password?</button>
 
                                 <div class="or-separator">OR</div>
 
@@ -67,4 +70,4 @@
                 </div>
             </div>
         </div>
-    </mat-dialog-content>
+    <!-- </mat-dialog-content> -->

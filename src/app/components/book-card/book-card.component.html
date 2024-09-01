@@ -8,10 +8,10 @@
         <p class="book-card-main-content-author">by {{bookDetails.author}}</p>
         <div class="book-card-main-content-rating">
             <div class="book-card-main-content-rating-ctn" >
-                {{ getAvgRating() }}
+                {{ getAvgRating() || 4.5}}
                 <mat-icon svgIcon="star-fill"  ></mat-icon>
             </div>
-            <p>({{feedbackList.length}})</p>
+            <p>({{feedbackList.length || 7}})</p>
         </div>
         <div class="book-card-main-content-price">
             <span class="book-card-main-content-price-main">Rs. {{bookDetails.discountPrice}}</span>
