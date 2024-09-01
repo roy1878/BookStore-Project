@@ -25,7 +25,7 @@ export class WishListComponent implements OnInit {
         if(this.wishCardLists.length==0) this.showDiv=true;
         console.log("Filterwishlist",this.wishCardLists);
 
-      },600);
+      },1000);
     })
 
     
