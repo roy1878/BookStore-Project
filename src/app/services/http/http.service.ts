@@ -9,6 +9,9 @@ export class HttpService {
   header: any = {
     'x-access-token': localStorage.getItem(`access_token`) || '',
   };
+  header1: any = {
+    'x-access-token': localStorage.getItem(`admin_token`) || '',
+  };
   constructor(private http: HttpClient) {}
 
   GetApiCall(endpoint: string) {
@@ -18,6 +21,11 @@ export class HttpService {
   PostAPICall(endPoint: string, data: any) {
     return this.http.post(this.BaseUrl + endPoint, data, {
       headers: this.header,
+    });
+  }
+  PostAdminAPICall(endPoint: string, data: any) {
+    return this.http.post(this.BaseUrl + endPoint, data, {
+      headers: this.header1,
     });
   }
 

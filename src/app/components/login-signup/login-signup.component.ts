@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from 'src/app/services/book/book.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
@@ -25,6 +25,7 @@ export class LoginSignupComponent implements OnInit {
   loginForm!: FormGroup;
   registerForm!: FormGroup;
   currentState!: string;
+  currentRoute!: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +36,8 @@ export class LoginSignupComponent implements OnInit {
     public dialog: MatDialog,
     private dataService: DataService,
     private http: HttpClient,
-    private cartService: CartService
+    private cartService: CartService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +72,10 @@ export class LoginSignupComponent implements OnInit {
       password: ['', Validators.required],
       phone: ['', Validators.required],
     });
+
+    this.activatedRoute.url.subscribe(urlSegment => {
+      this.currentRoute = this.router.url
+    });
   }
 
   userLogin() {
@@ -84,6 +90,7 @@ export class LoginSignupComponent implements OnInit {
           console.log('response', res);
           localStorage.setItem('access_token', res.result.accessToken);
           console.log('access_token', res.result.accessToken);
+
           // this.router.navigate(["./dashboard/books"]);
           // this.dialog.closeAll();
           // *****
@@ -110,6 +117,8 @@ export class LoginSignupComponent implements OnInit {
         },
       });
   }
+
+
   functionUpdateServices() {
     // this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
     //   next: (res: any) => {
@@ -232,4 +241,46 @@ export class LoginSignupComponent implements OnInit {
       },
     });
   }
+
+
+  login(){
+    if(this.currentRoute.includes('/admin')){
+      this.adminLogin();
+    }
+    else{
+      this.userLogin();
+    }
+  }
+
+
+  adminLogin(){    
+    if(this.loginForm.invalid)
+      return;
+    const{email,password}=this.loginForm.value
+    console.log(email,password);
+   
+    this.userService.adminAPICall({"email":email,"password":password}).subscribe({
+      next:(res:any)=>{
+        console.log("response",res);
+        
+        localStorage.setItem("admin_token",res.result.accessToken);
+        localStorage.setItem("email",email);
+        console.log("admin_token",res.result.accessToken);
+       
+        this.dialog.closeAll();
+        this.router.navigate(["./admin/add-book"]);
+        window.location.reload();
+      },
+      error:(err)=>{
+        console.log("error:",err);
+      }
+    });
+  }
+
+  
+  forgotPassword(){
+    this.router.navigate(["./forgot-password"]);
+        this.dialog.closeAll();
+  }
+
 }

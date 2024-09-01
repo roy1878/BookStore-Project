@@ -164,7 +164,11 @@ export class HeaderComponent implements OnInit {
     if (action == 'admin-login') {
       this.router.navigate(['admin']);
     }
-    if (action == 'add-book') this.router.navigate(['admin/add-book']);
+    if (action == 'add-book'){
+      if(!localStorage.getItem("admin_token")) this.openDialog();
+    } 
+
+    
   }
 
   openDialog(): void {
