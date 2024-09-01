@@ -33,7 +33,7 @@ export class BookDetailsComponent implements OnInit {
   isWishListed: boolean = false;
   name: string = '';
   booklist = [];
-  currentState : string = '';
+  currentState: string = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -44,14 +44,18 @@ export class BookDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.dataService.currentLoginState.subscribe({
-      next:(res)=>this.currentState = res
-    })
-    this.name = localStorage.getItem('name')!;
+      next: (res) => (this.currentState = res),
+    });
+    this.name = localStorage.getItem('name') || 'Alexa Martin';
 
     this.bookService.getAllBooksApiCall().subscribe({
-      next: (res: any) => (this.booklist = res.result),
+      next: (res: any) => {
+        this.selectedBook = res.result.find(
+          (e: any) => e._id === this.questionId
+        );
+        this.booklist = res.result;
+      },
     });
 
     if (this.data) this.isWishListed = true;
@@ -69,9 +73,14 @@ export class BookDetailsComponent implements OnInit {
       next: (res: any[]) => {
         console.log('CartList::::::', res);
         this.cartlist = res;
-        this.isCartlisted = res.find((e: any) => {
-          return e.product_id._id === this.questionId;
-        });
+        console.log('resss', res);
+
+        
+          this.isCartlisted = res.find((e: any) => {
+            return e.product_id._id === this.questionId;
+          });
+        
+        
         if (this.isCartlisted) this.quantity = this.isCartlisted.quantityToBuy;
       },
       error: (err) => console.log(err),
@@ -96,27 +105,17 @@ export class BookDetailsComponent implements OnInit {
 
     console.log('isWishlisted', this.isWishListed);
 
-    this.bookService.getAllBooksApiCall().subscribe({
-      next: (res: any) => {
-        this.selectedBook = res.result.find(
-          (e: any) => e._id === this.questionId
-        );
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-
-    this.bookService.getBookReviews(this.questionId).subscribe({
-      next: (res: any) => {
-        this.feedbackList = res.result.reverse();
-        // console.log(this.feedbackList);
-        this.feedbackList.rating = Array(5).fill(0);
-      },
-      error: (err) => console.log(err),
-    });
+    if (localStorage.getItem('access_token')) {
+      this.bookService.getBookReviews(this.questionId).subscribe({
+        next: (res: any) => {
+          this.feedbackList = res.result.reverse();
+          console.log('feedbackkk: ', this.feedbackList);
+          this.feedbackList.rating = Array(5).fill(0);
+        },
+        error: (err) => console.log(err),
+      });
+    }
   }
-
   getGoldStar(rating: number) {
     return Array(rating).fill(0);
   }
@@ -133,10 +132,9 @@ export class BookDetailsComponent implements OnInit {
   }
 
   getAvgRating() {
-    if(this.currentState == 'loggedOut'){
-      this.feedbackList = [1,2,3,4,5,6]
+    if (this.currentState == 'loggedOut') {
+      this.feedbackList = [1, 2, 3, 4, 5, 6];
       return 4.5;
-      
     }
     let count = this.feedbackList.reduce(
       (acc: number, e: any) => acc + e.rating,
@@ -216,35 +214,59 @@ export class BookDetailsComponent implements OnInit {
       } else if (action === 'decreament' && this.quantity > 0) {
         this.quantity = this.quantity - 1;
       }
-      console.log('quantity::::', this.quantity);
+      let bookdata: any = this.booklist.find(
+        (e: any) => e._id == this.questionId
+      );
+      console.log(bookdata);
+      let obj: any = {};
 
-      console.log(this.isCartlisted);
+      obj = {
+        product_id: {
+          _id: bookdata._id,
+          description: bookdata.description,
+          author: bookdata.author,
+          bookName: bookdata.bookName,
+          price: bookdata.price,
+          discountedPrice: bookdata.discountedPrice,
+          quantity: bookdata.quantity,
+          admin_user_id: bookdata.admin_user_id,
+        },
+        quantityToBuy: this.localQuantity,
+        user_id: {},
+      };
 
       if (!this.isCartlisted) {
-        this.bookService
-          .postCartItem(this.questionId, this.isCartlisted)
-          .subscribe({ next: (res: any) => console.log(res) });
-      }
-      this.bookService
-        .putAddToCartQuantity(this.isCartlisted._id, {
-          quantityToBuy: this.quantity,
-        })
-        .subscribe({
-          next: (res) => {
-            console.log('Put result:', res);
+        console.log('yaha aya');
 
-            const updatedData = this.cartlist.map((book: any) =>
-              book.product_id._id === this.questionId
-                ? { ...book, quantityToBuy: this.quantity }
-                : book
-            );
+        this.bookService.postCartItem(obj.product_id._id).subscribe({
+          next: (res: any) => {
+            console.log("result:",this.cartlist);
+            this.dataService.updateCartList([...this.cartlist,obj]);
+            console.log("result:",this.cartlist);
 
-            this.dataService.updateCartList(updatedData);
-          },
-          error: (err) => {
-            console.error('Error updating cart:', err);
           },
         });
+      } else {
+        this.bookService
+          .putAddToCartQuantity(bookdata._id, {
+            quantityToBuy: this.quantity,
+          })
+          .subscribe({
+            next: (res) => {
+              console.log('Put result:', res);
+
+              const updatedData = this.cartlist.map((book: any) =>
+                book.product_id._id === this.questionId
+                  ? { ...book, quantityToBuy: this.quantity }
+                  : book
+              );
+              this.dataService.updateCartList(updatedData);
+            },
+            error: (err) => {
+              console.error('Error updating cart:', err);
+            },
+          });
+      }
     } else {
       if (action == 'decreament') {
         this.localQuantity--;
@@ -252,30 +274,51 @@ export class BookDetailsComponent implements OnInit {
         this.localQuantity++;
       }
 
-      let bookdata = this.booklist.find((e: any) => e._id === this.questionId);
-
-      let isbookCartlisted = this.cartlist.find(
+      let bookdata: any = this.booklist.find(
         (e: any) => e._id === this.questionId
       );
 
-      if (bookdata && !isbookCartlisted) {
-        Object.assign(bookdata, { quantityToBuy: this.localQuantity });
-        this.dataService.updateCartList([...this.cartlist, bookdata]);
+      console.log('cartlissssttt:', this.cartlist);
+
+      let isCartlisted = this.cartlist.find(
+        (e: any) => e.product_id._id === this.questionId
+      );
+
+      let obj = {
+        product_id: {
+          _id: bookdata._id,
+          description: bookdata.description,
+          author: bookdata.author,
+          bookName: bookdata.bookName,
+          price: bookdata.price,
+          discountedPrice: bookdata.discountedPrice,
+          quantity: this.quantity,
+          admin_user_id: bookdata.admin_user_id,
+        },
+        quantityToBuy: this.localQuantity,
+        user_id: {
+          address: [],
+          fullName: localStorage.getItem('name') || 'Alexa Martin',
+          phone: localStorage.getItem('phone') || '+919110096046',
+        },
+      };
+
+      if (bookdata && !isCartlisted) {
+        this.dataService.updateCartList([...this.cartlist, obj]);
       } else {
-        isbookCartlisted.quantityToBuy = this.localQuantity;
+        isCartlisted.quantityToBuy = this.localQuantity;
         let index = this.cartlist.findIndex(
-          (e: any) => e._id === isbookCartlisted._id
+          (e: any) => e.product_id._id === isCartlisted.product_id._id
         );
         if (index !== -1) {
           console.log('aaaaa');
 
           this.cartlist = [
             ...this.cartlist.slice(0, index),
-            isbookCartlisted,
+            isCartlisted,
             ...this.cartlist.slice(index + 1),
           ];
         }
-        this.dataService.updateCartList(this.cartlist);
       }
 
       console.log(this.localQuantity);

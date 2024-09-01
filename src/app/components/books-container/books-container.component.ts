@@ -36,12 +36,12 @@ export class BooksContainerComponent implements OnInit {
 
     this.bookService.getAllBooksApiCall().subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.BooksList = res.result;
         this.length = this.BooksList.length;
         this.updatePaginatedCards();
         this.updatePageNumbers();
-        console.log(this.BooksList);
+        // console.log(this.BooksList);
       },
     });
     this.dataservice.currentData.subscribe((query) => {
