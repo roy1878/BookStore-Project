@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,EventEmitter, Output } from '@angular/core';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
 @Component({
@@ -7,6 +7,10 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./book-cart.component.scss']
 })
 export class BookCartComponent implements OnInit {
+  @Output() checkoutEvent = new EventEmitter<void>();
+  onCheckout(): void {
+    this.checkoutEvent.emit();
+  }
   isCart2Visible = false;
   isCard2Visible=true;
   isCart3Visible=false;
