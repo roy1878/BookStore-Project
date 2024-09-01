@@ -85,6 +85,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("on ngOnInit of Header")
     this.dataService.updateLoginState();
     this.dataService.currentLoginState.subscribe({
       next: (res) => {

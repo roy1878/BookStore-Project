@@ -175,3 +175,40 @@
          
 
 }
+
+
+@media (max-width: 750px) {
+    .profile-main-ctn{
+        width: 100%;
+        padding: 20px;
+    }
+    .profile-main-customerAdd-header-sub{
+        width: 200px;
+        height: 40px;
+    }
+
+    .profile-main-customerAdd{
+        width: 100%;
+    }
+    .profile-main-address-Details{
+        margin: 0;
+
+    }
+    .profile-main-address-Details-sub{
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-main-address-Details-main{
+        input{
+            width: 250px;
+        }
+    }
+    .profile-main-personalDetails-subctn{
+       
+    
+        input {
+                width: 250px;
+        }
+    }
+   
+}

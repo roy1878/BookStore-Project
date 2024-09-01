@@ -16,12 +16,16 @@ export class WishListComponent implements OnInit {
   constructor(private dataService:DataService, private bookService:BookService,private route:Router) { }
 
   ngOnInit(): void {
+    console.log("on ng onit of wishlist");
     this.dataService.currentWishList.subscribe((res)=>{
       this.wishCardLists=res;
       console.log("wishlist",res);
       this.wishCardLists=this.wishCardLists.filter((ele)=>ele.product_id!=null);
-      console.log("Filterwishlist",this.wishCardLists);
-      if(this.wishCardLists.length==0) this.showDiv=true;
+      setTimeout(()=>{
+        if(this.wishCardLists.length==0) this.showDiv=true;
+        console.log("Filterwishlist",this.wishCardLists);
+
+      },600);
     })
 
     
@@ -30,6 +34,10 @@ export class WishListComponent implements OnInit {
   handleDeleteIcon(id:any){
     
     this.wishCardLists=this.wishCardLists.filter((ele)=>ele.product_id._id!=id);
+    if(this.wishCardLists.length==0) {
+      this.showDiv=true;
+      console.log("no wish card",this.wishCardLists)
+    }
     this.bookService.deleteWishListItem(id).subscribe({
       next:(res:any)=>{
         console.log("Dlt res", res);
@@ -41,10 +49,7 @@ export class WishListComponent implements OnInit {
       }
     });
 
-    if(this.wishCardLists.length==0) {
-      this.showDiv=!this.showDiv;
-      console.log("no wish card",this.wishCardLists)
-    }
+    
     
     
 
