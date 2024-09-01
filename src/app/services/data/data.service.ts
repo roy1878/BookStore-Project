@@ -36,4 +36,6 @@ export class DataService {
   updateWishList(data: any) {
     this.wishList.next(data);
   }
+
+  
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -38,7 +37,6 @@ export class BookCartComponent implements OnInit {
   displaySpan: boolean = false;
 
   constructor(
-    private cartService: CartService,
     private dataService: DataService,
     private route: Router,
     private userService: UserService
@@ -199,14 +197,7 @@ export class BookCartComponent implements OnInit {
 
         console.log('Updated quantity:', cartItem.quantityToBuy);
 
-        this.cartService.updateCartItemQuantity(cartItemId, cartItem.quantityToBuy).subscribe(
-          (response) => {
-            console.log('Cart item quantity updated successfully', response);
-          },
-          (error) => {
-            console.error('Error updating cart item quantity', error);
-          }
-        );
+        this.dataService.updateLocalCartList(cartItemId, cartItem.quantityToBuy);
       } else {
         console.error('Cart item not found');
       }
@@ -224,14 +215,7 @@ export class BookCartComponent implements OnInit {
   }
 
   removeCartItem(itemId: string) {
-    this.cartService.removeFromCart(itemId).subscribe({
-      next: (res: any) => {
-        console.log('Item removed', res);
-        this.cartItems = this.cartItems.filter((item) => item._id !== itemId);
-      },
-      error: (err: any) => {
-        console.error('Error removing item', err);
-      },
-    });
+    this.cartItems = this.cartItems.filter((item) => item._id !== itemId);
+    this.dataService.updateCartList(this.cartItems);
   }
 }
