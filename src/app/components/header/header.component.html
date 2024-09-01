@@ -98,9 +98,9 @@
         </mat-menu>
       </div>
 
-      <div class="header-btns" *ngIf="currentRoute != 'admin'">
+      <div class="header-btns"  (click)="handleHeaderMenuClick('cartlist')" *ngIf="currentRoute != 'admin'">
         <mat-icon svgIcon="cart"></mat-icon>
-        <button (click)="handleHeaderMenuClick('cartlist')">Cart</button>
+        <button>Cart</button>
       </div>
     </div>
   </div>

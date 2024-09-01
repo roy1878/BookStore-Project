@@ -266,3 +266,17 @@
     color: gold;
 }
 
+
+
+@media (min-width:200px) and (max-width:600px){
+    .book-details-left-cnt-btns{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .book-details-left-cnt-btns button{
+        width: 100%;
+        padding: 20px;
+        height: 30px;
+    }
+}
