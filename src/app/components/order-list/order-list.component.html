@@ -1,13 +1,13 @@
-<div class="card2" >
+<div class="card2" *ngFor="let item of cartItems" >
 
     <div class="img-head">
     <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
      
     <div class="item-details">
         
-        <h3>Dont Make Me Think</h3>
-        <p> By Steve Kings</p>
-        <strong>Rs. 1500</strong>
+        <h3>{{item.product_id.bookName}}</h3>
+        <p> {{item.product_id.author}}</p>
+        <strong>Rs. {{item.product_id.price}}</strong>
     </div>
 </div>
 
@@ -18,41 +18,5 @@
 </div>
   </div>
 
-  <div class="card3" >
-
-    <div class="img-head">
-    <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
-     
-    <div class="item-details">
-        
-        <h3>Dont Make Me Think</h3>
-        <p> By Steve Kings</p>
-        <strong>Rs. 1500</strong>
-    </div>
-</div>
-
-<div class="order-status">
-
-    <strong>🟢Order Placed On May 21</strong>
-
-</div>
-  </div>
-  <div class="card3" >
-
-    <div class="img-head">
-    <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
-     
-    <div class="item-details">
-        
-        <h3>Dont Make Me Think</h3>
-        <p> By Steve Kings</p>
-        <strong>Rs. 1500</strong>
-    </div>
-</div>
-
-<div class="order-status">
-
-    <strong>🟢Order Placed On May 21</strong>
-
-</div>
-  </div>
+ 
+  

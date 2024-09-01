@@ -1,5 +1,5 @@
 <div class="cart">
-
+ 
   <div class="cart1">
     <div class="cart-head">
      <strong class="title">My Cart({{ cartItems.length }})</strong>
@@ -14,18 +14,18 @@
      </div>
      
     </div>
-
+ 
     <br><br>
     <br>
     <div class="cart-body">
-
-
+ 
+ 
       <div class="product" *ngFor="let item of cartItems">
       <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
       <div class="item-details">
-        <h3>{{item.product_id.bookName}}</h3>
-        <p> {{item.product_id.author}} </p>
-        <strong>Rs. {{item.product_id.price}}</strong>
+        <h3>{{item.product_id.bookName || item.bookName}}</h3>
+        <p> {{item.product_id.author || item.author}} </p>
+        <strong>Rs. {{item.product_id.discountPrice || item.discountPrice}}</strong>
          
         <div class="quantity">
           <div class="btns">
@@ -35,36 +35,38 @@
         </div>
         <strong (click)="removeCartItem(item._id)">Remove</strong>
           </div>
-        
+       
       </div>
     </div>
-    
-
+   
+ 
     </div>
-
-
-
+ 
+ 
+ 
     <br>
     <div class="cart-footer">
-      <button class="Order" *ngIf="isLoggedIn && isBtnVisible" (click)="showCart2()">Place Order</button>
-      <button class="Order" *ngIf="!isLoggedIn && isBtnVisible" (click)="redirectToHome()">Shop Now</button>
+     
+ 
+ 
+      <button class="Order"  *ngIf="isBtnVisible" (click)="showCart2()">Place Order</button>
     </div>
     
     
   </div>
-
-
-
-
+ 
+ 
+ 
+ 
   <div class="cart2" *ngIf="isCart2Visible">
     <div class="cart-head">
      <strong class="title2">Customer Details</strong>
      <div class="select-main">
-    
+   
      </div>
      
     </div>
-
+ 
     <br>
     <div class="cart-body">
       <div class="profile-main-customerAdd">
@@ -73,7 +75,7 @@
             <div class="profile-main-customerAdd-header-sub" (click)="add_new_add()">Add New Address</div>
         </div>
         <div class="profile-main-customerAdd-span" *ngFor="let addressData of customerDetails">
-    
+   
             <div *ngIf="shouldShowFirstDiv(addressData)" >
                 <div style="display: flex; justify-content: space-between;">
                     <h2 style="margin: 0;">{{addressData.addressType}}</h2>
@@ -82,7 +84,7 @@
                 <h3 style="margin: 0;">Address</h3>
                <span>{{addressData.fullAddress}} , {{addressData.city}}, {{addressData.state}} </span>
             </div>
-
+ 
             <div class="profile-main-address-Details" *ngIf="!shouldShowFirstDiv(addressData)" >
                 <div class="profile-main-address-Details-header">
                     <!-- <h1>Address Details</h1> -->
@@ -105,7 +107,7 @@
                         <p>State</p>
                         <input type="text" placeholder="State" [disabled]="CDisDisabled" [(ngModel)]="customerState">
                     </div>
-        
+       
                 </div>
                 <div class="profile-main-address-Details-worktype">
                     <p>Type</p>
@@ -114,69 +116,69 @@
                     <input type="radio" id="home" name="location" value="Home" [(ngModel)]="customerAddType">
                     <label for="home">Home</label>
                    </div>
-                    
+                   
                   <div>  
                     <input type="radio" id="work" name="location" value="Office" [(ngModel)]="customerAddType">
                     <label for="work">Work</label>
                   </div>
-                    
+                   
                     <div>
                         <input type="radio" id="other" name="location" value="Other" [(ngModel)]="customerAddType">
                     <label for="other">Other</label>
                     </div>
                    </div>
                 </div>
-        
+       
                 <!-- <button *ngIf="!CDisDisabled" (click)="saveAddress()">Save</button> -->
                 <button (click)="saveAddress()">Save</button>
-        
-        
+       
+       
             </div>
            
            
        </div>
     </div>
-
-
-  
  
-    
+ 
+ 
+ 
+   
      
-
+ 
     </div>
-    
-    
+   
+   
     <div class="option4">
-      
-            
+     
+           
       <button *ngIf="isBtnVisible2"  class="Order2" (click)="showCart3()" >Place Order</button>
     </div>
   </div>
-
-
+ 
+ 
   <div class="card2" *ngIf="isCard2Visible">
     <strong>Address Details</strong>
   </div>
-
+ 
   <div class="card3" *ngIf="isCard3Visible">
     <strong>Order Summary</strong>
   </div>
-
-
+ 
+ 
   <div class="cart3" *ngIf="isCart3Visible" >
     <strong>Order Summary</strong>
-
+ 
     <div class="order-summary" >
     <div class="cart-head">
      
-    
-      
+   
+     
      </div>
  
      <br>
-    
+   
      <div class="cart-body2" *ngFor="let item of cartItems">
-      
+     
        <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
        <div class="item-details">
         <h3 class="txt">{{item.product_id.bookName}}</h3>
@@ -184,13 +186,13 @@
         <strong >Rs. {{item.product_id.price}}</strong>
          
        </div>
-
+ 
      </div>
-  
+ 
  
  
      <br>
-    
+   
     </div>
     <div class="cart-footer2">
        
@@ -198,8 +200,8 @@
       <button  class="Order" (click)="orderPlaced()">Checkout</button>
     </div>
    </div>
-  
+ 
 </div>
-
+ 
 <br><br>
 <br><br>

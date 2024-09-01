@@ -13,56 +13,77 @@ import { BooksContainerComponent } from './components/books-container/books-cont
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderPlacedComponent } from './components/order-placed/order-placed.component';
+import { AddBookComponent } from './components/add-book/add-book.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'dashboard/books',
+    pathMatch: 'full',
+  },
   {
     path: 'login-signup',
     component: LoginSignupComponent,
   },
   {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
+  {
     path: 'bookcard',
     component: BookCardComponent,
   },
-   {
-    path:'dashboard',
-    component:DashboardComponent,
-    children:[
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
       {
-        path:'books',
-        component:BooksContainerComponent
+        path: 'books',
+        component: BooksContainerComponent,
       },
       {
-        path:'bookdetails',
-        component:BookDetailsComponent
+        path: 'bookdetails',
+        component: BookDetailsComponent,
       },
       {
-        path:'wishlist',
-        component:WishListComponent
+        path: 'wishlist',
+        component: WishListComponent,
       },
       {
-        path:'orderlist',
-        component:OrderListComponent
+        path: 'orderlist',
+        component: OrderListComponent,
       },
       {
         path: 'cart',
         component: BookCartComponent,
       },
       {
-        path:'profile',
-        component:ProfileComponent
-      },{
-        path:'order-placed',
-        component:OrderPlacedComponent
-      }
-      
-    ]
+        path: 'profile',
+        component: ProfileComponent,
+      },
+      {
+        path: 'order-placed',
+        component: OrderPlacedComponent,
+      },
+    ],
   },
-  
+
   {
-    path:'admin',
-    component:AdminContainerComponent
+    path: 'admin',
+    component: AdminContainerComponent,
+    children: [
+      
+      {
+        path: '',
+        component: BooksContainerComponent,
+      },
+      {
+        path: 'add-book',
+        component: AddBookComponent,
+      },
+    ],
   },
-  
 ];
 
 @NgModule({

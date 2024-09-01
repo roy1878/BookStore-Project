@@ -32,7 +32,7 @@
           <ng-template #quantityBtns>
             <div class="add-to-bag-quantity-btns">
               <button (click)="handleAddToCartBtn('decreament')">-</button>
-              <p>{{ quantity }}</p>
+              <p>{{ quantity || localQuantity }}</p>
 
               <button (click)="handleAddToCartBtn('increament')">+</button>
             </div>
@@ -139,13 +139,13 @@
             </div>
           </div>
           <div class="customer-reviews" *ngFor="let feedback of feedbackList">
-            <div class="review-details">
-              <div class="user">
+            <div class="review-details" *ngIf="currentState == 'loggedIn'">
+              <!-- <div class="user">
                 <div class="initials">
-                  {{ getInitials(feedback.user_id.fullName) }}
+                  {{ getInitials(feedback.user_id.fullName) || 'XYZ' }}
                 </div>
-                <div class="name">{{ feedback.user_id.fullName }}</div>
-              </div>
+                <div class="name">{{ feedback.user_id.fullName || 'XYZ' }}</div>
+              </div> -->
               <div
                 class="user-rating"
                 style="display: flex; gap: 3px; margin-bottom: 10px"

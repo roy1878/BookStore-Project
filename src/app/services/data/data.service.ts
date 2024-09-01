@@ -12,6 +12,21 @@ export class DataService {
     this.dataSource.next(data);
   }
 
+  private loginState = new BehaviorSubject<string>('');
+  currentLoginState = this.loginState.asObservable();
+
+  updateLoginState() {
+    if (localStorage.getItem('access_token')) {
+      this.loginState.next('loggedIn');
+      console.log('loggedIn');
+      
+    } else {
+      this.loginState.next('loggedOut');
+      console.log('loggedOut');
+      
+    }
+  }
+
   private localcartlist = new BehaviorSubject<any>([]);
   currentlocalcartlistData = this.localcartlist.asObservable();
 
@@ -28,8 +43,25 @@ export class DataService {
   private cartList = new BehaviorSubject<any>([]);
   currentCartList = this.cartList.asObservable();
   updateCartList(data: any) {
+    // console.log('sm', data);
     this.cartList.next(data);
-    
+  }
+   currentList = this.cartList.getValue();
+
+  addToCartList(newItems: any[]) {
+    const updatedList = this.currentList.concat(newItems);
+    this.cartList.next(updatedList);
+  }
+
+  updateQuantityToCartList(quantity:any,obj:any){
+
+    this.currentList=this.currentList.map((e:any)=>{
+      if(e.product_id._id === obj.product_id._id)
+        e.quantityToBuy = quantity;
+      return e;
+    })
+
+    this.cartList.next(this.currentList);
   }
 
   private wishList = new BehaviorSubject<any>([]);
@@ -38,8 +70,9 @@ export class DataService {
     this.wishList.next(data);
   }
 
-
-  
-
-  
+  private customerAddressList = new BehaviorSubject<any>([]);
+  currentCustomerAddressList = this.orderList.asObservable();
+  updateCustomerAddressList(data: any) {
+    this.customerAddressList.next(data);
+  }
 }

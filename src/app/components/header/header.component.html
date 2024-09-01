@@ -1,6 +1,6 @@
 <div class="book-store-header-cnt">
   <div class="book-store-header-left-cnt">
-    <div class="book-store-header-logo">
+    <div class="book-store-header-logo" (click)="handleHeaderMenuClick('logo')">
       <img src="../../../assets/logo/logo.png" alt="" />
       <span>Bookstore</span>
     </div>
@@ -21,33 +21,84 @@
         <mat-icon svgIcon="profile"></mat-icon>
         Profile
 
-        <mat-menu #loginMenu="matMenu" >
-          <div class="header-mat-menu-inner-cnt" *ngIf="isLoggedin == false else elsePart" style="padding:0px 20px;">
+        <mat-menu #loginMenu="matMenu">
+          <div
+            class="header-mat-menu-inner-cnt"
+            *ngIf="
+              currentRoute != 'admin' && currentState == 'loggedOut';
+              else elsePart
+            "
+            style="padding: 0px 20px"
+          >
             <p style="font-size: small; font-weight: bold">Welcome</p>
             <p style="font-size: small">To access and manage orders</p>
-            <button class="login" (click)="handleHeaderMenuClick('login')">Login/SignUp</button>
+            <button class="login" (click)="handleHeaderMenuClick('login')">
+              Login/SignUp
+            </button>
+            <button class="loginAsAdmin" (click)="handleHeaderMenuClick('admin-login')">Admin</button>
             <hr />
             <div
               class="mat-menu-btns"
               style="display: flex; flex-direction: column"
             >
-            <button class="menu-button-item" (click)="handleHeaderMenuClick('myOrders')"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
-            <button class="menu-button-item" (click)="handleHeaderMenuClick('myWishList')"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
+              <button
+                class="menu-button-item"
+                (click)="handleHeaderMenuClick('myOrders')"
+              >
+                <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders
+              </button>
+              <button
+                class="menu-button-item"
+                (click)="handleHeaderMenuClick('myWishList')"
+              >
+                <mat-icon svgIcon="heart"></mat-icon>My Wishlist
+              </button>
             </div>
           </div>
-          <ng-template #elsePart>
-            <div class="header-mat-menu-inner-cnt" style="display: flex; flex-direction: column; padding: 0px 20px;">
-              <p style="font-weight: bold;">Hello XYZ,</p>
-            <button class="menu-button-item" (click)="handleHeaderMenuClick('profile')"> <mat-icon svgIcon="profile"></mat-icon> Profile</button>
-            <button class="menu-button-item" (click)="handleHeaderMenuClick('myOrders')"> <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders</button>
-            <button class="menu-button-item" (click)="handleHeaderMenuClick('myWishList')"> <mat-icon svgIcon="heart"></mat-icon>My Wishlist</button>
-            <button class="logout" (click)="handleHeaderMenuClick('logout')">Logout</button>
+          <ng-template #elsePart >
+            <div *ngIf="currentRoute != 'admin' &&  currentState == 'loggedIn'; else admin"
+              class="header-mat-menu-inner-cnt"
+              style="display: flex; flex-direction: column; padding: 0px 20px"
+            >
+              <p style="font-weight: bold">Hello {{name}},</p>
+              <button
+                class="menu-button-item"
+                (click)="handleHeaderMenuClick('profile')"
+              >
+                <mat-icon svgIcon="profile"></mat-icon> Profile
+              </button>
+              <button
+                class="menu-button-item"
+                (click)="handleHeaderMenuClick('myOrders')"
+              >
+                <mat-icon svgIcon="shopping-bag"></mat-icon>My Orders
+              </button>
+              <button
+                class="menu-button-item"
+                (click)="handleHeaderMenuClick('myWishList')"
+              >
+                <mat-icon svgIcon="heart"></mat-icon>My Wishlist
+              </button>
+              <button class="logout" (click)="handleHeaderMenuClick('logout')">
+                Logout
+              </button>
+            </div>
+          </ng-template>
+          <ng-template #admin > 
+            <div
+              class="header-mat-menu-inner-cnt"
+              style="display: flex; flex-direction: column; padding: 0px 20px;width: 150px; justify-content: center;"
+            >
+            <h2>Hi Admin!</h2>
+            <button class="adminbtns" (click)="handleHeaderMenuClick('add-book')">Add Book</button>
+            <button class="adminbtns" (click)="handleHeaderMenuClick('user')">User</button>
+
           </div>
           </ng-template>
         </mat-menu>
       </div>
 
-      <div class="header-btns">
+      <div class="header-btns" *ngIf="currentRoute != 'admin'">
         <mat-icon svgIcon="cart"></mat-icon>
         <button (click)="handleHeaderMenuClick('cartlist')">Cart</button>
       </div>
