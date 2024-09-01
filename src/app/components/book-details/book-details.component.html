@@ -140,12 +140,12 @@
           </div>
           <div class="customer-reviews" *ngFor="let feedback of feedbackList">
             <div class="review-details" *ngIf="currentState == 'loggedIn'">
-              <div class="user">
+              <!-- <div class="user">
                 <div class="initials">
-                  {{ getInitials(feedback.user_id.fullName) || name }}
+                  {{ getInitials(feedback.user_id.fullName) || 'XYZ' }}
                 </div>
-                <div class="name">{{ feedback.user_id.fullName || name }}</div>
-              </div>
+                <div class="name">{{ feedback.user_id.fullName || 'XYZ' }}</div>
+              </div> -->
               <div
                 class="user-rating"
                 style="display: flex; gap: 3px; margin-bottom: 10px"

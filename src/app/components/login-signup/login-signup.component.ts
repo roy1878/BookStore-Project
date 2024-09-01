@@ -89,17 +89,15 @@ export class LoginSignupComponent implements OnInit {
           // *****
           this.dataService.updateLoginState();
 
-          this.router
-            .navigateByUrl('/', { skipLocationChange: true })
-            .then(() => {
-              console.log('change route');
+          // this.router
+          //   .navigateByUrl('/', { skipLocationChange: true })
+          //   .then(() => {
+          //     console.log('change route');
 
-              this.router.navigate([this.router.url]);
-            });
+          //     this.router.navigate([this.router.url]);
+          //   });
 
-          setTimeout(() => {
-            this.dialog.closeAll();
-          }, 600);
+          this.dialog.closeAll();
 
           //  this.functionUpdateServices();
 
@@ -137,7 +135,6 @@ export class LoginSignupComponent implements OnInit {
     //   });
 
     if (!this.DataServiceCartList || this.DataServiceCartList.length === 0) {
-      this.DataServiceCartList.push(this.BackendCartList);
       this.dataService.updateCartList(this.BackendCartList);
     } else if (this.BackendCartList.length === 0) {
       for (let dataServiceItem of this.DataServiceCartList) {
@@ -156,32 +153,40 @@ export class LoginSignupComponent implements OnInit {
           (item: any) => item.product_id._id === dataServiceItem.product_id._id
         );
 
-        
-
         if (backendItem) {
           let mergeQuantity =
             dataServiceItem.quantityToBuy + backendItem.quantityToBuy;
 
-          // if (this.currentState == 'loggedIn') {
-          //   console.log("ayyaaaa: ");
-            
-          //   dataServiceItem = this.BackendCartList.filter((e: any) => {
-          //     e.product_id._id === dataServiceItem._id;
-          //   });
+          if (this.currentState == 'loggedIn') {
+            console.log('ayyaaaa: ');
 
-          //   this.bookService
-          //     .putAddToCartQuantity(dataServiceItem._id, {
-          //       quantityToBuy: mergeQuantity,
-          //     })
-          //     .subscribe({
-          //       next: (res: any) => {
-          //         console.log('Quantity updated: ', res);
-          //       },
-          //       error: (err) => console.log(err),
-          //     });
-          // }
+            dataServiceItem = this.BackendCartList.find((e: any) => {
+              return e.product_id._id === dataServiceItem.product_id._id;
+            });
 
-          /******cant put the quantity from api because dont have cartId when loggedOut**************/
+            this.bookService
+              .putAddToCartQuantity(dataServiceItem._id, {
+                quantityToBuy: mergeQuantity,
+              })
+              .subscribe({
+                next: (res: any) => {
+                  console.log('Quantity updated: ', res);
+                },
+                error: (err) => console.log(err),
+              });
+              
+              this.dataService.updateQuantityToCartList(mergeQuantity,dataServiceItem);
+
+            this.BackendCartList = this.BackendCartList.map((item: any) => {
+              const matchingItem = this.DataServiceCartList.find(
+                (dataItem) => dataItem.product_id._id === item.product_id._id
+              );
+              if (matchingItem) {
+                item.quantityToBuy = mergeQuantity;
+              }
+              return item;
+            });
+          }
         } else {
           this.bookService
             .postCartItem(dataServiceItem.product_id._id)
@@ -192,8 +197,8 @@ export class LoginSignupComponent implements OnInit {
       }
 
       const updateList: any = this.BackendCartList.filter((item: any) => {
-        return !this.DataServiceCartList.some(
-          (dataItem) => dataItem.product_id._id === item.product_id._id
+        return !this.DataServiceCartList.some((dataItem) => 
+          dataItem.product_id._id === item.product_id._id
         );
       });
 
