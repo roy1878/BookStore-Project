@@ -4,6 +4,7 @@ import { LoginSignupComponent } from '../login-signup/login-signup.component';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
@@ -41,7 +42,8 @@ export class BookCartComponent implements OnInit {
     private cartService: CartService,
     private dataService: DataService,
     private route: Router,
-    private userService:UserService
+    private userService:UserService,
+    public dialog: MatDialog,
   ) {}
   hideBtn1() {
     this.isBtnVisible = false;
@@ -50,8 +52,15 @@ export class BookCartComponent implements OnInit {
   hideBtn2() {
     this.isBtnVisible2 = false;
   }
+  openDialog(): void {
+    this.dialog.open(LoginSignupComponent, {
+      width: '60%',
+      height: '500px',
+    });
+  }
  
   showCart2() {
+    if(!localStorage.getItem("access_token")) this.openDialog();
     this.isCart2Visible = true;
     this.isCard2Visible = false;
     this.hideBtn1();
@@ -73,30 +82,37 @@ export class BookCartComponent implements OnInit {
  
     this.dataService.currentCartList.subscribe({
       next: (res: any) => {
-        this.cartItems = res;
+        if(localStorage.getItem("access_token")){
+          this.cartItems = res;
+          this.cartItems= this.cartItems.map(product=>product.product_id);
+          
+          console.log("check in book-cart of the currentcartlist if loggen IN",res,"cartitem", this.cartItems);
+        }
+        else{
+          this.cartItems = res;
+
+        }
         console.log('cartlist', res);
         console.log(this.cartItems);
       },
     });
-    // this.dataService.currentCartList.subscribe({
-    //   next:(res:any)=>{
-    //     console.log(res);
-    //     this.customerDetails=res[0].user_id.address;
+
+
+    this.dataService.currentCartList.subscribe({
+      next:(res:any)=>{
+        console.log("addd in ds ",res);
+        this.customerDetails=res[0].user_id.address;
+        this.customerDetails = this.customerDetails.map((addressData: any) => ({
+          ...addressData,
+          showFirstDiv: true
+        }));
+        console.log("cust",this.customerDetails);
        
-    //     this.customerDetails = this.customerDetails.map((addressData: any) => ({
-    //       ...addressData,
-    //       showFirstDiv: true
-    //     }));
-    //     console.log("cust",this.customerDetails);
-       
- 
-       
- 
-       
-    //     // this.dataService.updateCustomerAddressList( this.customerDetails);
-    //     console.log("add",res[0].user_id.address);
-    //   }
-    // })
+        // this.dataService.updateCustomerAddressList( this.customerDetails);
+        console.log("add",res[0].user_id.address);
+      }
+    })
+
   }
  
   PDenableEditing(): void {
@@ -156,10 +172,6 @@ export class BookCartComponent implements OnInit {
       this.customerAddType = officeItems.addressType;
       console.log(officeItems.fullAddress);
     }
- 
- 
- 
- 
    
   }
  
@@ -281,7 +293,6 @@ export class BookCartComponent implements OnInit {
         console.log('Item removed', res);
  
         this.cartItems = this.cartItems.filter((item) => item._id !== itemId);
-        this.dataService.updateCartList(this.cartItems);
       },
       error: (err: any) => {
         console.error('Error removing item', err);
@@ -290,3 +301,4 @@ export class BookCartComponent implements OnInit {
   }
 }
  
+
