@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { BookService } from 'src/app/services/book/book.service';
 import { DataService } from 'src/app/services/data/data.service';
 
@@ -27,28 +28,26 @@ export class BookCardComponent implements OnInit {
 
   constructor(
     private bookService: BookService,
-    private dataService: DataService
+    private dataService: DataService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
+
+    
+
     this.dataService.currentLoginState.subscribe({
       next: (res) => {
         this.currentState = res;
-        console.log("current state in card",this.currentState);
-        
+        // console.log("current state in card",this.currentState);
+        if(localStorage.getItem('access_token'))
+        this.fetchBookReviews();
       },
     });
 
     this.setRandomImage();
-
-    this.bookService.getBookReviews(this.bookDetails._id).subscribe({
-      next: (res: any) => {
-        this.feedbackList = res.result;
-        console.log(this.feedbackList);
-      },
-      error: (err) => console.log(err),
-    });
   }
+
   setRandomImage(): void {
     const randomIndex = Math.floor(Math.random() * this.imagesArray.length);
     this.randomImage = this.imagesArray[randomIndex];
@@ -68,5 +67,14 @@ export class BookCardComponent implements OnInit {
     let roundedAverage = Math.round(average * 2) / 2;
     
     return roundedAverage;
+  }
+
+  fetchBookReviews(): void {
+    this.bookService.getBookReviews(this.bookDetails._id).subscribe({
+      next: (res: any) => {
+        this.feedbackList = res.result;
+      },
+      error: (err) => console.log(err),
+    });
   }
 }

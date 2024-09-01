@@ -59,6 +59,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { DataService } from '../data/data.service';
  
 @Injectable({
   providedIn: 'root'
@@ -69,7 +70,10 @@ export class CartService {
   headers: any = {
     'x-access-token': localStorage.getItem('access_token')
   }
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+  private dataService:DataService
+
+  ) { }
  
   getCartItems(): Observable<any> {
     return this.http.get(`${this.baseUrl}get_cart_items`, {
@@ -80,6 +84,7 @@ export class CartService {
     return this.http.delete(`${this.baseUrl}remove_cart_item/${itemId}`, {
       headers: this.headers
     });
+    
   }
   addToCart(item: any): void {
     this.cartItems.push(item);

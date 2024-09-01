@@ -43,13 +43,25 @@ export class DataService {
   private cartList = new BehaviorSubject<any>([]);
   currentCartList = this.cartList.asObservable();
   updateCartList(data: any) {
-    console.log('sm', data);
+    // console.log('sm', data);
     this.cartList.next(data);
   }
+   currentList = this.cartList.getValue();
+
   addToCartList(newItems: any[]) {
-    const currentList = this.cartList.getValue();
-    const updatedList = currentList.concat(newItems);
+    const updatedList = this.currentList.concat(newItems);
     this.cartList.next(updatedList);
+  }
+
+  updateQuantityToCartList(quantity:any,obj:any){
+
+    this.currentList=this.currentList.map((e:any)=>{
+      if(e.product_id._id === obj.product_id._id)
+        e.quantityToBuy = quantity;
+      return e;
+    })
+
+    this.cartList.next(this.currentList);
   }
 
   private wishList = new BehaviorSubject<any>([]);

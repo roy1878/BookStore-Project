@@ -11,7 +11,13 @@ export class BookService {
     return this.httpService.GetApiCall('bookstore_user/get/book');
   }
 
+  getBookByIdApiCall(id:any){
+    return this.httpService.GetApiCall(`bookstore_user/get/book/${id}`)
+  }
+  
   getBookReviews(id: any) {
+    // console.log('yaha aa rha');
+    
     return this.httpService.GetApiCall(`bookstore_user/get/feedback/${id}`);
   }
   postReviews(id: any, data: any) {
@@ -33,14 +39,14 @@ export class BookService {
     return this.httpService.deleteAPICall(`bookstore_user/remove_wishlist_item/${id}`,id);
   }
 
-  postCartItem(id:any,data:any){
+  postCartItem(id:any){
     return this.httpService.PostAPICall(
-      `bookstore_user/add_cart_item/${id}`,
-      data
+      `bookstore_user/add_cart_item/${id}`, id
     );
   }
 
   putAddToCartQuantity(id: any, data: any) {
+    
     return this.httpService.PutAPICall(
       `bookstore_user/cart_item_quantity/${id}`,
       data

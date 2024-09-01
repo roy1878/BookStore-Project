@@ -33,6 +33,9 @@ export class HeaderComponent implements OnInit {
   currentRoute!: string;
   name: string = '';
   currentState!: string;
+  
+ BackendCartList:any[] = [];
+ DataServiceCartList:any[]=[];
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -90,15 +93,13 @@ export class HeaderComponent implements OnInit {
     this.dataService.currentLoginState.subscribe({
       next: (res) => {
         this.currentState = res;
-        console.log("current state",this.currentState);
-        
+        console.log('current state', this.currentState);
       },
     });
-    this.name = localStorage.getItem('name') || 'XYZ';
+    this.name = localStorage.getItem('name') || 'Alexa Martin';
     this.activatedRoute.url.subscribe((urlSegment) => {
       this.currentRoute = urlSegment.join('/');
-      console.log("current route:",this.currentRoute);
-      
+      console.log('current route:', this.currentRoute);
     });
 
     console.log('access_token: ', this.access_token);
@@ -107,21 +108,26 @@ export class HeaderComponent implements OnInit {
       this.isLoggedin = true;
     }
 
-    this.httpService.GetApiCall('bookstore_user/get_wishlist_items').subscribe({
-      next: (res: any) => {
-        // console.log('WishListBooks: ', res.result);
-        this.dataService.updateWishList(res.result);
-      },
-      error: (err) => console.log(err),
-    });
+    if (localStorage.getItem('access_token')) {
+      this.httpService
+        .GetApiCall('bookstore_user/get_wishlist_items')
+        .subscribe({
+          next: (res: any) => {
+            // console.log('WishListBooks: ', res.result);
+            this.dataService.updateWishList(res.result);
+          },
+          error: (err) => console.log(err),
+        });
 
-    this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
-      next: (res: any) => {
-        // console.log('CartListBooks: ', res);
-        this.dataService.updateCartList(res.result);
-      },
-      error: (err) => console.log(err),
-    });
+      this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
+        next: (res: any) => {
+          // console.log('CartListBooks: ', res);
+          this.dataService.updateCartList(res.result);
+        },
+        error: (err) => console.log(err),
+      });
+    }
+    
   }
 
   handleHeaderMenuClick(action: string) {
@@ -131,7 +137,6 @@ export class HeaderComponent implements OnInit {
     if (action == 'logo') {
       if (this.currentRoute == 'admin') {
         this.router.navigate(['admin']);
-
       } else this.router.navigate(['dashboard/books']);
     }
     if (action === 'profile') {
@@ -146,7 +151,9 @@ export class HeaderComponent implements OnInit {
     if (action == 'logout') {
       localStorage.clear();
       this.dataService.updateLoginState();
+
       this.isLoggedin = false;
+      this.dataService.updateCartList([]);
     }
     if (action == 'login') {
       this.openDialog();
@@ -169,4 +176,7 @@ export class HeaderComponent implements OnInit {
   handleSearch() {
     this.dataService.updateData(this.searchQuery);
   }
+  
+
 }
+
