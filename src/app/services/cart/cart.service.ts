@@ -78,6 +78,7 @@ export class CartService {
   getCartItems(): Observable<any> {
     return this.http.get(`${this.baseUrl}get_cart_items`, {
       headers: this.headers
+      
     });
   }
   removeFromCart(itemId: string): Observable<any> {

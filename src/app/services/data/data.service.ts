@@ -50,6 +50,8 @@ export class DataService {
 
   addToCartList(newItems: any[]) {
     const updatedList = this.currentList.concat(newItems);
+    console.log(this.currentList , updatedList);
+    
     this.cartList.next(updatedList);
   }
 
