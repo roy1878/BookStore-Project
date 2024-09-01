@@ -16,7 +16,7 @@ export class BookDetailsComponent implements OnInit {
   selectedBook: any = {};
   feedbackList: any = [];
   cartlist: any = [];
-  wishlist: any = [];
+  wishlist: any[] = [];
   rating: number = 0;
   questionId: number = 1;
   starsArray: any = [];
@@ -33,6 +33,7 @@ export class BookDetailsComponent implements OnInit {
   isWishListed: boolean = false;
   name: string = '';
   booklist = [];
+  wishlistObj: any = {};
   currentState: string = '';
 
   constructor(
@@ -44,18 +45,7 @@ export class BookDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dataService.currentWishList.subscribe({
-      next: (res: any) =>
-        // console.log('WishList:::::', res);
-        {
-          this.wishlist = res;
-          let data = res.find((e: any) => {
-            e.product_id._id === this.questionId;
-          });
-          if (data) this.isWishListed = true;
-          else this.isWishListed = false;
-        },
-    });
+    
 
     this.dataService.currentLoginState.subscribe({
       next: (res) => (this.currentState = res),
@@ -78,6 +68,20 @@ export class BookDetailsComponent implements OnInit {
         this.questionId = params['id'];
       });
 
+      this.dataService.currentWishList.subscribe({
+        next: (res: any) => {
+          console.log('WishList:::::', res);
+          this.wishlist = res;
+          let data = res.find((e: any) => {
+            return e.product_id._id === this.questionId;
+          });
+          console.log('wishlist ka data', data);
+  
+          if (data) this.isWishListed = true;
+          else this.isWishListed = false;
+        },
+      });
+
     if (localStorage.getItem('access_token')) {
       this.isLoggedIn = true;
     }
@@ -89,7 +93,7 @@ export class BookDetailsComponent implements OnInit {
         console.log('resss', res);
 
         this.isCartlisted = res.find((e: any) => {
-          return e.product_id._id === this.questionId;
+          return e._id === this.questionId;
         });
 
         if (this.isCartlisted) this.quantity = this.isCartlisted.quantityToBuy;
@@ -186,12 +190,32 @@ export class BookDetailsComponent implements OnInit {
   }
 
   handleWishlistBtn() {
+   
+
     if (!this.isLoggedIn) {
       this.openDialog();
+      return
     }
+
+    this.wishlistObj = {
+      product_id: {
+        _id: this.selectedBook._id,
+        description: this.selectedBook.description,
+        author: this.selectedBook.author,
+        bookName: this.selectedBook.bookName,
+        price: this.selectedBook.price,
+        discountPrice: this.selectedBook.discountPrice,
+        quantity: this.selectedBook.quantity,
+        admin_user_id: this.selectedBook.admin_user_id,
+      },
+      quantityToBuy: this.localQuantity,
+      user_id: {}, 
+    };
     this.bookService.postWishlistBook(this.questionId).subscribe({
       next: (res: any) => {
-        console.log(res);
+        console.log("dataaa:",res);
+        this.dataService.updateWishList([...this.wishlist, this.wishlistObj]);
+        this.isWishListed = true;
       },
       error: (err) => console.log('err: ', err),
     });
@@ -218,7 +242,7 @@ export class BookDetailsComponent implements OnInit {
           author: bookdata.author,
           bookName: bookdata.bookName,
           price: bookdata.price,
-          discountedPrice: bookdata.discountedPrice,
+          discountPrice: bookdata.discountPrice,
           quantity: bookdata.quantity,
           admin_user_id: bookdata.admin_user_id,
         },
@@ -281,7 +305,7 @@ export class BookDetailsComponent implements OnInit {
           author: bookdata.author,
           bookName: bookdata.bookName,
           price: bookdata.price,
-          discountedPrice: bookdata.discountedPrice,
+          discountPrice: bookdata.discountPrice,
           quantity: this.quantity,
           admin_user_id: bookdata.admin_user_id,
         },

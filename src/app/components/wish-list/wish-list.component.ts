@@ -6,58 +6,57 @@ import { DataService } from 'src/app/services/data/data.service';
 @Component({
   selector: 'app-wish-list',
   templateUrl: './wish-list.component.html',
-  styleUrls: ['./wish-list.component.scss']
+  styleUrls: ['./wish-list.component.scss'],
 })
 export class WishListComponent implements OnInit {
-  wishCardLists:any[]=[];
-  AddressList:any[]=[];
-  showDiv:boolean=false;
+  wishCardLists: any[] = [];
+  AddressList: any[] = [];
+  showDiv: boolean = false;
 
-  constructor(private dataService:DataService, private bookService:BookService,private route:Router) { }
+  constructor(
+    private dataService: DataService,
+    private bookService: BookService,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
-    console.log("on ng onit of wishlist");
-    this.dataService.currentWishList.subscribe((res)=>{
-      this.wishCardLists=res;
-      console.log("wishlist",res);
-      this.wishCardLists=this.wishCardLists.filter((ele)=>ele.product_id!=null);
-      setTimeout(()=>{
-        if(this.wishCardLists.length==0) this.showDiv=true;
-        console.log("Filterwishlist",this.wishCardLists);
-
-      },600);
-    })
-
-    
+    console.log('on ng onit of wishlist');
+    this.dataService.currentWishList.subscribe((res) => {
+      this.wishCardLists = res;
+      console.log('wishlist', res);
+      this.wishCardLists = this.wishCardLists.filter(
+        (ele) => ele._id != null || ele.product_id._id != null
+      );
+      setTimeout(() => {
+        if (this.wishCardLists.length == 0) this.showDiv = true;
+        else console.log('Filterwishlist', this.wishCardLists);
+      }, 600);
+    });
   }
 
-  handleDeleteIcon(id:any){
-    
-    this.wishCardLists=this.wishCardLists.filter((ele)=>ele.product_id._id!=id);
-    if(this.wishCardLists.length==0) {
-      this.showDiv=true;
-      console.log("no wish card",this.wishCardLists)
+  handleDeleteIcon(id: any) {
+    this.wishCardLists = this.wishCardLists.filter(
+      (ele) => ele.product_id._id != id
+    );
+    if (this.wishCardLists.length == 0) {
+      this.showDiv = true;
+      console.log('no wish card', this.wishCardLists);
     }
     this.bookService.deleteWishListItem(id).subscribe({
-      next:(res:any)=>{
-        console.log("Dlt res", res);
+      next: (res: any) => {
+        console.log('Dlt res', res);
 
-        console.log("id deleted is : ",id);
+        console.log('id deleted is : ', id);
+        this.wishCardLists =  this.wishCardLists.filter((e:any)=>e.product_id._id !== id)
+        this.dataService.updateWishList(this.wishCardLists);
       },
-      error:(err:any)=>{
-
-      }
+      error: (err: any) => {
+        console.log(err);
+      },
     });
-
-    
-    
-    
-
   }
 
-  navigateHome(){
+  navigateHome() {
     this.route.navigate(['/dashboard/books']);
-
   }
-
 }
