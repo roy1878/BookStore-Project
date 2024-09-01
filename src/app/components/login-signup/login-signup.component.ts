@@ -102,13 +102,12 @@ export class LoginSignupComponent implements OnInit {
 
           this.dialog.closeAll();
 
-          if(this.currentState == 'loggedIn')
-           this.functionUpdateServices();
+          //  this.functionUpdateServices();
 
           //  ***
           this.cartService.getCartItems().subscribe({
             next:(res)=>{
-              this.BackendCartList.push(res.result);
+              this.BackendCartList = res.result;
               console.log("BackendList:" ,res.result);
               
             }
@@ -121,83 +120,82 @@ export class LoginSignupComponent implements OnInit {
         },
       });
   }
-  // functionUpdateServices() {
-    
-  //   if (!this.DataServiceCartList || this.DataServiceCartList.length === 0) {
-  //     this.dataService.updateCartList(this.BackendCartList);
+  functionUpdateServices() {
+    if (!this.DataServiceCartList || this.DataServiceCartList.length === 0) {
+      this.dataService.addToCartList(this.BackendCartList);
 
-  //   } else if (this.BackendCartList.length === 0) {
-  //     for (let dataServiceItem of this.DataServiceCartList) {
-  //       this.bookService
-  //         .postCartItem(dataServiceItem.product_id._id)
-  //         .subscribe({
-  //           next: (res: any) => {
-  //             console.log('Item posted: ', res);
-  //           },
-  //           error: (err) => console.log(err),
-  //         });
-  //     }
-  //   } else {
-  //     for (let dataServiceItem of this.DataServiceCartList) {
-  //       let backendItem = this.BackendCartList.find(
-  //         (item: any) => item.product_id._id === dataServiceItem.product_id._id
-  //       );
+    } else if (this.BackendCartList.length === 0) {
+      for (let dataServiceItem of this.DataServiceCartList) {
+        this.bookService
+          .postCartItem(dataServiceItem.product_id._id)
+          .subscribe({
+            next: (res: any) => {
+              console.log('Item posted: ', res);
+            },
+            error: (err) => console.log(err),
+          });
+      }
+    } else {
+      for (let dataServiceItem of this.DataServiceCartList) {
+        let backendItem = this.BackendCartList.find(
+          (item: any) => item.product_id._id === dataServiceItem.product_id._id
+        );
 
-  //       if (backendItem) {
-  //         let mergeQuantity =
-  //           dataServiceItem.quantityToBuy + backendItem.quantityToBuy;
+        if (backendItem) {
+          let mergeQuantity =
+            dataServiceItem.quantityToBuy + backendItem.quantityToBuy;
 
-  //         if (this.currentState == 'loggedIn') {
-  //           console.log('ayyaaaa: ');
+          if (this.currentState == 'loggedIn') {
+            console.log('ayyaaaa: ');
 
-  //           dataServiceItem = this.BackendCartList.find((e: any) => {
-  //             return e.product_id._id === dataServiceItem.product_id._id;
-  //           });
+            dataServiceItem = this.BackendCartList.find((e: any) => {
+              return e.product_id._id === dataServiceItem.product_id._id;
+            });
 
-  //           this.bookService
-  //             .putAddToCartQuantity(dataServiceItem._id, {
-  //               quantityToBuy: mergeQuantity,
-  //             })
-  //             .subscribe({
-  //               next: (res: any) => {
-  //                 console.log('Quantity updated: ', res);
-  //               },
-  //               error: (err) => console.log(err),
-  //             });
+            this.bookService
+              .putAddToCartQuantity(dataServiceItem._id, {
+                quantityToBuy: mergeQuantity,
+              })
+              .subscribe({
+                next: (res: any) => {
+                  console.log('Quantity updated: ', res);
+                },
+                error: (err) => console.log(err),
+              });
 
-  //           this.dataService.updateQuantityToCartList(
-  //             mergeQuantity,
-  //             dataServiceItem
-  //           );
+            this.dataService.updateQuantityToCartList(
+              mergeQuantity,
+              dataServiceItem
+            );
 
-  //           this.BackendCartList = this.BackendCartList.map((item: any) => {
-  //             const matchingItem = this.DataServiceCartList.find(
-  //               (dataItem) => dataItem.product_id._id === item.product_id._id
-  //             );
-  //             if (matchingItem) {
-  //               item.quantityToBuy = mergeQuantity;
-  //             }
-  //             return item;
-  //           });
-  //         }
-  //       } else {
-  //         this.bookService
-  //           .postCartItem(dataServiceItem.product_id._id)
-  //           .subscribe({
-  //             next: (res) => console.log('added to backend', res),
-  //           });
-  //       }
-  //     }
+            this.BackendCartList = this.BackendCartList.map((item: any) => {
+              const matchingItem = this.DataServiceCartList.find(
+                (dataItem) => dataItem.product_id._id === item.product_id._id
+              );
+              if (matchingItem) {
+                item.quantityToBuy = mergeQuantity;
+              }
+              return item;
+            });
+          }
+        } else {
+          this.bookService
+            .postCartItem(dataServiceItem.product_id._id)
+            .subscribe({
+              next: (res) => console.log('added to backend', res),
+            });
+        }
+      }
 
-  //     const updateList: any = this.BackendCartList.filter((item: any) => {
-  //       return !this.DataServiceCartList.some(
-  //         (dataItem) => dataItem.product_id._id === item.product_id._id
-  //       );
-  //     });
+      const updateList: any = this.BackendCartList.filter((item: any) => {
+        return !this.DataServiceCartList.some(
+          (dataItem) => dataItem.product_id._id === item.product_id._id
+        );
+      });
 
-  //     this.dataService.addToCartList(updateList);
-  //   }
-  // }
+      this.dataService.addToCartList(updateList);
+    }
+  }
 
   userRegister() {
     if (this.registerForm.invalid) {
@@ -225,74 +223,4 @@ export class LoginSignupComponent implements OnInit {
       },
     });
   }
-
-
-  functionUpdateServices() {
-    if (this.currentState != 'loggedIn') {
-      
-      return; // Exit early if the user is not logged in
-    }
-  
-    if (!this.DataServiceCartList || this.DataServiceCartList.length === 0) {
-      // If local cart is empty, update backend cart with local cart
-      this.dataService.updateCartList(this.BackendCartList);
-    } else if (this.BackendCartList.length === 0) {
-      // If backend cart is empty, add all items from local cart to backend cart
-      for (let dataServiceItem of this.DataServiceCartList) {
-        this.bookService.postCartItem(dataServiceItem.product_id._id).subscribe({
-          next: (res: any) => {
-            console.log('Item posted: ', res);
-          },
-          error: (err) => console.log(err),
-        });
-      }
-    } else {
-      // If both carts have items, update quantities or add new items
-      for (let dataServiceItem of this.DataServiceCartList) {
-        let backendItem = this.BackendCartList.find(
-          (item: any) => item.product_id._id === dataServiceItem.product_id._id
-        );
-  
-        if (backendItem) {
-          // If item exists in both carts, update the quantity
-          let mergeQuantity = dataServiceItem.quantityToBuy + backendItem.quantityToBuy;
-  
-          this.bookService.putAddToCartQuantity(backendItem._id, {
-            quantityToBuy: mergeQuantity,
-          }).subscribe({
-            next: (res: any) => {
-              console.log('Quantity updated: ', res);
-            },
-            error: (err) => console.log(err),
-          });
-  
-          this.dataService.updateQuantityToCartList(mergeQuantity, backendItem);
-  
-          // Update the quantity in the backend cart list
-          this.BackendCartList = this.BackendCartList.map((item: any) => {
-            if (item.product_id._id === backendItem.product_id._id) {
-              item.quantityToBuy = mergeQuantity;
-            }
-            return item;
-          });
-        } else {
-          // If item does not exist in backend cart, add it
-          this.bookService.postCartItem(dataServiceItem.product_id._id).subscribe({
-            next: (res) => console.log('Item added to backend: ', res),
-            error: (err) => console.log(err),
-          });
-        }
-      }
-  
-      // Add items from backend cart that are not in local cart to the local cart
-      const updateList: any = this.BackendCartList.filter((item: any) => {
-        return !this.DataServiceCartList.some(
-          (dataItem) => dataItem.product_id._id === item.product_id._id
-        );
-      });
-  
-      this.dataService.addToCartList(updateList);
-    }
-  }
-  
 }
