@@ -131,9 +131,6 @@ export class HeaderComponent implements OnInit {
   }
 
   handleHeaderMenuClick(action: string) {
-    if (action === 'user') {
-      this.router.navigate(['dashboard/books']);
-    }
     if (action == 'logo') {
       if (this.currentRoute == 'admin') {
         this.router.navigate(['admin']);
@@ -164,13 +161,17 @@ export class HeaderComponent implements OnInit {
     if (action == 'admin-login') {
       this.router.navigate(['admin']);
     }
-    if (action == 'add-book') this.router.navigate(['admin/add-book']);
+    if (action == 'add-book')
+      if(!localStorage.getItem('admin_token'))
+       this.openDialog();
+      else
+      this.router.navigate(['admin/add-book'])
   }
 
   openDialog(): void {
     this.dialog.open(LoginSignupComponent, {
-      width: '60%',
-      height: '500px',
+      width: '70%',
+    
     });
   }
   handleSearch() {
