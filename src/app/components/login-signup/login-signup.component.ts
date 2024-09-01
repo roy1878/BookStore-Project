@@ -49,10 +49,13 @@ export class LoginSignupComponent implements OnInit {
         }
       },
     });
+    
 
-    this.cartService.getCartItems().subscribe({
-      next: (res) => (this.BackendCartList = res.result),
-    });
+     
+   
+      
+      
+    
 
     this.dataService.currentCartList.subscribe({
       next: (res) => {
@@ -106,9 +109,17 @@ export class LoginSignupComponent implements OnInit {
 
           this.dialog.closeAll();
 
-          //  this.functionUpdateServices();
+          if(this.currentState == 'loggedIn')
+           this.functionUpdateServices();
 
           //  ***
+          this.cartService.getCartItems().subscribe({
+            next:(res)=>{
+              this.BackendCartList.push(res.result);
+              console.log("BackendList:" ,res.result);
+              
+            }
+          })
 
           // window.location.reload();
         },
@@ -145,6 +156,7 @@ export class LoginSignupComponent implements OnInit {
 
     if (!this.DataServiceCartList || this.DataServiceCartList.length === 0) {
       this.dataService.updateCartList(this.BackendCartList);
+
     } else if (this.BackendCartList.length === 0) {
       for (let dataServiceItem of this.DataServiceCartList) {
         this.bookService
@@ -183,8 +195,11 @@ export class LoginSignupComponent implements OnInit {
                 },
                 error: (err) => console.log(err),
               });
-              
-              this.dataService.updateQuantityToCartList(mergeQuantity,dataServiceItem);
+
+            this.dataService.updateQuantityToCartList(
+              mergeQuantity,
+              dataServiceItem
+            );
 
             this.BackendCartList = this.BackendCartList.map((item: any) => {
               const matchingItem = this.DataServiceCartList.find(
@@ -206,8 +221,8 @@ export class LoginSignupComponent implements OnInit {
       }
 
       const updateList: any = this.BackendCartList.filter((item: any) => {
-        return !this.DataServiceCartList.some((dataItem) => 
-          dataItem.product_id._id === item.product_id._id
+        return !this.DataServiceCartList.some(
+          (dataItem) => dataItem.product_id._id === item.product_id._id
         );
       });
 

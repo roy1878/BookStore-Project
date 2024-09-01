@@ -50,10 +50,14 @@ export class DataService {
 
   addToCartList(newItems: any[]) {
     const updatedList = this.currentList.concat(newItems);
+    console.log(this.currentList , updatedList);
+    
     this.cartList.next(updatedList);
   }
 
   updateQuantityToCartList(quantity:any,obj:any){
+    console.log(".....check quantity in DS");
+    console.log("cartlist in ds before quantity update",  this.currentList);
 
     this.currentList=this.currentList.map((e:any)=>{
       if(e.product_id._id === obj.product_id._id)
@@ -62,6 +66,7 @@ export class DataService {
     })
 
     this.cartList.next(this.currentList);
+    console.log("cartlist in ds after quantity update", this.currentList);
   }
 
   private wishList = new BehaviorSubject<any>([]);
