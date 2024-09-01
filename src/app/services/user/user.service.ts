@@ -5,9 +5,16 @@ import { log } from 'console';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
 
+
+
   constructor(private httpService :HttpService) { }
+
+  header: any = {
+    'x-access-token': localStorage.getItem(`admin_token`) || '',
+  };
 
   loginAPICall(data:any){
     return this.httpService.PostAPICall('bookstore_user/login',data);
@@ -27,7 +34,7 @@ export class UserService {
  // for admin
  addBookAPICall(data:any){
   console.log("admin",data);
-  return this.httpService.PostAPICall('bookstore_user/admin/add/book', data);
+  return this.httpService.PostAdminAPICall('bookstore_user/admin/add/book', data);
  }
  
 
