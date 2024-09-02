@@ -1,19 +1,12 @@
 .footer {
-    
-    width: calc(100% - 150px);
-    height: 40px;
-    background: #2E1D1E 0% 0% no-repeat padding-box;
+    background-color: #2E1D1E;
+    width: 89%;
+    height: 5%;
+    padding: 1%;
     color: rgb(204, 204, 204);
-    h3{
-        margin: 0;
-    }
-    padding: 0;
-    padding-left: 150px;
-     
+    padding-left: 10%;
+    margin-top: 3%;
 }
-
-
-
 
 @media (max-width: 768px) {
     .footer {
