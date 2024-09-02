@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../http/http.service';
 import { log } from 'console';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,6 +40,7 @@ export class UserService {
  
 
  adminAPICall(data:any){
+  console.log("admin");
   return this.httpService.PostAPICall('bookstore_user/admin/login',data);
  }
 

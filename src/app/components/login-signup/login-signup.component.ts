@@ -144,7 +144,9 @@ export class LoginSignupComponent implements OnInit {
           console.log('response', res);
           localStorage.setItem('access_token', res.result.accessToken);
           console.log('access_token', res.result.accessToken);
-
+          localStorage.setItem("name", 'Alexa Martin');
+        localStorage.setItem("mobile",'1234567890');
+        localStorage.setItem("email",email);
           // this.router.navigate(["./dashboard/books"]);
           // this.dialog.closeAll();
           // *****
@@ -182,6 +184,9 @@ export class LoginSignupComponent implements OnInit {
         },
       });
   }
+
+
+  
   adminLogin() {
     if (this.loginForm.invalid) return;
     const { email, password } = this.loginForm.value;

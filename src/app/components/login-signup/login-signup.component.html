@@ -26,12 +26,11 @@
                                     <label>Password</label>
                                     <mat-form-field appearance="outline">
                                         <input formControlName="password" matInput type="password">
-                                        
                                     </mat-form-field>
                                 </div>
 
-                                <button mat-raised-button (click)="login()" class="login-btn">Login</button>
-                                 
+                                <button mat-raised-button (click)="login()"  class="login-btn">Login</button>
+
                                 <button mat-button class="forgot-btn" (click)="forgotPassword()">Forgot Password?</button>
 
                                 <div class="or-separator">OR</div>
@@ -60,8 +59,6 @@
                                 <mat-form-field appearance="outline">
                                     <input formControlName="phone" matInput type="tel">
                                 </mat-form-field>
-
-
                                 <button style="width: 100%;background-color:#A03037;color:white; height: 40px;" mat-raised-button (click)="userRegister()">Sign
                                     Up</button>
                             </form>
