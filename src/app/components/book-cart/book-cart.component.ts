@@ -1,4 +1,5 @@
 import { Component, OnInit,EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
 @Component({
@@ -8,9 +9,7 @@ import { DataService } from 'src/app/services/data/data.service';
 })
 export class BookCartComponent implements OnInit {
   @Output() checkoutEvent = new EventEmitter<void>();
-  onCheckout(): void {
-    this.checkoutEvent.emit();
-  }
+  
   isCart2Visible = false;
   isCard2Visible=true;
   isCart3Visible=false;
@@ -21,7 +20,8 @@ export class BookCartComponent implements OnInit {
  
   cartItems: any[] = [];
 
-  constructor(private cartService: CartService,private dataService: DataService) { }
+  constructor(private cartService: CartService,private dataService: DataService,private route:Router) { }
+ 
   hideBtn1(){
     this.isBtnVisible=false;
   }
@@ -29,6 +29,7 @@ export class BookCartComponent implements OnInit {
   hideBtn2(){
     this.isBtnVisible2=false;
   }
+
 
 
   showCart2() {
@@ -71,17 +72,46 @@ export class BookCartComponent implements OnInit {
   }
 
 
-  removeCartItem(itemId: string) {
-    this.cartService.removeFromCart(itemId).subscribe({
-      next: (res: any) => {
-        console.log('Item removed', res);
+  // removeCartItem(itemId: string) {
+  //   this.cartService.removeFromCart(itemId).subscribe({
+  //     next: (res: any) => {
+  //       console.log('Item removed', res);
        
-        this.cartItems = this.cartItems.filter(item => item._id !== itemId);
-      },
-      error: (err: any) => {
-        console.error('Error removing item', err);
-      }
-    });
-  }
+  //       this.cartItems = this.cartItems.filter(item => item._id !== itemId);
+  //     },
+  //     error: (err: any) => {
+  //       console.error('Error removing item', err);
+  //     }
+  //   });
+  // }
+
+
+  // onCheckout(): void {
+  //   // this.checkoutEvent.emit();
+  //   console.log("start checkout");
+  //   this.dataService.updateOrderList(this.cartItems);
+    
+  
+    
+  //   for(let items of this.cartItems){
+  //     console.log("deleting",items);
+  //     this.cartService.removeFromCart(items._id).subscribe({
+  //       next:(res:any)=>{
+  //         console.log("dlt",res);
+  //         this.dataService.updateCartList([]);
+
+  //       },
+  //       error: (err: any) => {
+  //         console.error("error deleting", err);
+  //     }
+  
+  //     })
+      
+  //   }
+
+  //   this.route.navigate(['/dashboard/orderlist']);
+  //   console.log("end checkout");
+   
+  // }
 
 }

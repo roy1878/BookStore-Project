@@ -1,7 +1,7 @@
 
 <div class="div">
-<div (checkoutEvent)="checkout()" *ngIf="isLoggedIn; else notLoggedIn">
-  <div *ngIf="showCartList">
+<div >
+  <div >
     <div class="card2" *ngFor="let item of cartItems">
       <div class="img-head">
         <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
@@ -19,9 +19,11 @@
 </div>
 </div>
 
-<ng-template #notLoggedIn>
-  <div class="card">
-   
-    <button (click)="redirectToBooks()">Shop Now</button>
+<div class="please-login-in" *ngIf="showLogin==true" (click)="login()">
+  <h1>PLEASE LOG IN</h1>
+  <p>Login to view in your wishlist</p>
+  <img src="../../../assets/order-list.png" alt="" >
+  <div class="login-signup">
+      LOGIN/SIGNUP
   </div>
-</ng-template>
+</div>

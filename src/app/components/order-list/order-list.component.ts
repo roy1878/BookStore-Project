@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataService } from 'src/app/services/data/data.service';
+import { LoginSignupComponent } from '../login-signup/login-signup.component';
 
 @Component({
   selector: 'app-order-list',
@@ -9,6 +11,7 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements OnInit {
+  showLogin:boolean=false;
   cartItems: any[] = [];
   showCartList: boolean = false;
   isLoggedIn: boolean = false; // Replace with actual login check
@@ -16,20 +19,33 @@ export class OrderListComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    public dialog:MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.dataService.currentCartList.subscribe({
+    this.dataService.currentOrderList.subscribe({
       next: (res: any) => {
         this.cartItems = res;
-        console.log("cartlist", res);
+        console.log("cartlist in orderlist", res);
         console.log(this.cartItems);
+        if(!localStorage.getItem("access_token")) this.showLogin=true;
       }
     });
 
     // Check if user is logged in
     this.isLoggedIn = this.checkLoginStatus();
+  }
+  openDialog(): void {
+    this.dialog.open(LoginSignupComponent, {
+      width: '60%',
+      height: '500px',
+    });
+  }
+ 
+  login(){
+    this.openDialog();
+ 
   }
 
   checkout(): void {

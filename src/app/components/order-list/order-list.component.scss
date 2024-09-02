@@ -68,7 +68,7 @@
 
 /* Ensure the main content area takes at least the full height of the viewport minus the footer height */
 .div{
-    min-height: calc(100vh - 100px); /* Adjust 100px to the actual height of your footer */
+    min-height: calc(51vh - 100px); /* Adjust 100px to the actual height of your footer */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -83,4 +83,29 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+.login-signup{
+    width: 127px;
+height: 33px;
+text-align: left;
+font: normal normal normal 12px/16px Roboto;
+letter-spacing: 0px;
+color: #A03037;
+border: 1px solid #A03037;
+border-radius: 2px;
+opacity: 1;
+align-content: center;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+}
+ 
+.please-login-in{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
 }
