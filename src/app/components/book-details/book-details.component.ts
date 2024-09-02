@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
 import { LoginSignupComponent } from '../login-signup/login-signup.component';
@@ -13,6 +13,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./book-details.component.scss'],
 })
 export class BookDetailsComponent implements OnInit {
+
   selectedBook: any = {};
   feedbackList: any = [];
   cartlist: any = [];
@@ -35,13 +36,15 @@ export class BookDetailsComponent implements OnInit {
   booklist = [];
   wishlistObj: any = {};
   currentState: string = '';
+  selectedIndex:number=0;
 
   constructor(
     private activeRoute: ActivatedRoute,
     private bookService: BookService,
     public dialog: MatDialog,
     private dataService: DataService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export class BookDetailsComponent implements OnInit {
       next: (res: any) => {
         this.booklist = res.result;
         console.log('booklist', this.booklist);
+        this.selectedIndex = this.booklist.findIndex( (e: any) => e._id === this.questionId)
         this.selectedBook = this.booklist.find(
           (e: any) => e._id === this.questionId
         );
@@ -342,6 +346,10 @@ export class BookDetailsComponent implements OnInit {
       this.quantity = this.localQuantity;
     }
   }
+
+  handleHomeBtn() {
+    this.router.navigate(['/'])
+    }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
