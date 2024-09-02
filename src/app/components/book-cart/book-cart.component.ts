@@ -38,6 +38,7 @@ isCardVisible=false;
   editCard: boolean = false;
   displaySpan: boolean = false;
   showShopNowCard: boolean = false;
+  firstForm:boolean=false;
   constructor(
     private dataService: DataService,
     private route: Router,
@@ -219,7 +220,8 @@ isCardVisible=false;
   }
 
   add_new_add() {
-    this.showFirstDiv = !this.showFirstDiv;
+    // this.showFirstDiv = !this.showFirstDiv;
+    this.firstForm=true;
   }
 
   count: number = 1;
@@ -322,6 +324,68 @@ isCardVisible=false;
     this.cartItems = newCartItems;
     localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     this.checkCart();
+  }
+
+//  removeCartItem(itemId: string) {
+//     this.cartService.removeFromCart(itemId).subscribe({
+//       next: (res: any) => {
+//         console.log('Item removed', res);
+       
+//         this.cartItems = this.cartItems.filter(item => item._id !== itemId);
+//       },
+//       error: (err: any) => {
+//         console.error('Error removing item', err);
+//       }
+//     });
+//   }
+
+
+  onCheckout(): void {
+    // this.checkoutEvent.emit();
+    console.log("start checkout");
+    this.dataService.updateOrderList(this.cartItems);
+    
+  
+    
+    for(let items of this.cartItems){
+      console.log("deleting",items);
+      this.cartService.removeFromCart(items._id).subscribe({
+        next:(res:any)=>{
+          console.log("dlt",res);
+          this.dataService.updateCartList([]);
+
+        },
+        error: (err: any) => {
+          console.error("error deleting", err);
+      }
+  
+      })
+      
+    }
+
+    this.route.navigate(['/dashboard/order-placed']);
+    console.log("end checkout");
+   
+  }
+
+  saveNewForm(){
+    let customerDetail= {
+      "addressType": this.customerAddType,
+      "fullAddress": this.customerAddress,
+      "city": this.customerCity,
+      "state": this.customerState,
+      "showFirstDiv": true
+    }
+
+    // this.userService.updateCustomerDetails(this.customerDetails).subscribe({
+    //   next: (res: any) => {
+    //     console.log("Customer address update res ", res);
+    //   }
+    // })
+    this.customerDetails=[... this.customerDetails,customerDetail];
+    // this.showFirstDiv = !this.showFirstDiv;
+
+    this.firstForm=false;
   }
  
 }
