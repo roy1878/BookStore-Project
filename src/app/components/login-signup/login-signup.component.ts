@@ -159,7 +159,7 @@ export class LoginSignupComponent implements OnInit {
 
           //     this.router.navigate([this.router.url]);
           //   });
-
+            window.location.reload();
           this.dialog.closeAll();
 
           //  this.functionUpdateServices();
@@ -212,7 +212,8 @@ export class LoginSignupComponent implements OnInit {
   }
 
   forgotPassword() {
-    this.router.navigate(['dashboard/books']);
+    this.dialog.closeAll();
+    this.router.navigate(['forgot-password']);
   }
   userRegister() {
     if (this.registerForm.invalid) {

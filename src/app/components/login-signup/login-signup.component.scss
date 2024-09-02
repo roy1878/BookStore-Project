@@ -141,3 +141,13 @@ mat-form-field {
 .signup-body{
   padding-top: 3rem;
 }
+
+
+@media(min-width:200px) and (max-width:700px){
+  .main-cnt{
+    height: 100%;
+  }
+  .image-container{
+    display: none;
+  }
+}
