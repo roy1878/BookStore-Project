@@ -159,7 +159,7 @@ export class LoginSignupComponent implements OnInit {
 
           //     this.router.navigate([this.router.url]);
           //   });
-            window.location.reload();
+            // window.location.reload();
           this.dialog.closeAll();
 
           //  this.functionUpdateServices();
@@ -347,10 +347,10 @@ export class LoginSignupComponent implements OnInit {
           console.log('POST:', item.product_id._id, item.product_id._id);
           this.bookService.postCartItem(item.product_id._id).subscribe({
             next: (res:any) => {
-              console.log(res);
+              console.log("posted:",res);
               if(this.currentState == 'loggedIn')
               this.cartService.updateCartItemQuantity(res.result._id,item.quantityToBuy).subscribe({
-                next:(res)=>console.log(res)
+                next:(res)=>console.log("Backend updated:",res)
                 
               })
             },

@@ -24,6 +24,7 @@ isCardVisible=false;
   isBtnVisible2 = true;
   cartItemId: string = 'cartlist._id';
   cartItems: any[] = [];
+  currentState !:string;
  
   PDisDisabled: boolean = true;
   CDisDisabled: boolean = false;
@@ -56,7 +57,7 @@ isCardVisible=false;
   }
 
   handleButtonClick() {
-    if (this.isLoggedIn) {
+    if (this.currentState == 'loggedIn') {
       this.showCart2();
     } else if (this.cartItems.length > 0) {
       this.redirectToLogin();
@@ -72,9 +73,9 @@ isCardVisible=false;
   }
   
   getButtonText(): string {
-    if (this.isLoggedIn) {
+    if ( this.currentState == 'loggedIn') {
       return 'Place Order';
-    } else if (this.cartItems.length > 0) {
+    } else if (this.cartItems.length > 0 && this.currentState == 'loggedOut') {
       return 'Login to Shop';
     } else {
       return 'Shop Now';
@@ -109,6 +110,9 @@ isCardVisible=false;
   ngOnInit(): void {
     this.loadCartItems();
    
+    this.dataService.currentLoginState.subscribe({
+      next:(res)=>this.currentState = res
+    })
     
     if (localStorage.getItem('access_token')) {
       this.isLoggedIn = true;
