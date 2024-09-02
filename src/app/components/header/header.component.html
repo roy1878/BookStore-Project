@@ -65,7 +65,7 @@
                 class="menu-button-item"
                 (click)="handleHeaderMenuClick('profile')"
               >
-                <mat-icon svgIcon="profile"></mat-icon> Profile
+                <mat-icon svgIcon="profile">Profile</mat-icon> 
               </button>
               <button
                 class="menu-button-item"
@@ -98,8 +98,8 @@
       </div>
 
       <div class="header-btns"  (click)="handleHeaderMenuClick('cartlist')" *ngIf="currentRoute != 'admin'">
-        <mat-icon svgIcon="cart"></mat-icon>
-        <button>Cart</button>
+        <mat-icon matBadge={{cartLength}} svgIcon="cart"></mat-icon>Cart
+       
       </div>
     </div>
   </div>

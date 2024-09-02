@@ -205,7 +205,7 @@ export class LoginSignupComponent implements OnInit {
           window.location.reload();
           this.dialog.closeAll();
         },
-        error: (err) => {
+        error: (err) => {  
           console.log('error:', err);
         },
       });

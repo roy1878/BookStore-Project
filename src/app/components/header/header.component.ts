@@ -33,9 +33,11 @@ export class HeaderComponent implements OnInit {
   currentRoute!: string;
   name: string = '';
   currentState!: string;
+  hidden = false;
   
  BackendCartList:any[] = [];
  DataServiceCartList:any[]=[];
+  cartLength: number = 0;
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -88,6 +90,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+   
+
     console.log("on ngOnInit of Header")
     this.dataService.updateLoginState();
     this.dataService.currentLoginState.subscribe({
@@ -122,12 +127,25 @@ export class HeaderComponent implements OnInit {
       this.httpService.GetApiCall('bookstore_user/get_cart_items').subscribe({
         next: (res: any) => {
           // console.log('CartListBooks: ', res);
+          
           this.dataService.updateCartList(res.result);
         },
         error: (err) => console.log(err),
       });
+      this.dataService.currentCartList.subscribe({
+        next:(res)=>{
+          this.cartLength =res.length;
+          console.log("resssssss",res,this.cartLength);
+          
+        }
+      })
     }
     
+  }
+  
+
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
   }
 
   handleHeaderMenuClick(action: string) {
