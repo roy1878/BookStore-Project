@@ -347,6 +347,7 @@ export class LoginSignupComponent implements OnInit {
           this.bookService.postCartItem(item.product_id._id).subscribe({
             next: (res:any) => {
               console.log(res);
+              if(this.currentState == 'loggedIn')
               this.cartService.updateCartItemQuantity(res.result._id,item.quantityToBuy).subscribe({
                 next:(res)=>console.log(res)
                 

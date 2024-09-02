@@ -40,8 +40,9 @@ export class BookCardComponent implements OnInit {
       next: (res) => {
         this.currentState = res;
         // console.log("current state in card",this.currentState);
-        if(localStorage.getItem('access_token'))
-        this.fetchBookReviews();
+        if(localStorage.getItem('access_token')){
+          this.getAvgRating();
+        this.fetchBookReviews();}
       },
     });
 
