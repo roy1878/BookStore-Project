@@ -20,7 +20,8 @@ export class OrderListComponent implements OnInit {
     private cartService: CartService,
     private dataService: DataService,
     private router: Router,
-    public dialog:MatDialog
+    public dialog:MatDialog,
+    private route:Router
   ) { }
 
   ngOnInit(): void {
@@ -60,5 +61,10 @@ export class OrderListComponent implements OnInit {
     // Implement your login check logic here
     // For example, check if a token exists in local storage
     return !!localStorage.getItem('userToken');
+  }
+
+  navigateHome() {
+    this.route.navigate(['/dashboard/books']);
+ 
   }
 }

@@ -68,7 +68,7 @@
 
 /* Ensure the main content area takes at least the full height of the viewport minus the footer height */
 .div{
-    min-height: calc(51vh - 100px); /* Adjust 100px to the actual height of your footer */
+    min-height: calc(100vh - 120px); /* Adjust 100px to the actual height of your footer */
     display: flex;
     flex-direction: column;
     justify-content: space-between;

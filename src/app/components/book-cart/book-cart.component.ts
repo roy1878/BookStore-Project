@@ -386,5 +386,8 @@ isCardVisible=false;
 
     this.firstForm=false;
   }
-
+  navigateHome() {
+    this.route.navigate(['/dashboard/books']);
+ 
+  }
 }
