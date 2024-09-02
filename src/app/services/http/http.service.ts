@@ -42,6 +42,9 @@ export class HttpService {
     return this.http.put(this.BaseUrl + endPoint, data , { headers: this.header });
 
   }
-
+  updateCartList(cartItems: any[]) {
+    return this.http.put('your-api-endpoint/cart', { cartItems });
+  }
+  
   
 }
