@@ -67,26 +67,20 @@ import { DataService } from '../data/data.service';
 export class CartService {
   private baseUrl = 'https://bookstore.incubation.bridgelabz.com/bookstore_user/';
   private cartItems: any[] = [];
+  httpService: any;
+
   headers: any = {
     'x-access-token': localStorage.getItem('access_token')
   }
-  constructor(private http: HttpClient,
-  private dataService:DataService
 
-  ) { }
- 
+  constructor(private http: HttpClient,private dataService:DataService) { }
+
   getCartItems(): Observable<any> {
     return this.http.get(`${this.baseUrl}get_cart_items`, {
       headers: this.headers
-      
     });
   }
-  removeFromCart(itemId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}remove_cart_item/${itemId}`, {
-      headers: this.headers
-    });
-    
-  }
+ 
   addToCart(item: any): void {
     this.cartItems.push(item);
   }
@@ -106,6 +100,13 @@ export class CartService {
   //     this.cartItems.splice(index, 1);
   //   }
   // }
+  removeFromCart(itemId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}remove_cart_item/${itemId}`, {
+      headers: this.headers
+    });
+    
+  }
+  
  
   getItems(): any[] {
     return this.cartItems;
@@ -114,6 +115,7 @@ export class CartService {
   clearCart(): void {
     this.cartItems = [];
   }
+  
 }
  
  

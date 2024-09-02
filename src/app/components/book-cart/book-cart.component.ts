@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CartService } from 'src/app/services/cart/cart.service';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { LoginSignupComponent } from '../login-signup/login-signup.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CartService } from 'src/app/services/cart/cart.service';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
   styleUrls: ['./book-cart.component.scss'],
 })
 export class BookCartComponent implements OnInit {
+  @Output() checkoutEvent = new EventEmitter<void>();
+  
   isCart2Visible = false;
   isCard2Visible = true;
   isCart3Visible = false;
@@ -24,6 +26,7 @@ isCardVisible=false;
   isBtnVisible2 = true;
   cartItemId: string = 'cartlist._id';
   cartItems: any[] = [];
+
   currentState !:string;
  
   PDisDisabled: boolean = true;
@@ -40,16 +43,13 @@ isCardVisible=false;
   displaySpan: boolean = false;
   showShopNowCard: boolean = false;
   firstForm:boolean=false;
-  constructor(
-    private dataService: DataService,
-    private route: Router,
+
+  constructor(private dataService: DataService,private route: Router,
     private userService: UserService,
     private cartService :CartService,
-    public dialog: MatDialog,
-  ) { }
-
-  hideBtn1() {
-    this.isBtnVisible = false;
+    public dialog: MatDialog,) { }
+  hideBtn1(){
+    this.isBtnVisible=false;
   }
 
   hideBtn2() {
@@ -147,7 +147,7 @@ isCardVisible=false;
 
 
 
-  
+  count:number=1;
   
 
   PDenableEditing(): void {
@@ -228,7 +228,6 @@ isCardVisible=false;
     this.firstForm=true;
   }
 
-  count: number = 1;
 
   onIncrement() {
     this.count++;
@@ -276,17 +275,14 @@ isCardVisible=false;
     this.cartService.removeFromCart(itemId).subscribe({
       next: (res: any) => {
         console.log('Item removed', res);
- 
         this.cartItems = this.cartItems.filter((item) => item._id !== itemId);
         this.dataService.updateCartList(this.cartItems);
       },
       error: (err: any) => {
         console.error('Error removing item', err);
-      },
+      }
     });
   }
- 
-
   loadCartItems() {
     const storedCart = localStorage.getItem('cartItems');
     this.cartItems = storedCart ? JSON.parse(storedCart) : [];
@@ -302,7 +298,6 @@ isCardVisible=false;
       this.showOtherElements();
     }
   }
-
   hideOtherElements() {
     const cart1 = document.querySelector('.cart1') as HTMLElement;
     const cart2 = document.querySelector('.cart2') as HTMLElement;
@@ -391,5 +386,5 @@ isCardVisible=false;
 
     this.firstForm=false;
   }
- 
+
 }
