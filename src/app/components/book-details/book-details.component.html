@@ -1,6 +1,6 @@
 <div class="book-details-outer-cnt">
   <div class="book-details-routes">
-    <span>Home / </span> <span style="font-weight: bold">Book(0)</span>
+    <button style="border: none; background-color: white;" >Home / </button> <span style="font-weight: bold">Book(0)</span>
   </div>
 
   <div class="book-details-inner-cnt">
@@ -86,10 +86,10 @@
           >
             <div class="book-rating">
               <span
-                >{{ getAvgRating() }} <mat-icon svgIcon="star-fill"></mat-icon>
+                >{{ getAvgRating() || 4.5}} <mat-icon svgIcon="star-fill"></mat-icon>
               </span>
             </div>
-            <p style="color: #878787">({{ feedbackList.length }})</p>
+            <p style="color: #878787">({{ feedbackList.length || 7}})</p>
           </div>
           <div class="book-price">
             <p class="price">Rs.{{ selectedBook.discountPrice }}</p>
@@ -140,22 +140,22 @@
           </div>
           <div class="customer-reviews" *ngFor="let feedback of feedbackList">
             <div class="review-details" *ngIf="currentState == 'loggedIn'">
-              <!-- <div class="user">
+              <div class="user">
                 <div class="initials">
-                  {{ getInitials(feedback.user_id.fullName) || 'XYZ' }}
+                  {{ getInitials(feedback.user_id.fullName || 'Alexa Martin') }}
                 </div>
-                <div class="name">{{ feedback.user_id.fullName || 'XYZ' }}</div>
-              </div> -->
+                <div class="name">{{ feedback.user_id.fullName || "Alexa Martin" }}</div>
+              </div>
               <div
                 class="user-rating"
                 style="display: flex; gap: 3px; margin-bottom: 10px"
               >
                 <mat-icon
-                  *ngFor="let star of getGoldStar(feedback.rating)"
+                  *ngFor="let star of getGoldStar(feedback.rating || 3)"
                   svgIcon="gold-star"
                 ></mat-icon>
                 <mat-icon
-                  *ngFor="let star of getGreyStar(feedback.rating)"
+                  *ngFor="let star of getGreyStar(feedback.rating || 2)"
                   svgIcon="star"
                 ></mat-icon>
               </div>

@@ -93,7 +93,7 @@ export class BookDetailsComponent implements OnInit {
         console.log('resss', res);
 
         this.isCartlisted = res.find((e: any) => {
-          return e._id === this.questionId;
+          return e.product_id._id === this.questionId;
         });
 
         if (this.isCartlisted) this.quantity = this.isCartlisted.quantityToBuy;
@@ -223,9 +223,11 @@ export class BookDetailsComponent implements OnInit {
 
   handleAddToCartBtn(action: string) {
     if (this.isLoggedIn) {
-      if (this.localQuantity > 0) this.quantity += this.localQuantity;
+      
       if (action === 'increament') {
         this.quantity = this.quantity + 1;
+        console.log(this.quantity);
+        
       } else if (action === 'decreament' && this.quantity > 0) {
         this.quantity = this.quantity - 1;
       }
@@ -246,7 +248,7 @@ export class BookDetailsComponent implements OnInit {
           quantity: bookdata.quantity,
           admin_user_id: bookdata.admin_user_id,
         },
-        quantityToBuy: this.localQuantity,
+        quantityToBuy: this.quantity,
         user_id: {},
       };
 
@@ -255,14 +257,15 @@ export class BookDetailsComponent implements OnInit {
 
         this.bookService.postCartItem(obj.product_id._id).subscribe({
           next: (res: any) => {
-            console.log('result:', this.cartlist);
+            console.log('result before:', res);
+            obj._id = res.result._id;
             this.dataService.updateCartList([...this.cartlist, obj]);
             console.log('result:', this.cartlist);
           },
         });
       } else {
         this.bookService
-          .putAddToCartQuantity(bookdata._id, {
+          .putAddToCartQuantity(this.isCartlisted._id, {
             quantityToBuy: this.quantity,
           })
           .subscribe({
