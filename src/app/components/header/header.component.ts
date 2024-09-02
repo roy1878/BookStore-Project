@@ -132,14 +132,15 @@ export class HeaderComponent implements OnInit {
         },
         error: (err) => console.log(err),
       });
-      this.dataService.currentCartList.subscribe({
-        next:(res)=>{
-          this.cartLength =res.length;
-          console.log("resssssss",res,this.cartLength);
-          
-        }
-      })
+      
     }
+    this.dataService.currentCartList.subscribe({
+      next:(res)=>{
+        this.cartLength =res.length;
+        console.log("resssssss",res,this.cartLength);
+        
+      }
+    })
     
   }
   
@@ -153,6 +154,9 @@ export class HeaderComponent implements OnInit {
       if (this.currentRoute == 'admin') {
         this.router.navigate(['admin']);
       } else this.router.navigate(['dashboard/books']);
+    }
+    if (action === 'user') {
+      this.router.navigate(['dashboard/books']);
     }
     if (action === 'profile') {
       this.router.navigate(['dashboard/profile']);
