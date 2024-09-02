@@ -4,6 +4,7 @@ import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { LoginSignupComponent } from '../login-signup/login-signup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CartService } from 'src/app/services/cart/cart.service';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
@@ -41,6 +42,7 @@ isCardVisible=false;
     private dataService: DataService,
     private route: Router,
     private userService: UserService,
+    private cartService :CartService,
     public dialog: MatDialog,
   ) { }
 
@@ -105,16 +107,19 @@ isCardVisible=false;
 
   ngOnInit(): void {
     this.loadCartItems();
-    this.checkCart();
+   
     
     if (localStorage.getItem('access_token')) {
       this.isLoggedIn = true;
-    } else this.isLoggedIn = false;
+    } else {
+      this.isLoggedIn = false;
+    }
 
     this.dataService.currentCartList.subscribe({
       next: (res: any) => {
         this.cartItems = res;
         console.log('cartlist', res);
+        this.checkCart();
         console.log(this.cartItems);
       },
     });
@@ -128,7 +133,7 @@ isCardVisible=false;
           ...addressData,
           showFirstDiv: true
         }));
-        console.log("cust", this.customerDetails);
+        console.log("custttt", this.customerDetails);
 
         console.log("add", res[0].user_id.address);
       }
@@ -210,7 +215,7 @@ isCardVisible=false;
     })
     this.showFirstDiv = !this.showFirstDiv;
     alert("Address Updated Successfully");
-    window.location.reload();
+    // window.location.reload();
   }
 
   add_new_add() {
@@ -262,9 +267,19 @@ isCardVisible=false;
   }
 
   removeCartItem(itemId: string) {
-    this.cartItems = this.cartItems.filter((item) => item._id !== itemId);
-    this.dataService.updateCartList(this.cartItems);
+    this.cartService.removeFromCart(itemId).subscribe({
+      next: (res: any) => {
+        console.log('Item removed', res);
+ 
+        this.cartItems = this.cartItems.filter((item) => item._id !== itemId);
+        this.dataService.updateCartList(this.cartItems);
+      },
+      error: (err: any) => {
+        console.error('Error removing item', err);
+      },
+    });
   }
+ 
 
   loadCartItems() {
     const storedCart = localStorage.getItem('cartItems');
@@ -273,7 +288,7 @@ isCardVisible=false;
   }
 
   checkCart() {
-    if (this.cartItems.length === 0) {
+    if ( this.cartItems.length === 0 ) {
       this.isCardVisible = true;
       this.hideOtherElements();
     } else {
