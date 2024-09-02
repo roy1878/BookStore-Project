@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LoginSignupComponent } from '../login-signup/login-signup.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,7 +12,9 @@ import { Router } from '@angular/router';
 export class ForgotPasswordComponent implements OnInit {
 loginForm!: FormGroup<any>;
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,
+    public dialog:MatDialog
+  ) { }
 
   ngOnInit(): void {
   }
@@ -19,6 +23,11 @@ loginForm!: FormGroup<any>;
     this.router.navigate(["./dashboard/books"])
   }
   handleCreate(){
-    this.router.navigate(["./login-signup"])
+    this.openDialog();
+  }
+  openDialog() {
+    this.dialog.open(LoginSignupComponent);
+    this.router.navigate(["./dashboard/books"])
+
   }
 }
