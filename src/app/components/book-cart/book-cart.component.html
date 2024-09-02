@@ -23,9 +23,9 @@
       <div class="product" *ngFor="let item of cartItems">
       <img class="img" width="80px" src="../../../assets/book-images/Image 11.png" alt="">
       <div class="item-details">
-        <h3>{{item.product_id.bookName }}</h3>
-        <p> {{item.product_id.author }} </p>
-        <strong>Rs. {{item.product_id.discountPrice}}</strong>
+        <h3>{{item.product_id.bookName || item.bookName}}</h3>
+        <p> {{item.product_id.author || item.author}} </p>
+        <strong>Rs. {{item.product_id.discountPrice || item.discountPrice}}</strong>
          
         <div class="quantity">
           <div class="btns">

@@ -4,11 +4,11 @@
         <p>Profile</p>
     </div>
 
-    <div class="wishlist-main-header">
+    <div class="wishlist-main-header" *ngIf="showHeader==true">
         <h2>My Wishlist ({{wishCardLists.length}})</h2>
     </div>
 
-    <div class="wishlist-submain" *ngFor="let wishData of wishCardLists">
+    <div class="wishlist-submain" *ngFor="let wishData of wishCardLists" >
         <div class="wishlist-main-card" >
             <div class="wishlist-main-img">
                 <img src="../../../assets/think-book.png" alt="" height="90px" width="70px">
@@ -32,6 +32,15 @@
 
     <div class="no-wislist-main" *ngIf="showDiv==true">
        <h1> No items in the wishList </h1>
+    </div>
+
+    <div class="please-login-in" *ngIf="showLogin==true" (click)="login()">
+        <h1>PLEASE LOG IN</h1>
+        <p>Login to view in your wishlist</p>
+        <img src="../../../assets/icons/Page-1.png" alt="" >
+        <div class="login-signup">
+            LOGIN/SIGNUP
+        </div>
     </div>
 </div>
 
