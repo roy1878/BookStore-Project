@@ -40,7 +40,7 @@
           <input  readonly class="input" type="text" value="{{item.quantityToBuy}}" >
           <button (click)="handleUpdateCartBtn('increament',item._id)" class="btn">+</button>
         </div>
-        <strong >Remove</strong>
+        <strong (click)="removeCartItem(item._id)">Remove</strong>
           </div>
        
       </div>

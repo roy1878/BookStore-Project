@@ -5,6 +5,7 @@ import { DataService } from 'src/app/services/data/data.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { LoginSignupComponent } from '../login-signup/login-signup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BookService } from 'src/app/services/book/book.service';
 @Component({
   selector: 'app-book-cart',
   templateUrl: './book-cart.component.html',
@@ -47,6 +48,7 @@ isCardVisible=false;
   constructor(private dataService: DataService,private route: Router,
     private userService: UserService,
     private cartService :CartService,
+    private bookService:BookService,
     public dialog: MatDialog,) { }
   hideBtn1(){
     this.isBtnVisible=false;
@@ -229,15 +231,45 @@ isCardVisible=false;
   }
 
 
-  onIncrement() {
-    this.count++;
-  }
+  // onIncrement() {
+  //   this.count++;
+  //   if(this.currentState == 'loggedIn'){
+  //   this.bookService
+  //         .putAddToCartQuantity(this.isCartlisted._id, {
+  //           quantityToBuy: this.count,
+  //         })
+  //         .subscribe({
+  //           next: (res) => {
+  //             console.log(res);
+              
+  //           },
+  //           error: (err) => {
+  //             console.error('Error updating cart:', err);
+  //           },
+  //         });}
+  // }
 
-  onDecrement() {
-    if (this.count > 0) {
-      this.count--;
-    }
-  }
+  // onDecrement() {
+  //   if (this.count > 0) {
+  //     this.count--;
+  //   }
+  //   if(this.currentState == 'loggedIn'){
+
+  //   this.bookService
+  //         .putAddToCartQuantity(this.isCartlisted._id, {
+  //           quantityToBuy: this.count,
+  //         })
+  //         .subscribe({
+  //           next: (res) => {
+  //             console.log(res);
+              
+  //           },
+  //           error: (err) => {
+  //             console.error('Error updating cart:', err);
+  //           },
+  //         });
+  //       }
+  // }
 
   handleUpdateCartBtn(action: string, cartItemId: string) {
     if (this.isLoggedIn) {
@@ -252,6 +284,21 @@ isCardVisible=false;
         }
 
         console.log('Updated quantity:', cartItem.quantityToBuy);
+
+
+        this.bookService
+        .putAddToCartQuantity(cartItem._id, {
+          quantityToBuy: cartItem.quantityToBuy,
+        })
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            
+          },
+          error: (err) => {
+            console.error('Error updating cart:', err);
+          },
+        });
 
         this.dataService.updateLocalCartList(cartItemId, cartItem.quantityToBuy);
       } else {
